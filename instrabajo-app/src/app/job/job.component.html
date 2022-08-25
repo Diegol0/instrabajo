@@ -1,0 +1,57 @@
+<div class="container">
+  <mat-form-field class="example-form-field" appearance="standard">
+    <mat-label>Filter</mat-label>
+    <input matInput type="text" [(ngModel)]="value" />
+    <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+
+<div class="job-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Electrician</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="../../assets/job1.jpeg" style="margin: auto" />
+    <mat-card-actions>
+      <button mat-raised-button color="primary">View</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Mechanic</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="../../assets/job2.jpeg" style="margin: auto" />
+    <mat-card-actions>
+      <button mat-raised-button color="primary">View</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Cheff</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="../../assets/job3.jpeg" style="margin: auto" />
+    <mat-card-actions>
+      <button mat-raised-button color="primary">View</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Carpenter</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="../../assets/job4.png" style="margin: auto" />
+    <mat-card-actions>
+      <button mat-raised-button color="primary">View</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Plumber</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="../../assets/job5.jpeg" style="margin: auto" />
+    <mat-card-actions>
+      <button mat-raised-button color="primary">View</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

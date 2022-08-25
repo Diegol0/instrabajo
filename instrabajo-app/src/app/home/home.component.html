@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="user?.type == 'employee'">
   <p class="mat-display-1">Welcome {{ user?.name }}</p>
   <hr />
   <p class="mat-title">Recomended Jobs:</p>
@@ -6,13 +6,35 @@
     <div class="breed-container">
       <mat-card>
         <mat-card-header>
-          <mat-card-title> Available Jobs </mat-card-title>
+          <mat-card-title> You will see recommended jobs here according to your preferences and skills  </mat-card-title>
         </mat-card-header>
-        <img mat-card-image src="{{ img }}" style="margin: auto" />
+        
       </mat-card>
     </div>
   </div>
   <hr />
   <p class="mat-title">Here is a list of jobs:</p>
   <p class="mat-subheading-1">Click on any of them to see the details</p>
+  <app-job></app-job>
 </div>
+
+<div class="container" *ngIf="user?.type == 'employer'">
+  <p class="mat-display-1">Welcome {{ user?.name }}</p>
+  <hr />
+  <p class="mat-title">New options on employees:</p>
+  <div *ngIf="user">
+    <div class="breed-container">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title> Recommended employees will show here  </mat-card-title>
+        </mat-card-header>
+        
+      </mat-card>
+    </div>
+  </div>
+  <hr />
+  <p class="mat-title">Here is a list of people matching your search:</p>
+  <p class="mat-subheading-1">Click on any of them to see the details</p>
+  <app-employee></app-employee>
+</div>
+

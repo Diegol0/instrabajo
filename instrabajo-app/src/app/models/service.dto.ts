@@ -9,12 +9,12 @@ export interface CreateUserDto {
   username?: string | null;
   password?: string | null;
   email?: string | null;
-  favoriteBreed?: string | null;
+  type?: string | null;
 }
 
 export interface UpdateUserBreedDto {
   _id?: string | null;
-  favoriteBreed?: string | null;
+  type?: string | null;
 }
 
 export interface UserDto {
@@ -24,5 +24,5 @@ export interface UserDto {
   username?: string | null;
   password?: string | null;
   email?: string | null;
-  favoriteBreed?: string | null;
+  type?: string | null;
 }
