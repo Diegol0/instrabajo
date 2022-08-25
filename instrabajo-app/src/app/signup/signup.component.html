@@ -1,0 +1,87 @@
+<div class="container">
+  <div class="vertical-center">
+    <mat-card>
+      <mat-card-header>
+        <div mat-card-avatar>
+          <mat-icon aria-hidden="false">add</mat-icon>
+        </div>
+        <mat-card-title>Create Account</mat-card-title>
+        <mat-card-subtitle>Please fill the form below</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="signupForm" (ngSubmit)="signup()">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Name"
+              formControlName="name"
+              name="name"
+              required
+            />
+            <mat-error> Please provide a valid name</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Lastname"
+              formControlName="lastname"
+              name="lastname"
+            />
+            <mat-error> Please provide a valid lastname</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Username"
+              formControlName="username"
+              name="username"
+            />
+            <mat-error> Please provide a valid username</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Email"
+              formControlName="email"
+              name="email"
+              required
+            />
+            <mat-error> Please provide a valid email address</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              type="password"
+              placeholder="Password"
+              formControlName="password"
+              name="password"
+              required
+            />
+            <mat-error> Please provide a valid password </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="type" required>
+              <mat-option value="employer">Employer (Looking for people)</mat-option>
+              <mat-option value="employee">Employee (Looking for job)</mat-option>
+            </mat-select>
+            <mat-error> Please provide a valid type</mat-error>
+          </mat-form-field>
+          <mat-card-actions align="end">
+            <button
+              mat-raised-button
+              color="secondary"
+              type="button"
+              [routerLink]="'/login'"
+            >
+              Back
+            </button>
+            <button mat-raised-button color="primary" type="submit">
+              Sign Up
+            </button>
+          </mat-card-actions>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+.container {
+  margin: 2em;
+  padding: 1em;
+  background-color: rgb(255, 255, 255, 0.8);
+}
+
+hr {
+  background: linear-gradient(to right, #3f51b5, rgb(152, 234, 255));
+  height: 1px;
+}
+
+.info {
+  padding: 0% 10%;
+}
+
+.alert {
+  padding: 20px;
+  background-color: #3f51b5;
+  color: white;
+  margin-bottom: 15px;
+  border-radius: 8px;
+}
+
+.breed-container {
+  text-align: center;
+}
+
+mat-card {
+  display: inline-block;
+  max-width: 250px;
+  max-height: 250px;
+  width: 250px;
+  height: 250px;
+  margin: 1em 2em;
+  z-index: 1;
+}
+
+mat-card-header {
+  width: 100%;
+}
+
+mat-card img {
+  object-fit: cover; /*this makes the image in src fit to the size specified below*/
+  width: 70%; /* Here you can use wherever you want to specify the width and also the height of the <img>*/
+  height: 70%;
+  border-radius: 50%;
+}
