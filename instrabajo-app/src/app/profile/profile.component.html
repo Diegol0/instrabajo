@@ -1,0 +1,165 @@
+<mat-accordion class="example-headers-align">
+  <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Personal data </mat-panel-title>
+      <mat-panel-description>
+        General information
+        <mat-icon>account_circle</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <form [formGroup]="generalForm">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Name"
+          formControlName="name"
+          name="name"
+          required
+        />
+        <mat-error> Please provide a valid name</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Lastname"
+          formControlName="lastname"
+          name="lastname"
+        />
+        <mat-error> Please provide a valid lastname</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Username"
+          formControlName="username"
+          name="username"
+        />
+        <mat-error> Please provide a valid username</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Email"
+          formControlName="email"
+          name="email"
+          required
+        />
+        <mat-error> Please provide a valid email address</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="type" required>
+          <mat-option value="employer"
+            >Employer (Looking for people)</mat-option
+          >
+          <mat-option value="employee">Employee (Looking for job)</mat-option>
+        </mat-select>
+        <mat-error> Please provide a valid type</mat-error>
+      </mat-form-field>
+    </form>
+    <mat-action-row>
+      <button mat-button color="primary" (click)="nextStep()">Next</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Address </mat-panel-title>
+      <mat-panel-description>
+        Address and Location
+        <mat-icon>map</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <form [formGroup]="addressForm">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Address1"
+          formControlName="address1"
+          name="address1"
+          required
+        />
+        <mat-error> Please provide a Address 1</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Address2"
+          formControlName="address2"
+          name="address2"
+        />
+        <mat-error> Please provide a valid Address 2</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="City"
+          formControlName="city"
+          name="city"
+          required
+        />
+        <mat-error> Please provide a valid city</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Country"
+          formControlName="country"
+          name="country"
+          required
+        />
+        <mat-error> Please provide a valid country</mat-error>
+      </mat-form-field>
+    </form>
+
+    <mat-action-row>
+      <button mat-button color="warn" (click)="prevStep()">Previous</button>
+      <button mat-button color="primary" (click)="nextStep()">Next</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Payment </mat-panel-title>
+      <mat-panel-description>
+        Debit or Credit Card
+        <mat-icon>payments</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <form [formGroup]="paymentForm">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Card Number"
+          formControlName="cardNumber"
+          name="cardNumber"
+          required
+        />
+        <mat-error> Please provide a card</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Expiration Date"
+          formControlName="expirationDate"
+          name="expirationDate"
+        />
+        <mat-error> Please provide a valid expirationDate</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Name" formControlName="name" name="name" />
+        <mat-error> Please provide a valid name</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Ccv" formControlName="ccv" name="ccv" [type]="'password'" maxlength="3"/>
+        <mat-error> Please provide a valid ccv</mat-error>
+      </mat-form-field>
+    </form>
+    <mat-action-row>
+      <button mat-button color="warn" (click)="prevStep()">Cancel</button>
+      <button mat-button color="primary" (click)="nextStep()">Save</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>

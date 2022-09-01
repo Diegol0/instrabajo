@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignupComponent } from './signup/signup.component';
 import { JobComponent } from './job/job.component';
 import { EmployeeComponent } from './employee/employee.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { EmployeeComponent } from './employee/employee.component';
     HomeComponent,
     JobComponent,
     EmployeeComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

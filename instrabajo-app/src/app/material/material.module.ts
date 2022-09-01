@@ -7,8 +7,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 const MaterialComponents = [
   MatButtonModule,
@@ -20,7 +22,9 @@ const MaterialComponents = [
   MatSnackBarModule,
   MatDialogModule,
   MatCheckboxModule,
-  MatSelectModule
+  MatSelectModule,
+  MatExpansionModule,
+  MatDatepickerModule,
 ];
 
 @NgModule({
