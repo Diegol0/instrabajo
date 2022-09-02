@@ -9,20 +9,27 @@ import { SalukiService } from '../services/saluki.service';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
+  srcResult: any;
+  center: google.maps.LatLngLiteral = { lat: 0, lng: 0 };
   generalForm = new FormGroup({
-    username: new FormControl({value: '', disabled: true}),
-    name: new FormControl({value: '', disabled: true}, Validators.required),
-    lastname: new FormControl({value: '', disabled: true}),
-    phone: new FormControl({value: '+50248575945', disabled: true}, Validators.required),
-    password: new FormControl({value: '', disabled: true}, Validators.required),
-    email: new FormControl({value: '', disabled: true}, Validators.required),
-    type: new FormControl({value: '', disabled: true}, Validators.required),
-
+    username: new FormControl({ value: '', disabled: true }),
+    name: new FormControl({ value: '', disabled: true }, Validators.required),
+    lastname: new FormControl({ value: '', disabled: true }),
+    phone: new FormControl(
+      { value: '+50248575945', disabled: true },
+      Validators.required
+    ),
+    password: new FormControl(
+      { value: '', disabled: true },
+      Validators.required
+    ),
+    email: new FormControl({ value: '', disabled: true }, Validators.required),
+    type: new FormControl({ value: '', disabled: true }, Validators.required),
   });
 
   addressForm = new FormGroup({
-    address1: new FormControl('18 calle 15-48 Z3'),
-    address2: new FormControl('Vertical 3, Apto 408'),
+    address1: new FormControl('37 Av A 12-49'),
+    address2: new FormControl('Alamedas de Yumar 2 Zona 6 de Mixco'),
     city: new FormControl('Guatemala'),
     country: new FormControl('Guatemala'),
   });
@@ -34,7 +41,14 @@ export class ProfileComponent implements OnInit {
     ccv: new FormControl('123'),
   });
 
-  constructor(private salukiService: SalukiService) {}
+  constructor(private salukiService: SalukiService) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.center = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      };
+    });
+  }
 
   ngOnInit(): void {
     this.salukiService.getLoggedUser.pipe(take(1)).subscribe((user: any) => {
@@ -53,5 +67,21 @@ export class ProfileComponent implements OnInit {
 
   prevStep() {
     this.step--;
+  }
+
+  onFileSelected() {
+    const inputNode: any = document.querySelector('#file');
+  
+    if (typeof (FileReader) !== 'undefined') {
+      const reader = new FileReader();
+  
+      reader.onload = (e: any) => {
+        this.srcResult = e.target.result;
+        console.log(e)
+        
+      };
+  
+      reader.readAsArrayBuffer(inputNode.files[0]);
+    }
   }
 }

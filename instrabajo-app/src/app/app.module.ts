@@ -14,6 +14,7 @@ import { SignupComponent } from './signup/signup.component';
 import { JobComponent } from './job/job.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { ProfileComponent } from './profile/profile.component';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { ProfileComponent } from './profile/profile.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    GoogleMapsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
