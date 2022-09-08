@@ -21,6 +21,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { Welcome2Component } from './welcome2/welcome2.component';
 import { Welcome3Component } from './welcome3/welcome3.component';
 import { StartComponent } from './start/start.component';
+import { EmployerJobsComponent } from './employer-jobs/employer-jobs.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { StartComponent } from './start/start.component';
     Welcome2Component,
     Welcome3Component,
     StartComponent,
+    EmployerJobsComponent,
   ],
   imports: [
     BrowserModule,

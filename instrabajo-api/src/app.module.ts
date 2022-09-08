@@ -3,14 +3,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { EmployeeModule } from './employee/employee.module';
-import { EmployerModule } from './employer/employer.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
-    EmployeeModule,
-    EmployerModule,
     UsersModule,
     AuthModule,
     MongooseModule.forRoot(

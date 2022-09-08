@@ -1,14 +1,25 @@
-<div class="container" *ngIf="user?.type == 'employee'">
-  <p class="mat-display-1">Welcome {{ user?.name }}</p>
+<div
+  style="top: 5vh; position: absolute"
+  class="container"
+  *ngIf="user?.type == 'employee'"
+>
+  <div>
+    <span class="txt-3">Bienvenido {{ user?.name }}</span>
+    <br />
+    <br />
+  </div>
+  <p class="mat-display-1"></p>
   <hr />
-  <p class="mat-title">Recomended Jobs:</p>
+  <p class="mat-title">Existen tabajos disponibles:</p>
   <div *ngIf="user">
     <div class="breed-container">
       <mat-card>
         <mat-card-header>
-          <mat-card-title> You will see recommended jobs here according to your preferences and skills  </mat-card-title>
+          <mat-card-title>
+            You will see recommended jobs here according to your preferences and
+            skills
+          </mat-card-title>
         </mat-card-header>
-        
       </mat-card>
     </div>
   </div>
@@ -18,18 +29,22 @@
   <app-job></app-job>
 </div>
 
-<div class="container" *ngIf="user?.type == 'employer'">
-  <p class="mat-display-1">Welcome {{ user?.name }}</p>
+<div
+  style="top: 5vh; position: absolute"
+  class="container"
+  *ngIf="user?.type == 'employer'"
+>
+  <div>
+    <span class="txt-3">Bienvenido {{ user?.name }}</span>
+    <br />
+    <br />
+  </div>
+  <p class="mat-display-1"></p>
   <hr />
-  <p class="mat-title">New options on employees:</p>
+  <p class="mat-title">Tus trabajos:</p>
   <div *ngIf="user">
     <div class="breed-container">
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title> Recommended employees will show here  </mat-card-title>
-        </mat-card-header>
-        
-      </mat-card>
+      <app-employer-jobs></app-employer-jobs>
     </div>
   </div>
   <hr />
@@ -37,4 +52,3 @@
   <p class="mat-subheading-1">Click on any of them to see the details</p>
   <app-employee></app-employee>
 </div>
-
