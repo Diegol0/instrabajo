@@ -6,15 +6,5 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-.body-bg {
-  background-color: #ffffff;
-  opacity: 1;
-  background-image: linear-gradient(135deg, #d3d9ff 25%, transparent 25%),
-    linear-gradient(225deg, #d3d9ff 25%, transparent 25%),
-    linear-gradient(45deg, #d3d9ff 25%, transparent 25%),
-    linear-gradient(315deg, #d3d9ff 25%, #ffffff 25%);
-  background-position: 4px 0, 4px 0, 0 0, 0 0;
-  background-size: 4px 4px;
+  font-family: Roboto;
 }

@@ -5,6 +5,7 @@ import { take } from 'rxjs';
 import { AlertService } from '../alert.service';
 import { LoginUserDto } from '../models/service.dto';
 import { SalukiService } from '../services/saluki.service';
+import { SplashScreenService } from '../services/splash-screen.service';
 
 @Component({
   selector: 'app-login',
@@ -19,10 +20,15 @@ export class LoginComponent implements OnInit {
   constructor(
     private salukiService: SalukiService,
     private router: Router,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private splashScreenStateService: SplashScreenService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.splashScreenStateService.stop();
+    }, 1000);
+  }
 
   login() {
     let user: LoginUserDto = this.loginForm.getRawValue()!;

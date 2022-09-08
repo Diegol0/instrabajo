@@ -15,10 +15,13 @@ import { JobComponent } from './job/job.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { ProfileComponent } from './profile/profile.component';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { SplashScreenService } from './services/splash-screen.service';
+import { SplashScreenComponent } from './splash-screen/splash-screen.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    SplashScreenComponent,
     LoginComponent,
     SignupComponent,
     HomeComponent,
@@ -36,7 +39,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
     ReactiveFormsModule,
     GoogleMapsModule,
   ],
-  providers: [],
+  providers: [SplashScreenService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
