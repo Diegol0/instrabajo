@@ -1,0 +1,106 @@
+<div class="container" style="overflow: scroll">
+  <div class="vertical-center">
+    <div style="top: 10vh; position: absolute; padding: 5vw; width: 90vw">
+      <span class="txt-3">TRABAJO</span>
+      <br />
+      <br />
+      <span class="txt-3-s"
+        >Ingresa la informacion del trabajo que requieres:</span
+      >
+      <br />
+      <br />
+    </div>
+
+    <form style="padding: 5vw" [formGroup]="jobForm" (ngSubmit)="save()">
+      <br />
+      <span class="txt-2-s">General</span>
+      <hr />
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Nombre"
+          formControlName="name"
+          name="name"
+          required
+        />
+        <mat-error> Please provide a valid name</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Pago por hora"
+          type="number"
+          formControlName="rate"
+          name="rate"
+        />
+        <mat-error> Please provide a valid rate</mat-error>
+      </mat-form-field>
+      <br />
+      <br />
+      <span class="txt-2-s">Dirección</span>
+      <hr />
+      <div formGroupName="address">
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Linea 1"
+            formControlName="addressLine1"
+            name="addressLine1"
+          />
+          <mat-error> Please provide a valid address1</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Linea 2"
+            formControlName="addressLine2"
+            name="addressLine2"
+          />
+          <mat-error> Please provide a valid address2</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Ciudad"
+            formControlName="city"
+            name="city"
+          />
+          <mat-error> Please provide a valid city</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Pais"
+            formControlName="country"
+            name="country"
+          />
+          <mat-error> Please provide a valid country</mat-error>
+        </mat-form-field>
+        <br />
+        <br />
+        <span class="txt-2-s">Ubicación</span>
+
+        <hr />
+        <div style="width: 90%">
+          <google-map [center]="center"> </google-map>
+        </div>
+      </div>
+
+      <br />
+
+      <button mat-raised-button color="primary" type="submit">CREAR</button>
+      <br />
+      <br />
+      <button
+        mat-raised-button
+        color="secondary"
+        type="button"
+        [routerLink]="'/home'"
+      >
+        REGRESAR
+      </button>
+    </form>
+  </div>
+</div>

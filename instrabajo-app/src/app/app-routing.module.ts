@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { JobDetailComponent } from './job-detail/job-detail.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './services/auth.guard';
@@ -17,6 +18,8 @@ const routes: Routes = [
   { path: 'start', component: StartComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
+  { path: 'job-detail', component: JobDetailComponent },
+  { path: 'job-detail/:id', component: JobDetailComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'welcome' },
