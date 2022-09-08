@@ -17,6 +17,10 @@ import { ProfileComponent } from './profile/profile.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { SplashScreenService } from './services/splash-screen.service';
 import { SplashScreenComponent } from './splash-screen/splash-screen.component';
+import { WelcomeComponent } from './welcome/welcome.component';
+import { Welcome2Component } from './welcome2/welcome2.component';
+import { Welcome3Component } from './welcome3/welcome3.component';
+import { StartComponent } from './start/start.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +32,10 @@ import { SplashScreenComponent } from './splash-screen/splash-screen.component';
     JobComponent,
     EmployeeComponent,
     ProfileComponent,
+    WelcomeComponent,
+    Welcome2Component,
+    Welcome3Component,
+    StartComponent,
   ],
   imports: [
     BrowserModule,

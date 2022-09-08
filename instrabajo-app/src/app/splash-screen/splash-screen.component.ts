@@ -7,26 +7,25 @@ import { SplashScreenService } from '../services/splash-screen.service';
   styleUrls: ['./splash-screen.component.scss'],
 })
 export class SplashScreenComponent implements OnInit {
-  // The screen starts with the maximum opacity
   public opacityChange = 1;
   public splashTransition: string = '';
-  // First access the splash is visible
+
   public showSplash = true;
   readonly ANIMATION_DURATION = 1;
   constructor(private splashScreenStateService: SplashScreenService) {}
   ngOnInit(): void {
-    // Somewhere the stop method has been invoked
+    setTimeout(() => {
+      this.splashScreenStateService.stop();
+    }, 500);
     this.splashScreenStateService.subscribe((res: void) => {
       this.hideSplashAnimation();
     });
   }
   private hideSplashAnimation() {
-    // Setting the transition
     this.splashTransition = `opacity ${this.ANIMATION_DURATION}s`;
     this.opacityChange = 0;
     setTimeout(() => {
-      // After the transition is ended the showSplash will be hided
       this.showSplash = !this.showSplash;
-    }, 1000);
+    }, 250);
   }
 }

@@ -24,11 +24,7 @@ export class LoginComponent implements OnInit {
     private splashScreenStateService: SplashScreenService
   ) {}
 
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.splashScreenStateService.stop();
-    }, 1000);
-  }
+  ngOnInit(): void {}
 
   login() {
     let user: LoginUserDto = this.loginForm.getRawValue()!;

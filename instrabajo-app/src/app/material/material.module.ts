@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatChipsModule } from '@angular/material/chips';
 
 const MaterialComponents = [
   MatButtonModule,
@@ -25,6 +26,7 @@ const MaterialComponents = [
   MatSelectModule,
   MatExpansionModule,
   MatDatepickerModule,
+  MatChipsModule,
 ];
 
 @NgModule({

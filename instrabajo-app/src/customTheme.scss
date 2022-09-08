@@ -1,0 +1,34 @@
+/* For use in _color-definitions.scss */
+$palette-mcgpalette0:
+rgb(232, 251, 247)
+rgb(197, 244, 235)
+rgb(159, 237, 221)
+rgb(120, 229, 207)
+rgb(91, 224, 197)
+rgb(62, 218, 187)
+rgb(56, 214, 181)
+rgb(48, 208, 172)
+rgb(40, 203, 164)
+rgb(27, 194, 150)
+rgb(247, 255, 253)
+rgb(196, 255, 238)
+rgb(145, 255, 224)
+rgb(120, 255, 216)
+;
+
+$palette-mcgpalette0-50: nth($palette-mcgpalette0, 1);
+$palette-mcgpalette0-100: nth($palette-mcgpalette0, 2);
+$palette-mcgpalette0-200: nth($palette-mcgpalette0, 3);
+$palette-mcgpalette0-300: nth($palette-mcgpalette0, 4);
+$palette-mcgpalette0-400: nth($palette-mcgpalette0, 5);
+$palette-mcgpalette0-500: nth($palette-mcgpalette0, 6);
+$palette-mcgpalette0-600: nth($palette-mcgpalette0, 7);
+$palette-mcgpalette0-700: nth($palette-mcgpalette0, 8);
+$palette-mcgpalette0-800: nth($palette-mcgpalette0, 9);
+$palette-mcgpalette0-900: nth($palette-mcgpalette0, 10);
+$palette-mcgpalette0-A100: nth($palette-mcgpalette0, 11);
+$palette-mcgpalette0-A200: nth($palette-mcgpalette0, 12);
+$palette-mcgpalette0-A400: nth($palette-mcgpalette0, 13);
+$palette-mcgpalette0-A700: nth($palette-mcgpalette0, 14);
+
+
