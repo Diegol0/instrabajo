@@ -1,53 +1,57 @@
 <div class="container">
   <div class="vertical-center">
-    <mat-card>
-      <mat-card-header>
-        <div mat-card-avatar>
-          <mat-icon aria-hidden="false">person</mat-icon>
-        </div>
-        <mat-card-title>Log In</mat-card-title>
-        <mat-card-subtitle>Please enter your credentials</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <form [formGroup]="loginForm" (ngSubmit)="login()">
-          <mat-form-field>
-            <input
-              matInput
-              placeholder="Email or User"
-              formControlName="username"
-              name="username"
-              required
-            />
-            <mat-error>
-              Please provide a valid email address or username</mat-error
-            >
-          </mat-form-field>
-          <mat-form-field>
-            <input
-              matInput
-              type="password"
-              placeholder="Password"
-              formControlName="password"
-              name="password"
-              required
-            />
-            <mat-error> Please provide a valid password </mat-error>
-          </mat-form-field>
-          <mat-card-actions align="end">
-            <button mat-raised-button color="primary" type="submit">
-              Login
-            </button>
-            <button
-              mat-raised-button
-              color="secundary"
-              type="button"
-              [routerLink]="'/signup'"
-            >
-              Sign Up
-            </button>
-          </mat-card-actions>
-        </form>
-      </mat-card-content>
-    </mat-card>
+    <div
+      style="
+        top: 10vh;
+        position: absolute;
+        padding: 5vw;
+
+        width: 90vw;
+      "
+    >
+      <span class="txt-3">INICIAR SESIÓN</span>
+      <br />
+      <br />
+    </div>
+
+    <form style="padding: 5vw" [formGroup]="loginForm" (ngSubmit)="login()">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Email or User"
+          formControlName="username"
+          name="username"
+          required
+        />
+        <mat-error> Please provide a valid email address or username</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+          name="password"
+          required
+        />
+        <mat-error> Please provide a valid password </mat-error>
+      </mat-form-field>
+
+      <br />
+
+      <button mat-raised-button color="primary" type="submit">
+        INICIAR SESIÓN
+      </button>
+      <br />
+      <br />
+      <button
+        mat-raised-button
+        color="secondary"
+        type="button"
+        [routerLink]="'/signup'"
+      >
+        REGISTRARSE
+      </button>
+    </form>
   </div>
 </div>
