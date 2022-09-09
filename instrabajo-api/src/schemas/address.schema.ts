@@ -6,10 +6,10 @@ export type AddressDocument = Address & Document;
 @Schema()
 export class Address {
   @Prop({ required: true })
-  address1: string;
+  addressLine1: string;
 
   @Prop()
-  address2: number;
+  addressLine2: string;
 
   @Prop({ required: true })
   city: string;
@@ -17,7 +17,7 @@ export class Address {
   @Prop({ required: true })
   country: string;
 
-  @Prop({ required: true })
+  @Prop()
   lat: string;
 
   @Prop()

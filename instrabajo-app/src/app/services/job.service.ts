@@ -16,7 +16,7 @@ export class JobService {
 
   listAll() {
     return this.http
-      .get<any>(environment.salukiURL + 'jobs/list/all')
+      .get<any>(environment.salukiURL + 'jobs/')
       .pipe(
         catchError((error: HttpErrorResponse) =>
           this.errorHandlerService.handleError(error)
@@ -82,4 +82,6 @@ export class JobService {
         )
       );
   }
+
+
 }

@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { take } from 'rxjs';
 import { AlertService } from '../alert.service';
-import { JobDto } from '../models/service.dto';
+import { JobDto, UserDto } from '../models/service.dto';
 import { JobService } from '../services/job.service';
 import { SalukiService } from '../services/saluki.service';
 
@@ -15,6 +15,7 @@ import { SalukiService } from '../services/saluki.service';
 export class JobDetailComponent implements OnInit {
   center: google.maps.LatLngLiteral = { lat: 0, lng: 0 };
   marker: google.maps.Marker = new google.maps.Marker();
+  user: UserDto | null = null;
   lat: string = '';
   lng: string = '';
   jobForm = new FormGroup({
@@ -35,9 +36,10 @@ export class JobDetailComponent implements OnInit {
     private jobService: JobService,
     private alertService: AlertService
   ) {
-    console.log('test');
+    this.salukiService.getLoggedUser.pipe(take(1)).subscribe((user: any) => {
+      this.user = user;
+    });
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position);
       this.center = {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
@@ -61,6 +63,7 @@ export class JobDetailComponent implements OnInit {
     // return;
 
     let job: JobDto = this.jobForm.getRawValue()!;
+    job.employerId = this.user?._id;
     this.jobService
       .createJob(job)
       .pipe(take(1))

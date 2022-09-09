@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { take } from 'rxjs';
 import { JobDto } from '../models/service.dto';
+import { JobService } from '../services/job.service';
 
 @Component({
   selector: 'app-employer-jobs',
@@ -12,7 +14,17 @@ export class EmployerJobsComponent implements OnInit {
 
   jobs: JobDto[] = [];
 
-  constructor() {}
+  constructor(private jobService: JobService,) {
+    this.jobService
+      .listAll()
+      .pipe(take(1))
+      .subscribe((data: any) => {
+        if (data) {
+          this.jobs = data;
+          
+        }
+      });
+  }
 
   ngOnInit(): void {}
 }
