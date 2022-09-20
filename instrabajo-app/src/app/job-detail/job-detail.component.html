@@ -35,6 +35,15 @@
         />
         <mat-error> Please provide a valid rate</mat-error>
       </mat-form-field>
+      <button type="button" mat-raised-button (click)="fileInput.click()">
+        Imagen de referencia
+      </button>
+      <input
+        hidden
+        #fileInput
+        type="file"
+        id="file"
+      />
       <br />
       <br />
       <span class="txt-2-s">Dirección</span>
