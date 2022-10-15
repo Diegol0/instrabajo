@@ -2,6 +2,7 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { NotfoundComponent } from './app/components/notfound/notfound.component';
 import { AppLayoutComponent } from "./layout/app.layout.component";
+import { AuthGuard } from './services/auth.guard';
 
 @NgModule({
     imports: [
@@ -16,6 +17,7 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
                     { path: 'blocks', loadChildren: () => import('./app/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
                     { path: 'pages', loadChildren: () => import('./app/components/pages/pages.module').then(m => m.PagesModule) },
                 ],
+                canActivate:[AuthGuard]
             },
             { path: 'auth', loadChildren: () => import('./app/components/auth/auth.module').then(m => m.AuthModule) },
             { path: 'landing', loadChildren: () => import('./app/components/landing/landing.module').then(m => m.LandingModule) },

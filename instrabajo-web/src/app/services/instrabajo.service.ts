@@ -7,18 +7,14 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import {
-  CreateUserDto,
-  LoginUserDto,
-  UpdateUserBreedDto,
-  UserDto,
-} from '../models/service.dto';
+import { CreateUserDto, LoginUserDto, UpdateUserBreedDto, UserDto } from '../app/models/service.dto';
+
 import { ErrorHandlerService } from './error-handler/error-handler.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SalukiService {
+export class InstrabajoService {
   private readonly loggedIn = new BehaviorSubject<boolean>(false);
   private readonly loggedUser = new BehaviorSubject<any>(null);
 
@@ -49,7 +45,7 @@ export class SalukiService {
 
   login(user: LoginUserDto) {
     return this.http
-      .post<UserDto>(environment.salukiURL + 'auth/login', user)
+      .post<UserDto>(environment.instrabajoURL + 'auth/login', user)
       .pipe(
         catchError((error: HttpErrorResponse) =>
           this.errorHandlerService.handleError(error)
@@ -59,7 +55,7 @@ export class SalukiService {
 
   signup(user: CreateUserDto) {
     return this.http
-      .post<UserDto>(environment.salukiURL + 'users', user)
+      .post<UserDto>(environment.instrabajoURL + 'users', user)
       .pipe(
         catchError((error: HttpErrorResponse) =>
           this.errorHandlerService.handleError(error)
@@ -73,7 +69,7 @@ export class SalukiService {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     });
     return this.http
-      .put<any>(environment.salukiURL + 'users', user, { headers: headers })
+      .put<any>(environment.instrabajoURL + 'users', user, { headers: headers })
       .pipe(
         catchError((error: HttpErrorResponse) =>
           this.errorHandlerService.handleError(error)
@@ -92,7 +88,7 @@ export class SalukiService {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     });
     return this.http
-      .get(environment.salukiURL + 'auth/verifyToken', { headers: headers })
+      .get(environment.instrabajoURL + 'auth/verifyToken', { headers: headers })
       .pipe(
         catchError((error: HttpErrorResponse) =>
           this.errorHandlerService.handleError(error)

@@ -2,7 +2,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { JobDto } from '../models/service.dto';
+import { JobDto } from '../app/models/service.dto';
+
 import { ErrorHandlerService } from './error-handler/error-handler.service';
 
 @Injectable({
@@ -16,7 +17,7 @@ export class JobService {
 
   listAll() {
     return this.http
-      .get<any>(environment.salukiURL + 'jobs/')
+      .get<any>(environment.instrabajoURL + 'jobs/')
       .pipe(
         catchError((error: HttpErrorResponse) =>
           this.errorHandlerService.handleError(error)
@@ -26,7 +27,7 @@ export class JobService {
 
   listSubJob(job: string) {
     return this.http
-      .get<any>(environment.salukiURL + `job/${job}/list`)
+      .get<any>(environment.instrabajoURL + `job/${job}/list`)
       .pipe(
         catchError((error: HttpErrorResponse) =>
           this.errorHandlerService.handleError(error)
@@ -36,7 +37,7 @@ export class JobService {
 
   getAllJobImage(job: string) {
     return this.http
-      .get<any>(environment.salukiURL + `job/${job}/images`)
+      .get<any>(environment.instrabajoURL + `job/${job}/images`)
       .pipe(
         catchError((error: HttpErrorResponse) =>
           this.errorHandlerService.handleError(error)
@@ -46,7 +47,7 @@ export class JobService {
 
   getSingleJobImage(job: string) {
     return this.http
-      .get<any>(environment.salukiURL + `job/${job}/images/random`)
+      .get<any>(environment.instrabajoURL + `job/${job}/images/random`)
       .pipe(
         catchError((error: HttpErrorResponse) =>
           this.errorHandlerService.handleError(error)
@@ -56,7 +57,7 @@ export class JobService {
 
   getSubJobImage(job: string, subJob: string) {
     return this.http
-      .get<any>(environment.salukiURL + `job/${job}/${subJob}/images/random`)
+      .get<any>(environment.instrabajoURL + `job/${job}/${subJob}/images/random`)
       .pipe(
         catchError((error: HttpErrorResponse) =>
           this.errorHandlerService.handleError(error)
@@ -65,7 +66,7 @@ export class JobService {
   }
   getJobImage(job: string) {
     return this.http
-      .get<any>(environment.salukiURL + `job/${job}/images/random`)
+      .get<any>(environment.instrabajoURL + `job/${job}/images/random`)
       .pipe(
         catchError((error: HttpErrorResponse) =>
           this.errorHandlerService.handleError(error)
@@ -75,7 +76,7 @@ export class JobService {
 
   createJob(job: JobDto) {
     return this.http
-      .post<JobDto>(environment.salukiURL + 'jobs', job)
+      .post<JobDto>(environment.instrabajoURL + 'jobs', job)
       .pipe(
         catchError((error: HttpErrorResponse) =>
           this.errorHandlerService.handleError(error)

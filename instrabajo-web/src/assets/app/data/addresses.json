@@ -1,0 +1,24 @@
+{
+    "data": [
+        {
+            "id": "1007",
+            "name": "Home",
+			"addressLine1": "L 17 M K Zona 6 Mixco",
+			"addressLine2": "Alamedas de Yumar 2",
+			"city": "GT-GU",
+			"country": "GT",
+			"lat": 14.664111,
+			"long": -90.601649
+        },
+		{
+            "id": "1008",
+            "name": "Office",
+			"addressLine1": "3ra Ave 2-15 Zona 10",
+			"addressLine2": "Edificio Coral",
+			"city": "GT-GU",
+			"country": "GT",
+			"lat": 14.6014333,
+			"long": -90.5134791
+        }
+    ]
+}

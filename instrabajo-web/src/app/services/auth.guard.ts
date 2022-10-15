@@ -1,27 +1,29 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, UrlTree } from '@angular/router';
 import { map, Observable, take } from 'rxjs';
-import { SalukiService } from './saluki.service';
-
+import { InstrabajoService } from './instrabajo.service';
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router, private salukiService: SalukiService) {}
+    constructor(
+        private router: Router,
+        private instrabajoService: InstrabajoService
+    ) {}
 
-  canActivate():
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    return this.salukiService
-      .verifyToken()
-      .pipe(take(1))
-      .pipe(
-        map((data: any) => {
-          this.salukiService.setLoggedIn(true);
-          return data && data.isLogged;
-        })
-      );
-  }
+    canActivate():
+        | Observable<boolean | UrlTree>
+        | Promise<boolean | UrlTree>
+        | boolean
+        | UrlTree {
+        return this.instrabajoService
+            .verifyToken()
+            .pipe(take(1))
+            .pipe(
+                map((data: any) => {
+                    this.instrabajoService.setLoggedIn(true);
+                    return data && data.isLogged;
+                })
+            );
+    }
 }

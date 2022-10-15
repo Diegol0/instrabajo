@@ -1,0 +1,14 @@
+{
+    "data": [
+        {
+            "id": "1007",
+            "name": "Home",
+			"addressLine1": "L 17 M K Zona 6 Mixco",
+			"addressLine2": "Alamedas de Yumar 2",
+			"city": "GT-GU",
+			"country": "GT",
+			"lat": "12545",
+			"long": "4568"
+        }
+    ]
+}
