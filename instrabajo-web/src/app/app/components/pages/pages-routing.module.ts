@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
     imports: [RouterModule.forChild([
         { path: 'crud', loadChildren: () => import('./crud/crud.module').then(m => m.CrudModule) },
         { path: 'crud-address', loadChildren: () => import('./crud-address/crud-address.module').then(m => m.CrudAddressModule) },
+        { path: 'crud-job', loadChildren: () => import('./crud-jobs/crud-job.module').then(m => m.CrudJobModule) },
         { path: 'empty', loadChildren: () => import('./empty/emptydemo.module').then(m => m.EmptyDemoModule) },
         { path: 'timeline', loadChildren: () => import('./timeline/timelinedemo.module').then(m => m.TimelineDemoModule) }
     ])],

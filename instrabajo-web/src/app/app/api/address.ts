@@ -6,5 +6,5 @@ export interface Address {
     city?: string;
     country?: string;
     lat?: number;
-    long?: number;
+    lng?: number;
 }

@@ -1,0 +1,49 @@
+{
+    "data": [
+        {
+            "id": "2007",
+            "name": "SmartWatch Repair",
+            "description": "I need a person who can repair my SmartWatch screen, since it is broken",
+            "skill": "ELECTRONIC",
+            "rateType": "FIXED",
+            "hourlyRate": null,
+            "fixedRate": 200,
+            "images": ["blue-band.jpg"],
+            "address": "1007",
+            "employee": "",
+            "employer": "",
+            "employeeRating": null,
+            "employerRating": null
+        },
+        {
+            "id": "2008",
+            "name": "Game tester",
+            "description": "I need a PS4 gamer, to play a game and test it in order to report bugs, employee must have a ps4.",
+            "skill": "GAMER",
+            "rateType": "HOURLY",
+            "hourlyRate": 60,
+            "fixedRate": null,
+            "images": ["game-controller.jpg"],
+            "address": "1007",
+            "employee": "",
+            "employer": "",
+            "employeeRating": null,
+            "employerRating": null
+        },
+		{
+            "id": "2009",
+            "name": "Yoga Instructor",
+            "description": "I need a personal yoga trainer, must be available weekdays and has to bring all the materials.",
+            "skill": "TRAINER",
+            "rateType": "HOURLY",
+            "hourlyRate": 100,
+            "fixedRate": null,
+            "images": ["yoga-mat.jpg"],
+            "address": "1008",
+            "employee": "",
+            "employer": "",
+            "employeeRating": null,
+            "employerRating": null
+        }
+    ]
+}

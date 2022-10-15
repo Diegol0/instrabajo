@@ -1,16 +1,19 @@
-interface InventoryStatus {
-    label: string;
-    value: string;
+interface Rating {
+    stars: number;
+    comment?: string;
 }
-export interface Product {
+export interface Job {
     id?: string;
-    code?: string;
     name?: string;
     description?: string;
-    price?: number;
-    quantity?: number;
-    inventoryStatus?: InventoryStatus;
-    category?: string;
-    image?: string;
-    rating?: number;
+    skill?: string;
+    rateType?: string;
+    hourlyRate?: number;
+    fixedRate?: number;
+    images?: string[];
+    address?: string;
+    employee?: string;
+    employer?: string;
+    employeeRating?: Rating;
+    employerRating?: Rating;
 }

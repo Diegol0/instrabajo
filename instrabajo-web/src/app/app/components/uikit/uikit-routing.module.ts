@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
         { path: 'input', loadChildren: () => import('./input/inputdemo.module').then(m => m.InputDemoModule) },
         { path: 'invalidstate', loadChildren: () => import('./invalid/invalidstatedemo.module').then(m => m.InvalidStateDemoModule) },
         { path: 'list', loadChildren: () => import('./list/listdemo.module').then(m => m.ListDemoModule) },
+        { path: 'job-list', loadChildren: () => import('./job-list/job-list.module').then(m => m.JobListModule) },
         { path: 'media', loadChildren: () => import('./media/mediademo.module').then(m => m.MediaDemoModule) },
         { path: 'message', loadChildren: () => import('./messages/messagesdemo.module').then(m => m.MessagesDemoModule) },
         { path: 'misc', loadChildren: () => import('./misc/miscdemo.module').then(m => m.MiscDemoModule) },

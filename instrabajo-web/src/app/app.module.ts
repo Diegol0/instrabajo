@@ -12,6 +12,8 @@ import { IconService } from './app/service/icon.service';
 import { NodeService } from './app/service/node.service';
 import { PhotoService } from './app/service/photo.service';
 import { AddressService } from './app/service/address.service';
+import { JobService } from './app/service/job.service';
+
 
 @NgModule({
     declarations: [
@@ -24,7 +26,7 @@ import { AddressService } from './app/service/address.service';
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService, AddressService
+        PhotoService, ProductService, AddressService, JobService
     ],
     bootstrap: [AppComponent]
 })

@@ -127,7 +127,7 @@ export class CrudAddressComponent implements OnInit {
     editAddress(address: Address) {
         this.address = { ...address };
         this.addressDialog = true;
-        this.center = { lat: this.address.lat!, lng: this.address.long! };
+        this.center = { lat: this.address.lat!, lng: this.address.lng! };
         this.overlays = [
             new google.maps.Marker({position: this.center, title:this.address.name})
         ]
@@ -181,7 +181,7 @@ export class CrudAddressComponent implements OnInit {
         
         this.address.lat = this.center.lat;
 
-        this.address.long = this.center.lng;
+        this.address.lng = this.center.lng;
 
         console.log(this.overlays)
         
