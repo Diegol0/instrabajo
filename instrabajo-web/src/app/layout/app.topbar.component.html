@@ -17,12 +17,13 @@
             <i class="pi pi-calendar"></i>
             <span>Calendar</span>
         </button>
-        <button class="p-link layout-topbar-button">
+        <a href="http://localhost:4300/profile"><button class="p-link layout-topbar-button">
             <i class="pi pi-user"></i>
             <span>Profile</span>
-        </button>
-        <button class="p-link layout-topbar-button" [routerLink]="'/documentation'">
-            <i class="pi pi-cog"></i>
+        </button></a>
+        
+        <button class="p-link layout-topbar-button" (click)="instrabajoService.logout()">
+            <i class="pi pi-sign-out"></i>
             <span>Settings</span>
         </button>
     </div>

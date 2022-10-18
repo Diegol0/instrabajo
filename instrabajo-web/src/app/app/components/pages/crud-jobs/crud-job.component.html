@@ -33,6 +33,7 @@
                         </th>
                         <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
                         <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
+                        <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
                         <th pSortableColumn="skill">Skill <p-sortIcon field="skill"></p-sortIcon></th>
                         <th pSortableColumn="rateType">Rate Type <p-sortIcon field="rateType"></p-sortIcon></th>
                         <th pSortableColumn="hourlyRate">Hourly Rate<p-sortIcon field="hourlyRate"></p-sortIcon></th>
@@ -53,6 +54,10 @@
                             <span class="p-column-title">Description</span>
                             {{job.description}}
                         </td>
+                        <td style="min-width:8rem;">
+                            <span class="p-column-title">Status</span>
+                            {{job.status}}
+                        </td>
                         <td style="min-width:10rem;">
                             <span class="p-column-title">Skill</span>
                             {{job.skill}}
@@ -72,7 +77,8 @@
                         <td>
                             <div class="flex">
                                 <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editJob(job)"></button>
-                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteJob(job)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mr-2" (click)="deleteJob(job)"></button>
+                                <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-info" [disabled]="job.status == 'NEW' || job.status == 'AVAILABLE'" (click)="viewJob(job)"></button>
                             </div>
                         </td>
                     </tr>
@@ -91,6 +97,11 @@
                 <div class="field">
                     <label for="description">Description</label>
                     <textarea id="description" pInputTextarea [(ngModel)]="job.description" required rows="3" cols="20"></textarea>
+                </div>
+                <div class="field">
+                    <label for="status">Status</label>
+                    <input type="text" pInputText id="status" [(ngModel)]="job.status" required [disabled]="true" [ngClass]="{'ng-invalid ng-dirty' : submitted && !job.status}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !job.status">Status is required.</small>
                 </div>
                 <div class="field">
                     <label for="skill">Skill</label>
@@ -112,11 +123,6 @@
                 <div *ngIf="job.rateType == 'HOURLY'" class="field">
                     <label for="hourlyRate">Hourly Rate</label>
                     <p-inputNumber id="hourlyRate" [(ngModel)]="job.hourlyRate" mode="currency" currency="GTQ" locale="es-GT"></p-inputNumber>
-                </div>
-
-                <div *ngIf="job.rateType == 'FIXED'" class="field">
-                    <label for="fixedRate">Fixed Rate</label>
-                    <p-inputNumber id="fixedRate" [(ngModel)]="job.fixedRate" mode="currency" currency="GTQ" locale="es-GT"></p-inputNumber>
                 </div>
 
                 <div *ngIf="job.rateType == 'FIXED'" class="field">

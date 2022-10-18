@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { SelectItem } from 'primeng/api';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService, SelectItem } from 'primeng/api';
 import { DataView } from 'primeng/dataview';
 import { Job } from 'src/app/app/api/job';
 import { JobService } from 'src/app/app/service/job.service';
 
 @Component({
-    templateUrl: './job-list.component.html'
+    templateUrl: './job-list.component.html',
+    providers: [MessageService],
 })
 export class JobListComponent implements OnInit {
 
     jobs: Job[] = [];
+
+    applyJobDialog: boolean = false;
+
+    job: Job = {};
 
     sortOptions: SelectItem[] = [];
 
@@ -17,36 +23,11 @@ export class JobListComponent implements OnInit {
 
     sortField: string = '';
 
-    sourceCities: any[] = [];
-
-    targetCities: any[] = [];
-
-    orderCities: any[] = [];
-
-    constructor(private jobService: JobService) { }
+    constructor(private jobService: JobService, private messageService: MessageService,private route: ActivatedRoute,
+        private router: Router ) { }
 
     ngOnInit() {
         this.jobService.getJobs().then(data => this.jobs = data);
-
-        this.sourceCities = [
-            { name: 'San Francisco', code: 'SF' },
-            { name: 'London', code: 'LDN' },
-            { name: 'Paris', code: 'PRS' },
-            { name: 'Istanbul', code: 'IST' },
-            { name: 'Berlin', code: 'BRL' },
-            { name: 'Barcelona', code: 'BRC' },
-            { name: 'Rome', code: 'RM' }];
-
-        this.targetCities = [];
-
-        this.orderCities = [
-            { name: 'San Francisco', code: 'SF' },
-            { name: 'London', code: 'LDN' },
-            { name: 'Paris', code: 'PRS' },
-            { name: 'Istanbul', code: 'IST' },
-            { name: 'Berlin', code: 'BRL' },
-            { name: 'Barcelona', code: 'BRC' },
-            { name: 'Rome', code: 'RM' }];
 
         this.sortOptions = [
             { label: 'Price High to Low', value: '!price' },
@@ -68,5 +49,28 @@ export class JobListComponent implements OnInit {
 
     onFilter(dv: DataView, event: Event) {
         dv.filter((event.target as HTMLInputElement).value);
+    }
+
+    applyJob(job: Job){
+        this.applyJobDialog = true;
+        this.job = { ...job };
+    }
+
+    confirmApply() {
+        this.applyJobDialog = false;
+        this.jobs = this.jobs.filter((val) => val.id !== this.job.id);
+        this.job.status = 'PENDING';
+        this.jobs.push(this.job)
+        this.messageService.add({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'You applied to this job',
+            life: 3000,
+        });
+        this.job = {};
+    }
+
+    viewJob(job: Job){
+        this.router.navigate(['/uikit/job-detail', { id: job.id }]);
     }
 }

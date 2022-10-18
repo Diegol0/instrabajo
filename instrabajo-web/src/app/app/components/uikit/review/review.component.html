@@ -1,0 +1,45 @@
+<div class="grid">
+	<div class="col-12">
+		<div class="card">
+			<h5>Filter Menu</h5>
+			<p-table [value]="reviews" [rows]="10"  [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" responsiveLayout="scroll">
+				<ng-template pTemplate="header">
+					<tr>
+						<th>
+							<div class="flex justify-content-between align-items-center">
+								Job
+								
+							</div>
+						</th>
+						<th>
+							<div class="flex justify-content-between align-items-center">
+								Stars
+							</div>
+						</th>
+						<th>
+							<div class="flex justify-content-between align-items-center">
+								Comment
+							</div>
+						</th>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-review>
+					<tr>
+						<td style="min-width: 12rem;">
+							{{review.job}}
+						</td>
+						<td style="min-width: 12rem;">
+							<p-rating [ngModel]="review.stars" [readonly]="true" [cancel]="false"></p-rating>
+						</td>
+						<td style="min-width: 12rem;">
+							{{review.comment}}
+						</td>
+					</tr>
+				</ng-template>
+    		</p-table>
+		</div>
+
+	</div>
+
+	
+</div>

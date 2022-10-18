@@ -4,6 +4,8 @@ import { Product } from '../../api/product';
 import { ProductService } from '../../service/product.service';
 import { Subscription } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
+import { Job } from '../../api/job';
+import { JobService } from '../../service/job.service';
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -14,19 +16,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     products!: Product[];
 
+    jobs: Job[] = [];
+
     chartData: any;
 
     chartOptions: any;
 
     subscription!: Subscription;
 
-    constructor(private productService: ProductService, public layoutService: LayoutService) {
+    constructor(private productService: ProductService, public layoutService: LayoutService,
+        private jobService: JobService) {
         this.subscription = this.layoutService.configUpdate$.subscribe(() => {
             this.initChart();
         });
     }
 
     ngOnInit() {
+        this.jobService.getJobs().then((data) => (this.jobs = data));
         this.initChart();
         this.productService.getProductsSmall().then(data => this.products = data);
 

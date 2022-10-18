@@ -13,6 +13,7 @@ import { NodeService } from './app/service/node.service';
 import { PhotoService } from './app/service/photo.service';
 import { AddressService } from './app/service/address.service';
 import { JobService } from './app/service/job.service';
+import { ReviewService } from './app/service/review.service';
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { JobService } from './app/service/job.service';
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService, AddressService, JobService
+        PhotoService, ProductService, AddressService, JobService, ReviewService
     ],
     bootstrap: [AppComponent]
 })

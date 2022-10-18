@@ -10,6 +10,7 @@ export interface Job {
     rateType?: string;
     hourlyRate?: number;
     fixedRate?: number;
+    status?: string;
     images?: string[];
     address?: string;
     employee?: string;

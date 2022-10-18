@@ -28,8 +28,11 @@
 							</div>
 							<div class="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0">
 								<span class="text-2xl font-semibold mb-2 align-self-center md:align-self-end">GTQ{{job.hourlyRate? job.hourlyRate : job.fixedRate}}</span>
-								<p-button icon="pi pi-check-circle" label="Apply" class="mb-2"></p-button>
+								<p-button *ngIf="job.status == 'AVAILABLE'" icon="pi pi-check-circle" label="Apply" class="mb-2" (click)="applyJob(job)"></p-button>
+								<p-button *ngIf="job.status == 'PENDING'" icon="pi pi-eye" label="View" class="mb-2" (click)="viewJob(job)"></p-button>
 								<span [class]="'product-badge status-instock'">{{job.skill}}</span>
+								<br/>
+								<span [class]="'product-badge status-status'">{{job.status}}</span>
 							</div>
 						</div>
 					</div>
@@ -40,10 +43,11 @@
 						<div class="card m-3 border-1 surface-border">
 							<div class="flex align-items-center justify-content-between mb-2">
 								<div class="flex align-items-center">
-									<i class="pi pi-money-billmr-2"></i>
+									<i class="pi pi-money-bill mr-2"></i>
 									<span class="font-semibold">{{job.rateType}}</span>
 								</div>
 								<span [class]="'sm:ml-2 product-badge status-instock'">{{job.skill}}</span>
+								<span [class]="'product-badge status-status'">{{job.status}}</span>
 							</div>
 							<div class="text-center mb-3">
 								<img [src]="'assets/app/images/product/' + job.images[0]" [alt]="job.name" class="w-9 shadow-2 my-3 mx-0"/>
@@ -52,7 +56,8 @@
 							</div>
 							<div class="flex align-items-center justify-content-between">
 								<span class="text-2xl font-semibold">GTQ{{job.hourlyRate? job.hourlyRate : job.fixedRate}}</span>
-								<p-button icon="pi pi-check-circle"></p-button>
+								<p-button *ngIf="job.status == 'AVAILABLE'" icon="pi pi-check-circle" (click)="applyJob(job)"></p-button>
+								<p-button *ngIf="job.status == 'PENDING'" icon="pi pi-eye" (click)="viewJob(job)"></p-button>
 							</div>
 						</div>
 					</div>
@@ -60,5 +65,14 @@
 			</p-dataView>
 		</div>
 	</div>
-
+	<p-dialog [(visible)]="applyJobDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+		<div class="flex align-items-center justify-content-center">
+			<i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+			<span *ngIf="job">Are you sure you want to apply to <b>{{job.name}}</b>?</span>
+		</div>
+		<ng-template pTemplate="footer">
+			<button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="applyJobDialog = false"></button>
+			<button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmApply()"></button>
+		</ng-template>
+	</p-dialog>
 </div>

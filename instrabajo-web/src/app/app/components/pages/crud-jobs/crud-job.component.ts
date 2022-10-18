@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
@@ -48,7 +49,8 @@ export class CrudJobComponent implements OnInit {
     constructor(
         private jobService: JobService,
         private messageService: MessageService,
-        private addressService: AddressService
+        private addressService: AddressService,private route: ActivatedRoute,
+        private router: Router
     ) {}
 
     ngOnInit() {
@@ -85,6 +87,7 @@ export class CrudJobComponent implements OnInit {
 
     openNew() {
         this.job = {};
+        this.job.status = 'NEW';
         this.submitted = false;
         this.jobDialog = true;
     }
@@ -136,6 +139,11 @@ export class CrudJobComponent implements OnInit {
         this.submitted = true;
 
         console.log(this.overlays);
+        if(this.job.rateType == 'FIXED'){
+            this.job.hourlyRate = undefined;
+        } else {
+            this.job.fixedRate = undefined;
+        }
 
         if (this.job.name?.trim()) {
             if (this.job.id) {
@@ -219,5 +227,9 @@ export class CrudJobComponent implements OnInit {
 
     onBasicUpload() {
         this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
+    }
+
+    viewJob(job: Job){
+        this.router.navigate(['/uikit/job-detail', { id: job.id }]);
     }
 }
