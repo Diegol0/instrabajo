@@ -18,4 +18,8 @@ export class AppTopBarComponent {
     @ViewChild('topbarmenu') menu!: ElementRef;
 
     constructor(public layoutService: LayoutService, public instrabajoService: InstrabajoService,) { }
+
+    logout(){
+        this.instrabajoService.logout();
+    }
 }

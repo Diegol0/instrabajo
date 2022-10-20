@@ -21,6 +21,7 @@ export class AuthGuard implements CanActivate {
             .pipe(take(1))
             .pipe(
                 map((data: any) => {
+                    console.log(data)
                     this.instrabajoService.setLoggedIn(true);
                     return data && data.isLogged;
                 })

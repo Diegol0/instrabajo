@@ -29,8 +29,9 @@ export class InstrabajoService {
   }
 
   get getLoggedUser() {
+    console.log(this.loggedUser.value)
     if (!this.loggedUser.value) {
-      this.router.navigate(['login']);
+      this.router.navigate(['/auth/login']);
     }
     return this.loggedUser.asObservable();
   }
@@ -80,6 +81,7 @@ export class InstrabajoService {
   logout() {
     localStorage.removeItem('token');
     this.setLoggedIn(false);
+    this.router.navigate(['/auth/login']);
   }
 
   verifyToken() {

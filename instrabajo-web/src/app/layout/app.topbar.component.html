@@ -12,17 +12,13 @@
         <i class="pi pi-ellipsis-v"></i>
     </button>
 
-    <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+    <div #topbarmenu class="layout-topbar-menu" [routerLink]="'/uikit/profile'" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
         <button class="p-link layout-topbar-button">
-            <i class="pi pi-calendar"></i>
-            <span>Calendar</span>
-        </button>
-        <a href="http://localhost:4300/profile"><button class="p-link layout-topbar-button">
             <i class="pi pi-user"></i>
             <span>Profile</span>
-        </button></a>
+        </button>
         
-        <button class="p-link layout-topbar-button" (click)="instrabajoService.logout()">
+        <button class="p-link layout-topbar-button" (click)="logout()">
             <i class="pi pi-sign-out"></i>
             <span>Settings</span>
         </button>

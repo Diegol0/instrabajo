@@ -8,7 +8,6 @@ import { RouterModule } from '@angular/router';
         { path: 'crud-job', loadChildren: () => import('./crud-jobs/crud-job.module').then(m => m.CrudJobModule) },
         { path: 'empty', loadChildren: () => import('./empty/emptydemo.module').then(m => m.EmptyDemoModule) },
         { path: 'timeline', loadChildren: () => import('./timeline/timelinedemo.module').then(m => m.TimelineDemoModule) },
-        { path: 'profile', loadChildren: () => import('./profile/profile-routing.module').then(m => m.ProfileRoutingModule) }
     ])],
     exports: [RouterModule]
 })

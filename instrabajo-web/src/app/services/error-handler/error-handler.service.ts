@@ -13,7 +13,7 @@ export class ErrorHandlerService {
       console.log();
       if (!this.router.url.includes('login')) {
         alert('Invalid session, redirecting to Login');
-        this.router.navigate(['auth/login']);
+        this.router.navigate(['/auth/login']);
       } else {
         alert('Invalid credentials');
       }
