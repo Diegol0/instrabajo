@@ -1,205 +1,395 @@
 <div class="grid p-fluid">
-	<div class="col-12">
-		<div class="card">
-			<div class="flex flex-wrap gap-2 " style="align-items: center; justify-content: center;">
-				<div><button pButton pRipple type="button" label="Mark Job as Completed" class="p-button-rounded p-button-success" (click)="completeJob()"></button></div>
-				<div><a href="mailto:admin@instrabajo.com"><button pButton pRipple type="button" label="Contact Administrator" class="p-button-rounded p-button-warning"></button></a></div>
-				<div><button pButton pRipple type="button" label="Cancel this Job" class="p-button-rounded p-button-danger" (click)="cancelJob()"></button></div>
-				<div><button pButton pRipple type="button" label="Go Back" class="p-button-rounded p-button-info" [routerLink]="''"></button></div>
-			</div>
-		</div>
-	</div>
-	<div class="col-12 md:col-6">
-		<div class="card">
-			<h5>Job Detail</h5>
-			<div class="grid formgrid">
-					<div class="col-12">
-						<label for="name">Name</label>
-						<input type="text" pInputText id="name" [(ngModel)]="job.name" [disabled]="true"/>
-					</div>
-					<div class="col-12">
-						<label for="description">Description</label>
-						<textarea id="description" pInputTextarea [(ngModel)]="job.description" required rows="3" cols="20" [disabled]="true"></textarea>
-					</div>
-					<div class="col-12">
-						<label for="status">Status</label>
-						<input type="text" pInputText id="status" [(ngModel)]="job.status" required [disabled]="true" [disabled]="true"/>
-						
-					</div>
-					<div class="col-12">
-						<label for="skill">Skill</label>
-						<p-dropdown id="skill" [options]="skills" optionLabel="label" optionValue="value" [(ngModel)]="job.skill" placeholder="Select a Skill" [disabled]="true">
-							<ng-template let-skill pTemplate="skill">
-								<span>{{skill.label}}</span>
-							</ng-template>
-						</p-dropdown>
-					</div>
-					<div class="col-12">
-						<label for="rateType">Rate Type</label>
-						<p-dropdown id="rateType" [options]="rateTypes" optionLabel="label" optionValue="value"  [disabled]="true" [(ngModel)]="job.rateType" placeholder="Select a Rate Type">
-							<ng-template let-rateType pTemplate="rateType">
-								<span>{{rateType.label}}</span>
-							</ng-template>
-						</p-dropdown>
-					</div>
-	
-					<div  class="col-12" *ngIf="job.rateType == 'HOURLY'" >
-						<label for="hourlyRate">Hourly Rate</label>
-						<p-inputNumber id="hourlyRate" [(ngModel)]="job.hourlyRate" mode="currency" currency="GTQ" locale="es-GT" [disabled]="true"></p-inputNumber>
-					</div>
-	
-					<div class="col-12" *ngIf="job.rateType == 'FIXED'" >
-						<label for="fixedRate">Fixed Rate</label>
-						<p-inputNumber id="fixedRate" [(ngModel)]="job.fixedRate" mode="currency" currency="GTQ" locale="es-GT" [disabled]="true"></p-inputNumber>
-					</div>
-
-				
-			</div>
-		</div>
-
-		<div class="card">
-			<h5>Address</h5>
-			<div class="grid formgrid">
-				<div class="col-12">
+    <div class="col-12">
+        <div class="card">
+            <div
+                class="flex flex-wrap gap-2"
+                style="align-items: center; justify-content: center"
+            >
+                <div>
+                    <button
+                        pButton
+                        pRipple
+                        type="button"
+                        label="Mark Job as Completed"
+                        class="p-button-rounded p-button-success"
+                        (click)="completeJob()"
+                    ></button>
+                </div>
+                <div>
+                    <a href="mailto:admin@instrabajo.com"
+                        ><button
+                            pButton
+                            pRipple
+                            type="button"
+                            label="Contact Administrator"
+                            class="p-button-rounded p-button-warning"
+                        ></button
+                    ></a>
+                </div>
+                <div>
+                    <button
+                        pButton
+                        pRipple
+                        type="button"
+                        label="Cancel this Job"
+                        class="p-button-rounded p-button-danger"
+                        (click)="cancelJob()"
+                    ></button>
+                </div>
+                <div>
+                    <button
+                        pButton
+                        pRipple
+                        type="button"
+                        label="Go Back"
+                        class="p-button-rounded p-button-info"
+                        [routerLink]="''"
+                    ></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 md:col-6">
+        <div class="card">
+            <h5>Job Detail</h5>
+            <div class="grid formgrid">
+                <div class="col-12">
                     <label for="name">Name</label>
-                    <input type="text" pInputText id="name" [(ngModel)]="address.name" [disabled]="true"/>
+                    <input
+                        type="text"
+                        pInputText
+                        id="name"
+                        [(ngModel)]="job.name"
+                        [disabled]="true"
+                    />
+                </div>
+                <div class="col-12">
+                    <label for="description">Description</label>
+                    <textarea
+                        id="description"
+                        pInputTextarea
+                        [(ngModel)]="job.description"
+                        required
+                        rows="3"
+                        cols="20"
+                        [disabled]="true"
+                    ></textarea>
+                </div>
+                <div class="col-12">
+                    <label for="status">Status</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="status"
+                        [(ngModel)]="job.status"
+                        required
+                        [disabled]="true"
+                        [disabled]="true"
+                    />
+                </div>
+                <div class="col-12">
+                    <label for="skill">Skill</label>
+                    <p-dropdown
+                        id="skill"
+                        [options]="skills"
+                        optionLabel="label"
+                        optionValue="value"
+                        [(ngModel)]="job.skill"
+                        placeholder="Select a Skill"
+                        [disabled]="true"
+                    >
+                        <ng-template let-skill pTemplate="skill">
+                            <span>{{ skill.label }}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <div class="col-12">
+                    <label for="rateType">Rate Type</label>
+                    <p-dropdown
+                        id="rateType"
+                        [options]="rateTypes"
+                        optionLabel="label"
+                        optionValue="value"
+                        [disabled]="true"
+                        [(ngModel)]="job.rateType"
+                        placeholder="Select a Rate Type"
+                    >
+                        <ng-template let-rateType pTemplate="rateType">
+                            <span>{{ rateType.label }}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+
+                <div class="col-12" *ngIf="job.rateType == 'HOURLY'">
+                    <label for="hourlyRate">Hourly Rate</label>
+                    <p-inputNumber
+                        id="hourlyRate"
+                        [(ngModel)]="job.hourlyRate"
+                        mode="currency"
+                        currency="GTQ"
+                        locale="es-GT"
+                        [disabled]="true"
+                    ></p-inputNumber>
+                </div>
+
+                <div class="col-12" *ngIf="job.rateType == 'FIXED'">
+                    <label for="fixedRate">Fixed Rate</label>
+                    <p-inputNumber
+                        id="fixedRate"
+                        [(ngModel)]="job.fixedRate"
+                        mode="currency"
+                        currency="GTQ"
+                        locale="es-GT"
+                        [disabled]="true"
+                    ></p-inputNumber>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h5>Address</h5>
+            <div class="grid formgrid">
+                <div class="col-12">
+                    <label for="name">Name</label>
+                    <input
+                        type="text"
+                        pInputText
+                        id="name"
+                        [(ngModel)]="address.name"
+                        [disabled]="true"
+                    />
                 </div>
                 <div class="col-12">
                     <label for="addressLine1">Address Line 1</label>
-                    <input type="text" pInputText id="addressLine1" [(ngModel)]="address.addressLine1" [disabled]="true"/>
+                    <input
+                        type="text"
+                        pInputText
+                        id="addressLine1"
+                        [(ngModel)]="address.addressLine1"
+                        [disabled]="true"
+                    />
                 </div>
                 <div class="col-12">
                     <label for="addressLine2">Address Line 2</label>
-                    <input type="text" pInputText id="addressLine2" [(ngModel)]="address.addressLine2" [disabled]="true"/>
+                    <input
+                        type="text"
+                        pInputText
+                        id="addressLine2"
+                        [(ngModel)]="address.addressLine2"
+                        [disabled]="true"
+                    />
                 </div>
                 <div class="col-12">
                     <label for="country">Country</label>
-                    <p-dropdown id="country" [options]="countries" optionLabel="label" optionValue="value" [disabled]="true" [(ngModel)]="address.country" placeholder="Select a Country">
+                    <p-dropdown
+                        id="country"
+                        [options]="countries"
+                        optionLabel="label"
+                        optionValue="value"
+                        [disabled]="true"
+                        [(ngModel)]="address.country"
+                        placeholder="Select a Country"
+                    >
                         <ng-template let-country pTemplate="country">
-                            <span>{{country.label}}</span>
+                            <span>{{ country.label }}</span>
                         </ng-template>
                     </p-dropdown>
                 </div>
                 <div class="col-12">
                     <label for="city">City</label>
-                    <p-dropdown id="city" [options]="cities" optionLabel="label" optionValue="value" [(ngModel)]="address.city" [disabled]="true" placeholder="Select a City">
+                    <p-dropdown
+                        id="city"
+                        [options]="cities"
+                        optionLabel="label"
+                        optionValue="value"
+                        [(ngModel)]="address.city"
+                        [disabled]="true"
+                        placeholder="Select a City"
+                    >
                         <ng-template let-city pTemplate="city">
-                            <span>{{city.label}}</span>
+                            <span>{{ city.label }}</span>
                         </ng-template>
                     </p-dropdown>
                 </div>
 
-                <div *ngIf="options && overlays.length>0" class="field" class="col-12">
+                <div
+                    *ngIf="options && overlays.length > 0"
+                    class="field"
+                    class="col-12"
+                >
                     <label for="city">Location</label>
-                    <p-gmap [options]="options" [overlays]="overlays" [style]="{'width':'100%','height':'320px'}" ></p-gmap>
+                    <p-gmap
+                        [options]="options"
+                        [overlays]="overlays"
+                        [style]="{ width: '100%', height: '320px' }"
+                    ></p-gmap>
                 </div>
+            </div>
+        </div>
+    </div>
 
-				
-			</div>
-		</div>
+    <div class="col-12 md:col-6">
+        <div class="card">
+            <h5>Conversation</h5>
 
+            <p-divider align="left">
+                <span class="p-tag">Employee - 2 days ago</span>
+            </p-divider>
+            <p>
+                I want to change the fixed rate to GTQ250.00 since this is a
+                very complicated job.
+            </p>
 
-		
-	</div>
+            <p-divider align="right">
+                <span class="p-tag">Employer - 2 days ago</span>
+            </p-divider>
+            <p align="right">I can go up to QTG220.00, that's all my bugdet.</p>
 
-	<div class="col-12 md:col-6">
-		<div class="card">
-			<h5>Conversation</h5>
-			
-
-			<p-divider align="left">
-				<span class="p-tag">Employee - 2 days ago</span>
-			</p-divider>
-			<p>I want to change the fixed rate to GTQ250.00 since this is a very complicated job.</p>
-			
-
-			<p-divider align="right">
-				<span class="p-tag">Employer - 2 days ago</span>
-			</p-divider>
-			<p align="right">I can go up to QTG220.00, that's all my bugdet.</p>
-			
-
-			<p-divider align="left">
-				<span class="p-tag">Employee - 1 days ago</span>
-			</p-divider>
-			<p>Allright I'll take it.</p>
-			<p-divider align="left">
-				<span></span>
-			</p-divider>
-			<div class="col-12">
-				<div class="p-inputgroup">
-					<input type="text" pInputText placeholder="Message">
-					<button type="button" pButton pRipple label="Send"></button>
-				</div>
-			</div>
-		</div>
-		<div class="card">
+            <p-divider align="left">
+                <span class="p-tag">Employee - 1 days ago</span>
+            </p-divider>
+            <p>Allright I'll take it.</p>
+            <p-divider align="left">
+                <span></span>
+            </p-divider>
+            <div class="col-12">
+                <div class="p-inputgroup">
+                    <input type="text" pInputText placeholder="Message" />
+                    <button type="button" pButton pRipple label="Send"></button>
+                </div>
+            </div>
+        </div>
+        <div class="card">
             <div class="grid">
-                
                 <div class="col-12 md:col-6">
                     <h5>Employer Rating</h5>
                     <p-rating></p-rating>
-					
                 </div>
-				<div class="col-12 md:col-6">
-					<label for="description">Comment</label>
-					<textarea id="description" pInputTextarea rows="3" cols="20" ></textarea>
-				</div>
-                
+                <div class="col-12 md:col-6">
+                    <label for="description">Comment</label>
+                    <textarea
+                        id="description"
+                        pInputTextarea
+                        rows="3"
+                        cols="20"
+                    ></textarea>
+                </div>
             </div>
-		</div>
+        </div>
 
-		<div class="card">
+        <div class="card">
             <div class="grid">
-                
                 <div class="col-12 md:col-6">
                     <h5>Employee Rating</h5>
                     <p-rating></p-rating>
-
                 </div>
-				<div class="col-12 md:col-6">
-					<label for="description">Comment</label>
-					<textarea id="description" pInputTextarea rows="3" cols="20" ></textarea>
-				</div>
-                
-            </div>
-		</div>
-
-		<div class="card">
-            <div class="grid">
-                
                 <div class="col-12 md:col-6">
-                    <h5>Employee Facial Recognition</h5>
-					<span class="p-tag">Pending</span>
-					<h6>This person has not been verified for this job, you can use the option below to scan the employee's face.</h6>
-                    <input type="file" accept="image/*" capture="environment">
+                    <label for="description">Comment</label>
+                    <textarea
+                        id="description"
+                        pInputTextarea
+                        rows="3"
+                        cols="20"
+                    ></textarea>
                 </div>
-                
             </div>
-		</div>
-		
-	</div>
+        </div>
 
-	<p-dialog [(visible)]="cancelJobDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
-		<div class="flex align-items-center justify-content-center">
-			<i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-			<span *ngIf="job">Are you sure you want to cancel <b>{{job.name}}</b>?</span>
-		</div>
-		<ng-template pTemplate="footer">
-			<button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="cancelJobDialog = false"></button>
-			<button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirm()"></button>
-		</ng-template>
-	</p-dialog>
+        <div class="card">
+            <div class="grid">
+                <div class="col-12 md:col-12">
+                    <h5>Employee Facial Recognition</h5>
+                    <span *ngIf="!faceMatch" class="p-tag">Pending</span>
+                    <h6 *ngIf="!faceMatch">
+                        This person has not been verified for this job, you can
+                        use the option below to scan the employee's face.
+                    </h6>
+                    <h6 *ngIf="faceMatch">This person has been verified! ✅</h6>
+                    <input *ngIf="!faceMatch"
+                        type="file"
+                        id="file"
+                        (change)="onBasicUpload($event.target)"
+                    />
+                    <!-- <p-fileUpload *ngIf="!user.photo" mode="basic" name="demo[]" [previewWidth]="200" [customUpload]="true" [maxFileSize]="1000000" (uploadHandler)="onBasicUpload($event)"></p-fileUpload> -->
+                    <img
+                        style="max-width: 100%"
+                        *ngIf="photo"
+                        src="{{ photo }}"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<p-dialog [(visible)]="completeJobDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
-		<div class="flex align-items-center justify-content-center">
-			<i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-			<span *ngIf="job">Are you sure you want to complete <b>{{job.name}}</b>?</span>
-		</div>
-		<ng-template pTemplate="footer">
-			<button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="completeJobDialog = false"></button>
-			<button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirm()"></button>
-		</ng-template>
-	</p-dialog>
+    <p-dialog
+        [(visible)]="cancelJobDialog"
+        header="Confirm"
+        [modal]="true"
+        [style]="{ width: '450px' }"
+    >
+        <div class="flex align-items-center justify-content-center">
+            <i
+                class="pi pi-exclamation-triangle mr-3"
+                style="font-size: 2rem"
+            ></i>
+            <span *ngIf="job"
+                >Are you sure you want to cancel <b>{{ job.name }}</b
+                >?</span
+            >
+        </div>
+        <ng-template pTemplate="footer">
+            <button
+                pButton
+                pRipple
+                icon="pi pi-times"
+                class="p-button-text"
+                label="No"
+                (click)="cancelJobDialog = false"
+            ></button>
+            <button
+                pButton
+                pRipple
+                icon="pi pi-check"
+                class="p-button-text"
+                label="Yes"
+                (click)="confirm()"
+            ></button>
+        </ng-template>
+    </p-dialog>
 
+    <p-dialog
+        [(visible)]="completeJobDialog"
+        header="Confirm"
+        [modal]="true"
+        [style]="{ width: '450px' }"
+    >
+        <div class="flex align-items-center justify-content-center">
+            <i
+                class="pi pi-exclamation-triangle mr-3"
+                style="font-size: 2rem"
+            ></i>
+            <span *ngIf="job"
+                >Are you sure you want to complete <b>{{ job.name }}</b
+                >?</span
+            >
+        </div>
+        <ng-template pTemplate="footer">
+            <button
+                pButton
+                pRipple
+                icon="pi pi-times"
+                class="p-button-text"
+                label="No"
+                (click)="completeJobDialog = false"
+            ></button>
+            <button
+                pButton
+                pRipple
+                icon="pi pi-check"
+                class="p-button-text"
+                label="Yes"
+                (click)="confirm()"
+            ></button>
+        </ng-template>
+    </p-dialog>
 </div>

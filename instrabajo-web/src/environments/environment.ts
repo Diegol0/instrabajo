@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  instrabajoURL: 'http://192.168.1.21:3000/',
+  instrabajoURL: 'http://192.168.1.21:3000/api/',
 };
 
 /*

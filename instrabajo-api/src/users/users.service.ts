@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './.dto/create-user.dto';
-import { UpdateUserTypeDto } from './.dto/update-user.dto';
+
 import { User, UserDocument } from '../schemas/users.schema';
+import { UpdateUserDto } from './.dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -17,15 +18,15 @@ export class UsersService {
     return createdUser;
   }
 
-  async findOneAndUpdateType(
-    updateUserTypeDTO: UpdateUserTypeDto,
-  ): Promise<UserDocument> {
+  async findOneAndUpdate(updateUserDTO: UpdateUserDto): Promise<UserDocument> {
+    const params = {
+      phone: updateUserDTO.phone,
+      photo: updateUserDTO.photo,
+    };
+
+    for (const prop in params) if (!params[prop]) delete params[prop];
     const updatedUser = await this.userModel
-      .findOneAndUpdate(
-        { _id: updateUserTypeDTO._id },
-        { favoriteType: updateUserTypeDTO.type },
-        { new: true },
-      )
+      .findOneAndUpdate({ _id: updateUserDTO._id }, params)
       .exec();
     updatedUser.password = null;
     return updatedUser;

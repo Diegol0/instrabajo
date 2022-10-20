@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { MessageService, SelectItem } from 'primeng/api';
-import { map, switchMap } from 'rxjs';
+import { map, switchMap, take } from 'rxjs';
 import { Address } from 'src/app/app/api/address';
 import { Job } from 'src/app/app/api/job';
+import { CompareDto, UpdateUserDto } from 'src/app/app/models/service.dto';
 import { AddressService } from 'src/app/app/service/address.service';
 import { CountryService } from 'src/app/app/service/country.service';
 import { JobService } from 'src/app/app/service/job.service';
+import { InstrabajoService } from 'src/app/services/instrabajo.service';
 declare var google: any;
 
 @Component({
@@ -16,94 +18,86 @@ declare var google: any;
 })
 export class JobDetailComponent implements OnInit {
     countries: any[] = [];
-
+    user: any = {};
     filteredCountries: any[] = [];
-
     selectedCountryAdvanced: any[] = [];
-
     options: any;
-
     overlays: any[] = [];
-
     center = { lat: 0, lng: 0 };
-
     job: Job = {};
-
     jobs: Job[] = [];
-
     addresss: Job[] = [];
-    
     address: Address = {};
-
     valSlider = 50;
-
     valColor = '#424242';
-
     valRadio: string = '';
-
     valCheck: string[] = [];
-
     rateTypes: any[] = [];
-
     skills: any[] = [];
-
     valCheck2: boolean = false;
-
     valSwitch: boolean = false;
-
     cities: SelectItem[] = [];
-
     selectedList: SelectItem = { value: '' };
-
     selectedDrop: SelectItem = { value: '' };
-
     selectedMulti: any[] = [];
-
     valToggle = false;
-
     paymentOptions: any[] = [];
-
-    valSelect1: string = "";
-
-    valSelect2: string = "";
-
+    valSelect1: string = '';
+    valSelect2: string = '';
     valueKnob = 20;
-
     cancelJobDialog: boolean = false;
-
     completeJobDialog: boolean = false;
+    photo = null;
 
-    constructor(private countryService: CountryService,
-        private messageService: MessageService, private jobService: JobService, private addressService: AddressService, private route: ActivatedRoute) {
+    faceMatch = false;
+
+    constructor(
+        private countryService: CountryService,
+        public instrabajoService: InstrabajoService,
+        private messageService: MessageService,
+        private jobService: JobService,
+        private addressService: AddressService,
+        private route: ActivatedRoute
+    ) {
         this.options = {
             center: { lat: this.center.lat, lng: this.center.lng },
             zoom: 12,
         };
-     }
+    }
 
     ngOnInit() {
+        this.instrabajoService.getLoggedUser
+            .pipe(take(1))
+            .subscribe((user: any) => {
+                this.user = user;
+                console.log(user);
+            });
 
         const id = this.route.snapshot.paramMap.get('id')!;
 
-              this.jobService.getJobs().then((data) => {
-                    (this.jobs = data)
-                    this.job = this.jobs.filter(job => job.id = id)[0];
-                    this.addressService
-                    .getAddresss()
-                    .then((data) => {(this.addresss = data)
-                        this.address = this.addresss.filter(address => address.id = this.job.address)[0];
-                        
-                        
-                        this.center = { lat: this.address.lat!, lng: this.address.lng! };
-                        this.overlays = [
-                            new google.maps.Marker({position: this.center, title:this.address.name})
-                        ]
-                        this.options.center = this.center;
-                        this.options.zoom = 14;});
+        this.jobService.getJobs().then((data) => {
+            this.jobs = data;
+            this.job = this.jobs.filter((job) => (job.id = id))[0];
+            this.addressService.getAddresss().then((data) => {
+                this.addresss = data;
+                this.address = this.addresss.filter(
+                    (address) => (address.id = this.job.address)
+                )[0];
 
-                });
-              
-
+                this.center = {
+                    lat: this.address.lat!,
+                    lng: this.address.lng!,
+                };
+                this.overlays = [
+                    new google.maps.Marker({
+                        position: this.center,
+                        title: this.address.name,
+                    }),
+                ];
+                this.options.center = this.center;
+                this.options.zoom = 14;
+            });
+        });
 
         this.skills = [
             { label: 'ELECTRONIC', value: 'ELECTRONIC' },
@@ -150,7 +144,7 @@ export class JobDetailComponent implements OnInit {
         this.paymentOptions = [
             { name: 'Option 1', value: 1 },
             { name: 'Option 2', value: 2 },
-            { name: 'Option 3', value: 3 }
+            { name: 'Option 3', value: 3 },
         ];
     }
 
@@ -167,11 +161,11 @@ export class JobDetailComponent implements OnInit {
         this.filteredCountries = filtered;
     }
 
-    cancelJob(){
+    cancelJob() {
         this.cancelJobDialog = true;
     }
 
-    completeJob(){
+    completeJob() {
         this.completeJobDialog = true;
     }
 
@@ -184,5 +178,47 @@ export class JobDetailComponent implements OnInit {
             detail: 'Job Status Changed',
             life: 3000,
         });
+    }
+
+    onBasicUpload(event: any) {
+        this.instrabajoService
+            .saveUserPhoto(event.files[0])
+            .pipe(take(1))
+            .subscribe((data: any) => {
+                console.log(data);
+                this.photo = data.payload.url;
+                this.compare();
+            });
+    }
+
+    compare() {
+        let compare: CompareDto = {
+            source: this.user.photo,
+            target: this.photo!,
+        };
+
+        this.instrabajoService
+            .compare(compare)
+            .pipe(take(1))
+            .subscribe((data: any) => {
+                console.log(data);
+                if (
+                    data.payload.FaceMatches &&
+                    data.payload.FaceMatches.length > 0
+                ) {
+                    alert('Faces match!!!!');
+                    alert(JSON.stringify(data.payload.FaceMatches));
+                    this.faceMatch = true;
+                } else {
+                    alert('No, this is not the employee!');
+                    this.faceMatch = false;
+                }
+
+                this.messageService.add({
+                    severity: 'info',
+                    summary: 'Success',
+                    detail: 'User updated',
+                });
+            });
     }
 }

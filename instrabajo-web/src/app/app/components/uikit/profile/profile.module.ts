@@ -7,6 +7,8 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { GMapModule } from 'primeng/gmap';
+import { FileUploadModule } from 'primeng/fileupload';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
         InputTextModule,
         InputTextareaModule,
         ButtonModule,
-        ProfileRoutingModule
+        ProfileRoutingModule,
+        GMapModule,
+        FileUploadModule
     ],
     declarations: [ProfileComponent]
 })

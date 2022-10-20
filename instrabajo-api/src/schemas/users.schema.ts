@@ -28,6 +28,12 @@ export class User {
   @Prop()
   type: string;
 
+  @Prop()
+  phone: string;
+
+  @Prop()
+  photo: string;
+
   @Prop({ type: AddressSchema })
   @Type(() => Address)
   address: Address;

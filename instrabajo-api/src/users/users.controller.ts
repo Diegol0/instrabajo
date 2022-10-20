@@ -4,10 +4,15 @@ import {
   HttpException,
   HttpStatus,
   Post,
+  Put,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './.dto/create-user.dto';
 import * as bcrypt from 'bcryptjs';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { UpdateUserDto } from './.dto/update-user.dto';
+import { User } from 'src/schemas/users.schema';
 
 @Controller('users')
 export class UsersController {
@@ -27,5 +32,13 @@ export class UsersController {
         HttpStatus.BAD_REQUEST,
       );
     }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put()
+  async findOneAndUpdateUser(
+    @Body() updateUserDTO: UpdateUserDto,
+  ): Promise<User> {
+    return this.usersService.findOneAndUpdate(updateUserDTO);
   }
 }

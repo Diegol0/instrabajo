@@ -5,6 +5,8 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { JobsModule } from './jobs/jobs.module';
+import { FileUploadController } from './users/file-upload.controller';
+import { FileService } from './users/file-service';
 
 @Module({
   imports: [
@@ -15,7 +17,7 @@ import { JobsModule } from './jobs/jobs.module';
     ),
     JobsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, FileUploadController],
+  providers: [AppService, FileService],
 })
 export class AppModule {}

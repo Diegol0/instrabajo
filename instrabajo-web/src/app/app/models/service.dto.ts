@@ -12,9 +12,15 @@ export interface CreateUserDto {
   type?: string | null;
 }
 
-export interface UpdateUserBreedDto {
-  _id?: string | null;
-  type?: string | null;
+export interface UpdateUserDto {
+  _id?: string;
+  phone?: string;
+  photo?: string;
+}
+
+export interface CompareDto {
+  source?: string;
+  target?: string;
 }
 
 export interface UserDto {
