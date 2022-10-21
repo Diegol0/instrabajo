@@ -5,10 +5,17 @@ export type AddressDocument = Address & Document;
 
 @Schema()
 export class Address {
+
+  @Prop({ required: true })
+  userId: string;
+  
+  @Prop({ required: true })
+  name: string;
+
   @Prop({ required: true })
   addressLine1: string;
 
-  @Prop()
+  @Prop({ required: true })
   addressLine2: string;
 
   @Prop({ required: true })

@@ -10,6 +10,9 @@ export class User {
   @Transform(({ value }) => value.toString())
   _id: ObjectId;
 
+  @Prop()
+  userId: string; 
+
   @Prop({ required: true })
   name: string;
 

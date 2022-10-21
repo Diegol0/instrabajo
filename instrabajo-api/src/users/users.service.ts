@@ -55,4 +55,7 @@ export class UsersService {
       .exec();
     return deletedUser;
   }
+  async findAll() {
+    return await this.userModel.find().exec();
+  }
 }

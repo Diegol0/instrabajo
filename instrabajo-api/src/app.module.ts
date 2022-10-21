@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { JobsModule } from './jobs/jobs.module';
+import { AddressModule } from './address/address.module';
 import { FileUploadController } from './users/file-upload.controller';
 import { FileService } from './users/file-service';
 
@@ -16,6 +17,7 @@ import { FileService } from './users/file-service';
       'mongodb+srv://instrabajo:jmRZ9qq2Q019smS2@instrabajo.fxm5kak.mongodb.net/?retryWrites=true&w=majority',
     ),
     JobsModule,
+    AddressModule
   ],
   controllers: [AppController, FileUploadController],
   providers: [AppService, FileService],

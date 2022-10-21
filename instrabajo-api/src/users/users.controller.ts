@@ -6,6 +6,7 @@ import {
   Post,
   Put,
   UseGuards,
+  Get
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './.dto/create-user.dto';
@@ -32,6 +33,10 @@ export class UsersController {
         HttpStatus.BAD_REQUEST,
       );
     }
+  }
+  @Get()
+  findAll() {
+    return this.usersService.findAll();
   }
 
   @UseGuards(JwtAuthGuard)
