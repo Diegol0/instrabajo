@@ -150,6 +150,8 @@ export class CrudJobComponent implements OnInit {
     confirmDelete() {
         this.deleteJobDialog = false;
 
+        console.log(this.job._id)
+
         this.jobService
         .removeJob(this.job._id)
         .pipe(take(1))

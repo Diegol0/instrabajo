@@ -19,7 +19,7 @@ export class JobsService {
     return await this.jobModel.find().exec();
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     return await this.jobModel.findById(id).exec();
   }
 
@@ -50,7 +50,7 @@ export class JobsService {
     return updatedJob;
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const deletedJob = await this.jobModel
       .findByIdAndRemove({ _id: id })
       .exec();

@@ -26,7 +26,7 @@ export class JobsController {
 
   @Get('job/:id')
   findOne(@Param('id') id: string) {
-    return this.jobsService.findOne(+id);
+    return this.jobsService.findOne(id);
   }
 
   @Get('employer/:userId')
@@ -41,6 +41,6 @@ export class JobsController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.jobsService.remove(+id);
+    return this.jobsService.remove(id);
   }
 }
