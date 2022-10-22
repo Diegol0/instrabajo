@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { take } from 'rxjs';
 import { Job } from 'src/app/app/api/job';
+import { JobDto } from 'src/app/app/models/service.dto';
 import { AddressService } from 'src/app/app/service/address.service';
 import { JobService } from 'src/app/app/service/job.service';
 import { InstrabajoService } from 'src/app/services/instrabajo.service';
@@ -28,7 +29,7 @@ export class CrudJobComponent implements OnInit {
 
     addresss: Job[] = [];
 
-    job: Job = {};
+    job: JobDto = {};
 
     selectedJobs: Job[] = [];
 
@@ -66,22 +67,24 @@ export class CrudJobComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.jobService.getJobs().then((data) => (this.jobs = data));
+        // this.jobService.getJobs().then((data) => (this.jobs = data));
 
-        this.jobService.getUserJobs(this.user._id)
+        this.jobService
+            .getUserJobs(this.user._id)
             .pipe(take(1))
             .subscribe((data: any) => {
-                console.log(data)
+                this.jobs = data
+                console.log(data);
             });
 
-            this.addressService
-                .getAddressByUser(this.user._id)
-                .then((data) => (this.addresss = data));
-                
-        /*this.addressService
+        this.addressService
+            .getAddressByUser(this.user._id)
+            .then((data) => (this.addresss = data));
+
+            /*this.addressService
             .getAddresss()
             .then((data) => (this.addresss = data));*/
-
+            
         this.cols = [
             { field: 'name', header: 'Name' },
             { field: 'description', header: 'Description' },
@@ -118,12 +121,12 @@ export class CrudJobComponent implements OnInit {
         this.deleteJobsDialog = true;
     }
 
-    editJob(job: Job) {
+    editJob(job: JobDto) {
         this.job = { ...job };
         this.jobDialog = true;
     }
 
-    deleteJob(job: Job) {
+    deleteJob(job: JobDto) {
         this.deleteJobDialog = true;
         this.job = { ...job };
     }
@@ -142,7 +145,7 @@ export class CrudJobComponent implements OnInit {
 
     confirmDelete() {
         this.deleteJobDialog = false;
-        this.jobs = this.jobs.filter((val) => val.id !== this.job.id);
+        this.jobs = this.jobs.filter((val) => val.id !== this.job._id);
         this.messageService.add({
             severity: 'success',
             summary: 'Successful',
@@ -168,25 +171,39 @@ export class CrudJobComponent implements OnInit {
         }
 
         if (this.job.name?.trim()) {
-            if (this.job.id) {
+            if (this.job._id) {
+                // update job
                 // @ts-ignore
-                this.jobs[this.findIndexById(this.job.id)] = this.job;
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Job Updated',
-                    life: 3000,
-                });
+                this.jobService
+                    .updateJob(this.job)
+                    .pipe(take(1))
+                    .subscribe((data: any) => {
+                        console.log(data)
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: 'Successful',
+                            detail: 'Job Updated',
+                            life: 3000,
+                        });
+                    });
+
+                this.jobService.getUserJobs(this.user._id);
             } else {
-                this.job.id = this.createId();
+                // create job
                 // @ts-ignore
-                this.jobs.push(this.job);
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Job Created',
-                    life: 3000,
-                });
+                this.job.employer = this.user._id;
+                this.jobService
+                    .createJob(this.job)
+                    .pipe(take(1))
+                    .subscribe((data: any) => {
+                        console.log(data)
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: 'Successful',
+                            detail: 'Job Created',
+                            life: 3000,
+                        });
+                    });
             }
 
             this.jobs = [...this.jobs];

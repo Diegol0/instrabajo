@@ -33,7 +33,7 @@ export class JobService {
             .then((data) => data);
     }
 
-    creatJob(job: JobDto) {
+    createJob(job: JobDto) {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -71,11 +71,8 @@ export class JobService {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
         });
         return this.http
-            .get<any>(environment.instrabajoURL + 'jobs/employer/', {
+            .get<any>(environment.instrabajoURL + `jobs/employer/${userId}`, {
                 headers: headers,
-                params: {
-                    userId: userId,
-                },
             })
             .pipe(
                 catchError((error: HttpErrorResponse) =>

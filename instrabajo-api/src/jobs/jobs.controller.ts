@@ -30,7 +30,7 @@ export class JobsController {
   }
 
   @Get('employer/:userId')
-  findByEmployer(@Param('employerId') id: string) {
+  findByEmployer(@Param('userId') id: string) {
     return this.jobsService.findByEmployer(id);
   }
 
