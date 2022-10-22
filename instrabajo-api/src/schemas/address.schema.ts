@@ -19,10 +19,10 @@ export class Address {
   country: string;
 
   @Prop()
-  lat: string;
+  lat: number;
 
   @Prop()
-  lng: string;
+  lng: number;
 }
 
 export const AddressSchema = SchemaFactory.createForClass(Address);
