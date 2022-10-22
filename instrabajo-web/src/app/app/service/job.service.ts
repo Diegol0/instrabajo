@@ -87,7 +87,7 @@ export class JobService {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
         });
         return this.http
-            .delete<any>(environment.instrabajoURL + `jobs/employer/${jobId}`, {
+            .delete<any>(environment.instrabajoURL + `jobs/${jobId}`, {
                 headers: headers,
             })
             .pipe(
