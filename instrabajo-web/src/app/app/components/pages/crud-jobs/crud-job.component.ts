@@ -74,9 +74,13 @@ export class CrudJobComponent implements OnInit {
                 console.log(data)
             });
 
-        this.addressService
+            this.addressService
+                .getAddressByUser(this.user._id)
+                .then((data) => (this.addresss = data));
+                
+        /*this.addressService
             .getAddresss()
-            .then((data) => (this.addresss = data));
+            .then((data) => (this.addresss = data));*/
 
         this.cols = [
             { field: 'name', header: 'Name' },

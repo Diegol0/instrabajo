@@ -74,13 +74,14 @@ export class CrudAddressComponent implements OnInit {
     ngOnInit() {
         this.instrabajoService.getLoggedUser?.pipe(take(1))
         .subscribe((user: any) => {
-            
-            console.log(user);
-            this.addressService
-            .getAddressByUser(user._id)
-            .then((data) => (this.addresss = data));
-            this.userId = user._id;
-
+            if (user !==null) {
+                console.log(user);
+                this.addressService
+                .getAddressByUser(user?._id)
+                .then((data) => (this.addresss = data));
+                this.userId = user._id;
+            }
+        
         });
         
 
@@ -146,9 +147,10 @@ export class CrudAddressComponent implements OnInit {
     editAddress(address: Address) {
         this.address = { ...address };
         this.addressDialog = true;
-        this.center = { lat: this.address.lat!, lng: this.address.lng! };
+        console.log("LATITUD: "+this.address.lat+" LONGITUD: "+this.address.lng);
+        this.center = new google.maps.LatLng(this.address.lat!, this.address.lng!);
         this.overlays = [
-            new google.maps.Marker({position: this.center, title:this.address.name})
+            new google.maps.Marker({position: this.center , title:this.address.name})
         ]
         this.options.center = this.center;
         this.options.zoom = 14;
