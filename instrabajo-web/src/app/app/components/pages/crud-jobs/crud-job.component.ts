@@ -66,9 +66,7 @@ export class CrudJobComponent implements OnInit {
             });
     }
 
-    ngOnInit() {
-        // this.jobService.getJobs().then((data) => (this.jobs = data));
-
+    loadJobs(){
         this.jobService
             .getUserJobs(this.user._id)
             .pipe(take(1))
@@ -76,6 +74,12 @@ export class CrudJobComponent implements OnInit {
                 this.jobs = data
                 console.log(data);
             });
+    }
+
+    ngOnInit() {
+        // this.jobService.getJobs().then((data) => (this.jobs = data));
+
+        this.loadJobs();
 
         this.addressService
             .getAddressByUser(this.user._id)
@@ -185,6 +189,7 @@ export class CrudJobComponent implements OnInit {
                             detail: 'Job Updated',
                             life: 3000,
                         });
+                        this.loadJobs();
                     });
 
                 this.jobService.getUserJobs(this.user._id);
@@ -203,6 +208,7 @@ export class CrudJobComponent implements OnInit {
                             detail: 'Job Created',
                             life: 3000,
                         });
+                        this.loadJobs();
                     });
             }
 

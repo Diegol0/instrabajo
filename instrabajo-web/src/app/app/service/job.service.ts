@@ -55,7 +55,7 @@ export class JobService {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
         });
         return this.http
-            .put<any>(environment.instrabajoURL + 'jobs', job, {
+            .patch<any>(environment.instrabajoURL + `jobs/${job._id}`, job, {
                 headers: headers,
             })
             .pipe(
