@@ -1,5 +1,6 @@
 export interface Address {
-    id?: string;
+    _id?: string;
+    userId?: string;
     name?: string;
     addressLine1?: string;
     addressLine2?: string;

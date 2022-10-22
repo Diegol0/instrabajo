@@ -52,6 +52,8 @@ export interface JobDto {
 
 export interface AddressDto {
   _id?: string | null;
+  userId?: string | null;
+  name?: string | null;
   address1?: string | null;
   address2?: string | null;
   city?: string | null;

@@ -4,6 +4,11 @@ import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { Address } from 'src/app/app/api/address';
 import { AddressService } from 'src/app/app/service/address.service';
+import { InstrabajoService } from 'src/app/services/instrabajo.service';
+import { map, switchMap, take } from 'rxjs';
+import {
+    UserDto,
+} from 'src/app/app/models/service.dto';
 
 declare var google: any;
 
@@ -12,6 +17,7 @@ declare var google: any;
     providers: [MessageService],
 })
 export class CrudAddressComponent implements OnInit {
+
     addressDialog: boolean = false;
 
     deleteAddressDialog: boolean = false;
@@ -41,10 +47,14 @@ export class CrudAddressComponent implements OnInit {
     overlays: any[] = [];
 
     rowsPerPageOptions = [5, 10, 20];
+    userId: string = "";
+
+    addressId: string = "";
 
     constructor(
         private addressService: AddressService,
-        private messageService: MessageService
+        private messageService: MessageService,
+        private instrabajoService: InstrabajoService
     ) {
        navigator.geolocation.getCurrentPosition((position) => {
             console.log(position)
@@ -58,12 +68,21 @@ export class CrudAddressComponent implements OnInit {
                 zoom: 12,
             };
         });
+        
     }
 
     ngOnInit() {
-        this.addressService
-            .getAddresss()
+        this.instrabajoService.getLoggedUser?.pipe(take(1))
+        .subscribe((user: any) => {
+            
+            console.log(user);
+            this.addressService
+            .getAddressByUser(user._id)
             .then((data) => (this.addresss = data));
+            this.userId = user._id;
+
+        });
+        
 
         this.cols = [
             { field: 'name', header: 'Name' },
@@ -156,9 +175,16 @@ export class CrudAddressComponent implements OnInit {
 
     confirmDelete() {
         this.deleteAddressDialog = false;
-        this.addresss = this.addresss.filter(
-            (val) => val.id !== this.address.id
-        );
+        /*this.addresss = this.addresss.filter(
+            (val) => val._id !== this.address._id
+        );*/
+        
+        this.addressService.deleteAddress(this.address).pipe(take(1))
+                    .subscribe((data: any) => {
+                        if (data) {
+                            console.log("_id: "+data._id);
+                        }
+                    }); 
         this.messageService.add({
             severity: 'success',
             summary: 'Successful',
@@ -166,6 +192,7 @@ export class CrudAddressComponent implements OnInit {
             life: 3000,
         });
         this.address = {};
+        this.ngOnInit();
     }
 
     hideDialog() {
@@ -186,10 +213,16 @@ export class CrudAddressComponent implements OnInit {
         console.log(this.overlays)
         
         if (this.address.name?.trim()) {
-            if (this.address.id) {
+            if (this.address._id) {
                 // @ts-ignore
-                this.addresss[this.findIndexById(this.address.id)] =
-                    this.address;
+                /*this.addresss[this.findIndexById(this.address.id)] =
+                    this.address;*/
+                this.addressService.updateAdress(this.address).pipe(take(1))
+                    .subscribe((data: any) => {
+                        if (data) {
+                            console.log("_id: "+data._id);
+                        }
+                    });   
                 this.messageService.add({
                     severity: 'success',
                     summary: 'Successful',
@@ -197,9 +230,15 @@ export class CrudAddressComponent implements OnInit {
                     life: 3000,
                 });
             } else {
-                this.address.id = this.createId();
-                // @ts-ignore
-                this.addresss.push(this.address);
+                this.address.userId = this.userId;
+                console.log("USER ID: "+this.userId);
+                this.addressService.createAdress(this.address).pipe(take(1))
+                .subscribe((data: any) => {
+                    if (data) {
+                        console.log("_id: "+data._id);
+                    }
+                });
+                
                 this.messageService.add({
                     severity: 'success',
                     summary: 'Successful',
@@ -212,12 +251,13 @@ export class CrudAddressComponent implements OnInit {
             this.addressDialog = false;
             this.address = {};
         }
+        this.ngOnInit();
     }
 
     findIndexById(id: string): number {
         let index = -1;
         for (let i = 0; i < this.addresss.length; i++) {
-            if (this.addresss[i].id === id) {
+            if (this.addresss[i]._id === id) {
                 index = i;
                 break;
             }

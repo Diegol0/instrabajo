@@ -20,4 +20,17 @@ export class ErrorHandlerService {
     }
     return throwError(() => error.message);
   }
+
+  handleAddresError(error: Response | any): any {
+    if (error.status === 401 || error.status === 403) {
+      console.log();
+      if (!this.router.url.includes('login')) {
+        alert('Invalid session, redirecting to Login');
+        this.router.navigate(['/auth/login']);
+      } else {
+        alert('Invalid credentials');
+      }
+    }
+    return throwError(() => error.message);
+  }
 }
