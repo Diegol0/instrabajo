@@ -25,23 +25,23 @@ export class AddressController {
     return this.addressService.findAll();
   }
 
-  @Get(':id')
+  /*@Get(':id')
   findOne(@Param('id') id: string) {
     return this.addressService.findOne(+id);
+  }*/
+
+  @Get(':userId')
+  findByEmployer(@Param('userId') id: string) {
+    return this.addressService.findByUser(id);
   }
 
-  @Get(':id')
-  findByEmployer(@Param('employerId') id: string) {
-    return this.addressService.findByEmployer(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAddressDto: UpdateAddressDto) {
-    return this.addressService.update(+id, updateAddressDto);
+  @Patch()
+  update( @Body() adressDto: AddressDTO) {
+    return this.addressService.update( adressDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.addressService.remove(+id);
+    return this.addressService.remove(id);
   }
 }
