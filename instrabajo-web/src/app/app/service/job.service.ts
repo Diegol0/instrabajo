@@ -81,6 +81,22 @@ export class JobService {
             );
     }
 
+    removeJob(jobId: any) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        });
+        return this.http
+            .delete<any>(environment.instrabajoURL + `jobs/employer/${jobId}`, {
+                headers: headers,
+            })
+            .pipe(
+                catchError((error: HttpErrorResponse) =>
+                    this.errorHandlerService.handleError(error)
+                )
+            );
+    }
+
     getJobsMixed() {
         return this.http
             .get<any>('assets/app/data/jobs-mixed.json')

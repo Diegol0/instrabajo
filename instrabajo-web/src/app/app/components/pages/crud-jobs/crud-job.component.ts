@@ -149,12 +149,19 @@ export class CrudJobComponent implements OnInit {
 
     confirmDelete() {
         this.deleteJobDialog = false;
-        this.jobs = this.jobs.filter((val) => val.id !== this.job._id);
-        this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Job Deleted',
-            life: 3000,
+
+        this.jobService
+        .removeJob(this.job._id)
+        .pipe(take(1))
+        .subscribe((data: any) => {
+            console.log(data)
+            this.messageService.add({
+                severity: 'success',
+                summary: 'Successful',
+                detail: 'Job Deleted',
+                life: 3000,
+            });
+            this.loadJobs();
         });
         this.job = {};
     }
@@ -191,8 +198,6 @@ export class CrudJobComponent implements OnInit {
                         });
                         this.loadJobs();
                     });
-
-                this.jobService.getUserJobs(this.user._id);
             } else {
                 // create job
                 // @ts-ignore
