@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Job, JobDocument } from 'src/schemas/jobs.schema';
 import { CreateJobDto } from './dto/create-job.dto';
-import { UpdateJobDto } from './dto/update-job.dto';
 
 @Injectable()
 export class JobsService {
@@ -24,15 +23,37 @@ export class JobsService {
     return await this.jobModel.findById(id).exec();
   }
 
-  async findByEmployer(employerId: number) {
-    return await this.jobModel.find({ employerId: employerId }).exec();
+  async findByEmployer(employer: string) {
+    return await this.jobModel.find({ employer: employer }).exec();
   }
 
-  update(id: number, updateJobDto: UpdateJobDto) {
-    return `This action updates a #${id} job`;
+  async update(_id: number, updateJobDto: CreateJobDto) {
+    const params = {
+      name: updateJobDto.name,
+      description: updateJobDto.description,
+      skill: updateJobDto.skill,
+      rateType: updateJobDto.rateType,
+      hourlyRate: updateJobDto.hourlyRate,
+      fixedRate: updateJobDto.fixedRate,
+      status: updateJobDto.status,
+      images: updateJobDto.images,
+      address: updateJobDto.address,
+      employee: updateJobDto.employee,
+      employer: updateJobDto.employer,
+      employeeVerified: updateJobDto.employeeVerified,
+    };
+
+    for (const prop in params) if (!params[prop]) delete params[prop];
+    const updatedJob = await this.jobModel
+      .findOneAndUpdate({ _id: updateJobDto._id }, params)
+      .exec();
+    return updatedJob;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} job`;
+  async remove(id: number) {
+    const deletedJob = await this.jobModel
+      .findByIdAndRemove({ _id: id })
+      .exec();
+    return deletedJob;
   }
 }

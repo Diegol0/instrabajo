@@ -34,6 +34,22 @@ export interface UserDto {
   address?: AddressDto | null;
 }
 
+export interface JobDto {
+  _id?: string | null;
+  name?: string | null;
+  description?: string | null;
+  skill?: string | null;
+  rateType?: string | null;
+  hourlyRate?: number | null;
+  fixedRate?: number | null;
+  status?: string | null;
+  images?: string | null;
+  address?: string | null;
+  employee?: string | null;
+  employer?: string | null;
+  employeeVerified?: boolean | null;
+}
+
 export interface AddressDto {
   _id?: string | null;
   address1?: string | null;
@@ -44,11 +60,3 @@ export interface AddressDto {
   lng?: string | null;
 }
 
-export interface JobDto {
-  _id?: string | null;
-  name?: string | null;
-  rate?: string | null;
-  image?: string | null;
-  employerId?: string | null;
-  address?: AddressDto | null;
-}

@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import {
     CompareDto,
     CreateUserDto,
+    JobDto,
     LoginUserDto,
     UpdateUserDto,
     UserDto,
@@ -92,9 +93,13 @@ export class InstrabajoService {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
         });
         return this.http
-            .post<any>(environment.instrabajoURL + 'file-upload/compare', compare, {
-                headers: headers,
-            })
+            .post<any>(
+                environment.instrabajoURL + 'file-upload/compare',
+                compare,
+                {
+                    headers: headers,
+                }
+            )
             .pipe(
                 catchError((error: HttpErrorResponse) =>
                     this.errorHandlerService.handleError(error)

@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { JobsService } from './jobs.service';
 import { CreateJobDto } from './dto/create-job.dto';
-import { UpdateJobDto } from './dto/update-job.dto';
 
 @Controller('jobs')
 export class JobsController {
@@ -25,18 +24,18 @@ export class JobsController {
     return this.jobsService.findAll();
   }
 
-  @Get(':id')
+  @Get('job/:id')
   findOne(@Param('id') id: string) {
     return this.jobsService.findOne(+id);
   }
 
-  @Get(':id')
+  @Get('employer/:userId')
   findByEmployer(@Param('employerId') id: string) {
-    return this.jobsService.findByEmployer(+id);
+    return this.jobsService.findByEmployer(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateJobDto: UpdateJobDto) {
+  update(@Param('id') id: string, @Body() updateJobDto: CreateJobDto) {
     return this.jobsService.update(+id, updateJobDto);
   }
 

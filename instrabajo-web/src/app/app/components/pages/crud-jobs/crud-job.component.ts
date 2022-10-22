@@ -3,9 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
+import { take } from 'rxjs';
 import { Job } from 'src/app/app/api/job';
 import { AddressService } from 'src/app/app/service/address.service';
 import { JobService } from 'src/app/app/service/job.service';
+import { InstrabajoService } from 'src/app/services/instrabajo.service';
 
 declare var google: any;
 
@@ -46,15 +48,31 @@ export class CrudJobComponent implements OnInit {
 
     rowsPerPageOptions = [5, 10, 20];
 
+    user: any;
+
     constructor(
         private jobService: JobService,
         private messageService: MessageService,
-        private addressService: AddressService,private route: ActivatedRoute,
-        private router: Router
-    ) {}
+        private addressService: AddressService,
+        private route: ActivatedRoute,
+        private router: Router,
+        private instrabajoService: InstrabajoService
+    ) {
+        this.instrabajoService.getLoggedUser
+            .pipe(take(1))
+            .subscribe((user: any) => {
+                this.user = user;
+            });
+    }
 
     ngOnInit() {
         this.jobService.getJobs().then((data) => (this.jobs = data));
+
+        this.jobService.getUserJobs(this.user._id)
+            .pipe(take(1))
+            .subscribe((data: any) => {
+                console.log(data)
+            });
 
         this.addressService
             .getAddresss()
@@ -139,7 +157,7 @@ export class CrudJobComponent implements OnInit {
         this.submitted = true;
 
         console.log(this.overlays);
-        if(this.job.rateType == 'FIXED'){
+        if (this.job.rateType == 'FIXED') {
             this.job.hourlyRate = undefined;
         } else {
             this.job.fixedRate = undefined;
@@ -215,21 +233,27 @@ export class CrudJobComponent implements OnInit {
 
     uploadedFiles: any[] = [];
 
-    
-
     onUpload(event: any) {
         for (const file of event.files) {
             this.uploadedFiles.push(file);
         }
 
-        this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
+        this.messageService.add({
+            severity: 'info',
+            summary: 'Success',
+            detail: 'File Uploaded',
+        });
     }
 
     onBasicUpload() {
-        this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
+        this.messageService.add({
+            severity: 'info',
+            summary: 'Success',
+            detail: 'File Uploaded with Basic Mode',
+        });
     }
 
-    viewJob(job: Job){
+    viewJob(job: Job) {
         this.router.navigate(['/uikit/job-detail', { id: job.id }]);
     }
 }

@@ -1,12 +1,15 @@
 export class CreateJobDto {
-  readonly name: string;
-  readonly rate: number;
-  addrress: AddressDTO;
-}
-
-export interface AddressDTO {
-  addressLine1: string;
-  addressLine2: string;
-  city: string;
-  country: string;
+  _id: string;
+  name: string;
+  description: string;
+  skill: string;
+  rateType: string;
+  hourlyRate: number;
+  fixedRate: number;
+  status: string;
+  images: string;
+  address: string;
+  employee: string;
+  employer: string;
+  employeeVerified: boolean;
 }

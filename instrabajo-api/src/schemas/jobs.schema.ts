@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, ObjectId } from 'mongoose';
-import { Address, AddressSchema } from './address.schema';
-import { Type, Transform } from 'class-transformer';
+import { Transform } from 'class-transformer';
 
 export type JobDocument = Job & Document;
 
@@ -14,17 +13,37 @@ export class Job {
   name: string;
 
   @Prop({ required: true })
-  rate: number;
-
-  @Prop()
-  image: string;
+  description: string;
 
   @Prop({ required: true })
-  employerId: string;
+  skill: string;
 
-  @Prop({ type: AddressSchema })
-  @Type(() => Address)
-  address: Address;
+  @Prop({ required: true })
+  rateType: string;
+
+  @Prop()
+  hourlyRate: number;
+
+  @Prop()
+  fixedRate: number;
+
+  @Prop()
+  status: string;
+
+  @Prop()
+  images: string;
+
+  @Prop()
+  address: string;
+
+  @Prop()
+  employee: string;
+
+  @Prop()
+  employer: string;
+
+  @Prop()
+  employeeVerified: boolean;
 }
 
 export const JobSchema = SchemaFactory.createForClass(Job);
