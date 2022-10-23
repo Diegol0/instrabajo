@@ -17,6 +17,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 import {GMapModule} from 'primeng/gmap';
+import { GalleriaModule } from 'primeng/galleria';
 
 @NgModule({
     imports: [
@@ -36,7 +37,8 @@ import {GMapModule} from 'primeng/gmap';
         RadioButtonModule,
         InputNumberModule,
         DialogModule,
-        GMapModule
+        GMapModule,
+        GalleriaModule,
     ],
     declarations: [CrudJobComponent]
 })

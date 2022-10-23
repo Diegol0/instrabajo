@@ -5,8 +5,9 @@ import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { take } from 'rxjs';
 import { Job } from 'src/app/app/api/job';
-import { JobDto } from 'src/app/app/models/service.dto';
+import { GalleryImage, JobDto, JobImageDto } from 'src/app/app/models/service.dto';
 import { AddressService } from 'src/app/app/service/address.service';
+import { JobImageService } from 'src/app/app/service/job-image.service';
 import { JobService } from 'src/app/app/service/job.service';
 import { InstrabajoService } from 'src/app/services/instrabajo.service';
 
@@ -51,11 +52,35 @@ export class CrudJobComponent implements OnInit {
 
     user: any;
 
+    jobImages: any[] = [];
+
+    galleryImage: GalleryImage[] = [];
+
+    galleriaResponsiveOptions: any[] = [
+        {
+            breakpoint: '1024px',
+            numVisible: 5
+        },
+        {
+            breakpoint: '960px',
+            numVisible: 4
+        },
+        {
+            breakpoint: '768px',
+            numVisible: 3
+        },
+        {
+            breakpoint: '560px',
+            numVisible: 1
+        }
+    ];
+
     constructor(
         private jobService: JobService,
         private messageService: MessageService,
         private addressService: AddressService,
         private route: ActivatedRoute,
+        private jobImagesService: JobImageService,
         private router: Router,
         private instrabajoService: InstrabajoService
     ) {
@@ -127,8 +152,26 @@ export class CrudJobComponent implements OnInit {
 
     editJob(job: JobDto) {
         this.job = { ...job };
+        this.loadImages();
         this.jobDialog = true;
     }
+
+    loadImages(){
+        this.jobImages = [];
+        this.jobImagesService.getJobImages(this.job._id)
+        .pipe(take(1))
+        .subscribe((data: JobImageDto[]) => {
+            data.forEach((jobImage: JobImageDto) => {
+                let image: GalleryImage = {};
+                image.itemImageSrc = jobImage.imageKey;
+                image.thumbnailImageSrc = jobImage.imageKey;
+                image.alt = 'alt';
+                image.title = 'Job Image';
+                this.jobImages.push(image);
+            });
+        });
+    }
+    
 
     deleteJob(job: JobDto) {
         this.deleteJobDialog = true;
@@ -168,6 +211,30 @@ export class CrudJobComponent implements OnInit {
         this.job = {};
     }
 
+    onBasicUpload(event: any) {
+        this.instrabajoService
+            .saveUserPhoto(event.files[0])
+            .pipe(take(1))
+            .subscribe((data: any) => {
+                console.log(data);
+                let jobImage: JobImageDto = {};
+                jobImage.imageKey = data.payload.url;
+                jobImage.jobId = this.job._id;
+                let image: GalleryImage = {};
+                image.itemImageSrc = data.payload.url;
+                image.thumbnailImageSrc = data.payload.url;
+                image.alt = 'alt';
+                image.title = 'Job Image';
+                this.galleryImage.push(image);
+                this.jobImagesService.createJobImage(jobImage)
+                .pipe(take(1))
+                .subscribe((data: any) => {
+                    console.log(data)
+                    this.loadImages();
+                });
+            });
+    }
+
     hideDialog() {
         this.jobDialog = false;
         this.submitted = false;
@@ -203,6 +270,7 @@ export class CrudJobComponent implements OnInit {
             } else {
                 // create job
                 // @ts-ignore
+                this.job.status = 'AVAILABLE'
                 this.job.employer = this.user._id;
                 this.jobService
                     .createJob(this.job)
@@ -263,28 +331,6 @@ export class CrudJobComponent implements OnInit {
                 title: this.job.name,
             }),
         ];
-    }
-
-    uploadedFiles: any[] = [];
-
-    onUpload(event: any) {
-        for (const file of event.files) {
-            this.uploadedFiles.push(file);
-        }
-
-        this.messageService.add({
-            severity: 'info',
-            summary: 'Success',
-            detail: 'File Uploaded',
-        });
-    }
-
-    onBasicUpload() {
-        this.messageService.add({
-            severity: 'info',
-            summary: 'Success',
-            detail: 'File Uploaded with Basic Mode',
-        });
     }
 
     viewJob(job: Job) {

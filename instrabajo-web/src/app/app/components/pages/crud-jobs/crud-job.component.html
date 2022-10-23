@@ -86,7 +86,7 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="jobDialog" [style]="{width: '450px'}" header="Job Details" [modal]="true" class="p-fluid">
+        <p-dialog [(visible)]="jobDialog" [style]="{width: '700px'}" header="Job Details" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
                 
                 <div class="field">
@@ -138,15 +138,27 @@
                         </ng-template>
                     </p-dropdown>
                 </div>
-
-                <p-fileUpload name="demo[]" url="./upload.php" (onUpload)="onUpload($event)"
-                          [multiple]="true">
-                    <ng-template pTemplate="content">
-                        <ul *ngIf="uploadedFiles.length">
-                            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-                        </ul>
-                    </ng-template>
-                </p-fileUpload>
+                <div *ngIf="job.status !== 'NEW'">
+                    <h5>Job Images</h5>
+                    <input type="file" id="file" (change)="onBasicUpload($event.target)"/>
+                    <div *ngIf="jobImages.length > 0" class="col-12">
+                        <div class="card">
+                            <h5>Uploaded Images</h5>
+                            <p-galleria [value]="jobImages" [responsiveOptions]="galleriaResponsiveOptions"
+                                        [containerStyle]="{'max-width': '600px', 'margin':'auto', 'background':'black'}" [numVisible]="6" [circular]="true">
+                                <ng-template pTemplate="item" let-item>
+                                    <img [src]="item.itemImageSrc" style="max-height: 400px; max-width: 400px; display: block;"/>
+                                </ng-template>
+                                <ng-template pTemplate="thumbnail" let-item>
+                                    <div class="grid nogutter justify-center">
+                                        <img [src]="item.thumbnailImageSrc" style="max-height:100px; max-width: 100px; display: block;"/>
+                                    </div>
+                                </ng-template>
+                            </p-galleria>
+                        </div>
+                    </div>    
+                </div>
+            
 
             </ng-template>
 

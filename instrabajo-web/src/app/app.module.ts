@@ -15,6 +15,7 @@ import { AddressService } from './app/service/address.service';
 import { JobService } from './app/service/job.service';
 import { ReviewService } from './app/service/review.service';
 import { InstrabajoService } from './services/instrabajo.service';
+import { JobImageService } from './app/service/job-image.service';
 
 
 @NgModule({
@@ -27,7 +28,7 @@ import { InstrabajoService } from './services/instrabajo.service';
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        CountryService, CustomerService, EventService, IconService, NodeService,
+        CountryService, CustomerService, EventService, IconService, NodeService, JobImageService,
         PhotoService, ProductService, AddressService, JobService, ReviewService, InstrabajoService
     ],
     bootstrap: [AppComponent]
