@@ -86,7 +86,7 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="jobDialog" [style]="{width: '700px'}" header="Job Details" [modal]="true" class="p-fluid">
+        <p-dialog [(visible)]="jobDialog" [style]="{width: '600px'}" header="Job Details" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
                 
                 <div class="field">
@@ -132,7 +132,7 @@
                 
                 <div class="field">
                     <label for="address">Address</label>
-                    <p-dropdown id="address" [options]="addresss" optionLabel="name" optionValue="id" [(ngModel)]="job.address" placeholder="Select a Address">
+                    <p-dropdown id="address" [options]="addresss" optionLabel="name" optionValue="_id" [(ngModel)]="job.address" placeholder="Select a Address">
                         <ng-template let-address pTemplate="address">
                             <span>{{address.name}}</span>
                         </ng-template>
@@ -142,20 +142,18 @@
                     <h5>Job Images</h5>
                     <input type="file" id="file" (change)="onBasicUpload($event.target)"/>
                     <div *ngIf="jobImages.length > 0" class="col-12">
-                        <div class="card">
-                            <h5>Uploaded Images</h5>
-                            <p-galleria [value]="jobImages" [responsiveOptions]="galleriaResponsiveOptions"
-                                        [containerStyle]="{'max-width': '600px', 'margin':'auto', 'background':'black'}" [numVisible]="6" [circular]="true">
-                                <ng-template pTemplate="item" let-item>
-                                    <img [src]="item.itemImageSrc" style="max-height: 400px; max-width: 400px; display: block;"/>
-                                </ng-template>
-                                <ng-template pTemplate="thumbnail" let-item>
-                                    <div class="grid nogutter justify-center">
-                                        <img [src]="item.thumbnailImageSrc" style="max-height:100px; max-width: 100px; display: block;"/>
-                                    </div>
-                                </ng-template>
-                            </p-galleria>
-                        </div>
+                        <h5>Uploaded Images</h5>
+                        <p-galleria [value]="jobImages" [responsiveOptions]="galleriaResponsiveOptions"
+                                    [containerStyle]="{'max-width': '500px', 'margin':'auto', 'background':'black'}" [numVisible]="6" [circular]="true">
+                            <ng-template pTemplate="item" let-item>
+                                <img [src]="item.itemImageSrc" style="max-height: 400px; max-width: 400px; display: block;"/>
+                            </ng-template>
+                            <ng-template pTemplate="thumbnail" let-item>
+                                <div class="grid nogutter justify-center">
+                                    <img [src]="item.thumbnailImageSrc" style="max-height:100px; max-width: 100px; display: block;"/>
+                                </div>
+                            </ng-template>
+                        </p-galleria>
                     </div>    
                 </div>
             

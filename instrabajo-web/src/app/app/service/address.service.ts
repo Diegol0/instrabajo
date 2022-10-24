@@ -2,7 +2,7 @@ import {
     HttpClient,
     HttpErrorResponse,
     HttpHeaders,
-    HttpParams
+    HttpParams,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, throwError } from 'rxjs';
@@ -11,10 +11,7 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
-import {
-    UserDto,
-    AddressDto,
-} from 'src/app/app/models/service.dto';
+import { UserDto, AddressDto } from 'src/app/app/models/service.dto';
 
 @Injectable({
     providedIn: 'root',
@@ -23,7 +20,8 @@ export class AddressService {
     constructor(
         private readonly errorHandlerService: ErrorHandlerService,
         private http: HttpClient,
-        private router: Router) {}
+        private router: Router
+    ) {}
 
     getAddresssSmall() {
         return this.http
@@ -33,8 +31,23 @@ export class AddressService {
             .then((data) => data);
     }
 
+    getAddressById(id: string) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        });
+        return this.http
+            .get<any>(environment.instrabajoURL + `address/address/${id}`, {
+                headers: headers,
+            })
+            .pipe(
+                catchError((error: HttpErrorResponse) =>
+                    this.errorHandlerService.handleError(error)
+                )
+            );
+    }
+
     getAddresss() {
-        
         return this.http
             .get<any>('assets/app/data/addresses.json')
             .toPromise()
@@ -43,8 +56,9 @@ export class AddressService {
     }
 
     getAddressByUser(userId: string) {
-        return this.http
-        .get<any>(environment.instrabajoURL + 'address/'+userId);
+        return this.http.get<any>(
+            environment.instrabajoURL + 'address/' + userId
+        );
     }
 
     getAddresssMixed() {
@@ -84,14 +98,13 @@ export class AddressService {
     }
 
     deleteAddress(address: Address) {
-        console.log("ADDRESS ID: "+address._id);
-            return this.http
-                .delete<any>(environment.instrabajoURL + 'address/'+address._id)
-                .pipe(
-                    catchError((error: HttpErrorResponse) =>
-                        this.errorHandlerService.handleError(error)
-                    )
-                );
-        }
+        console.log('ADDRESS ID: ' + address._id);
+        return this.http
+            .delete<any>(environment.instrabajoURL + 'address/' + address._id)
+            .pipe(
+                catchError((error: HttpErrorResponse) =>
+                    this.errorHandlerService.handleError(error)
+                )
+            );
     }
-
+}

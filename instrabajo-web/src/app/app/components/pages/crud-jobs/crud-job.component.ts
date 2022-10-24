@@ -28,7 +28,7 @@ export class CrudJobComponent implements OnInit {
 
     jobs: Job[] = [];
 
-    addresss: Job[] = [];
+    addresss: any[] = [];
 
     job: JobDto = {};
 
@@ -93,7 +93,7 @@ export class CrudJobComponent implements OnInit {
 
     loadJobs(){
         this.jobService
-            .getUserJobs(this.user._id)
+            .getEmployerJobs(this.user._id)
             .pipe(take(1))
             .subscribe((data: any) => {
                 this.jobs = data
@@ -134,6 +134,9 @@ export class CrudJobComponent implements OnInit {
             { label: 'CLEARNER', value: 'CLEARNER' },
             { label: 'GARDENER', value: 'GARDENER' },
             { label: 'BABYSITTER', value: 'BABYSITTER' },
+            { label: 'WAITER', value: 'WAITER' },
+            { label: 'PLUMBER', value: 'PLUMBER' },
+            { label: 'BLACKSMITH', value: 'BLACKSMITH' },
         ];
         this.rateTypes = [
             { label: 'Hourly Rate', value: 'HOURLY' },
@@ -252,6 +255,7 @@ export class CrudJobComponent implements OnInit {
             this.job.fixedRate = undefined;
         }
 
+        
         if (this.job.name?.trim()) {
             if (this.job._id) {
                 // update job
@@ -298,7 +302,7 @@ export class CrudJobComponent implements OnInit {
     findIndexById(id: string): number {
         let index = -1;
         for (let i = 0; i < this.jobs.length; i++) {
-            if (this.jobs[i].id === id) {
+            if (this.jobs[i]._id === id) {
                 index = i;
                 break;
             }
@@ -336,6 +340,6 @@ export class CrudJobComponent implements OnInit {
     }
 
     viewJob(job: Job) {
-        this.router.navigate(['/uikit/job-detail', { id: job.id }]);
+        this.router.navigate(['/uikit/job-detail', { id: job._id }]);
     }
 }

@@ -58,4 +58,8 @@ export class UsersService {
   async findAll() {
     return await this.userModel.find().exec();
   }
+
+  async findOne(id: string) {
+    return await this.userModel.findById(id).exec();
+  }
 }

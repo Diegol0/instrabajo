@@ -13,6 +13,24 @@
                         label="Mark Job as Completed"
                         class="p-button-rounded p-button-success"
                         (click)="completeJob()"
+                        *ngIf="
+                            job.employee &&
+                            job.status == 'ACCEPTED' &&
+                            user._id == job.employer
+                        "
+                    ></button>
+                </div>
+                <div>
+                    <button
+                        pButton
+                        pRipple
+                        type="button"
+                        label="Accept Current Employee"
+                        class="p-button-rounded p-button-success"
+                        *ngIf="
+                            job.status == 'PENDING' && job.employer == user._id
+                        "
+                        (click)="acceptEmployee()"
                     ></button>
                 </div>
                 <div>
@@ -33,6 +51,10 @@
                         type="button"
                         label="Cancel this Job"
                         class="p-button-rounded p-button-danger"
+                        *ngIf="
+                            job.employer == user._id &&
+                            job.status == 'AVAILABLE'
+                        "
                         (click)="cancelJob()"
                     ></button>
                 </div>
@@ -43,12 +65,59 @@
                         type="button"
                         label="Go Back"
                         class="p-button-rounded p-button-info"
-                        [routerLink]="''"
+                        [routerLink]="'/uikit/job-list'"
                     ></button>
                 </div>
             </div>
         </div>
     </div>
+
+    <div
+        class="col-12"
+        *ngIf="job.status == 'COMPLETED' && user._id == job.employee"
+    >
+        <div class="card">
+            <h5>Rating</h5>
+            <p>It's time to rate this Employer</p>
+            <div class="col-12">
+                <h5>Employer Rating</h5>
+                <p-rating></p-rating>
+            </div>
+            <div class="col-12 md:col-6">
+                <label for="description">Comment</label>
+                <textarea
+                    id="description"
+                    pInputTextarea
+                    rows="3"
+                    cols="20"
+                ></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div
+        class="col-12"
+        *ngIf="job.status == 'COMPLETED' && user._id == job.employer"
+    >
+        <div class="card">
+            <h5>Rating</h5>
+            <p>It's time to rate this Employee</p>
+            <div class="col-12">
+                <h5>Employee Rating</h5>
+                <p-rating></p-rating>
+            </div>
+            <div class="col-12 md:col-6">
+                <label for="description">Comment</label>
+                <textarea
+                    id="description"
+                    pInputTextarea
+                    rows="3"
+                    cols="20"
+                ></textarea>
+            </div>
+        </div>
+    </div>
+
     <div class="col-12 md:col-6">
         <div class="card">
             <h5>Job Detail</h5>
@@ -146,7 +215,7 @@
             </div>
         </div>
 
-        <div class="card">
+        <div *ngIf="address" class="card">
             <h5>Address</h5>
             <div class="grid formgrid">
                 <div class="col-12">
@@ -230,6 +299,188 @@
 
     <div class="col-12 md:col-6">
         <div class="card">
+            <div class="grid">
+                <h5>Employer Information</h5>
+                <div class="grid formgrid col-12">
+                    <div class="col-12">
+                        <label htmlFor="name1">Name</label>
+                        <input
+                            pInputText
+                            [(ngModel)]="employer.name"
+                            id="name1"
+                            type="text"
+                            disabled="true"
+                        />
+                    </div>
+                    <div class="col-12">
+                        <label htmlFor="lastName1">Last Name</label>
+                        <input
+                            pInputText
+                            [(ngModel)]="employer.lastname"
+                            id="lastName1"
+                            type="text"
+                            disabled="true"
+                        />
+                    </div>
+                    <div class="col-12">
+                        <label htmlFor="email1">Email</label>
+                        <input
+                            pInputText
+                            [(ngModel)]="employer.email"
+                            id="email1"
+                            type="text"
+                            disabled="true"
+                        />
+                    </div>
+                    <div class="col-12">
+                        <label htmlFor="phone1">Phone</label>
+                        <input
+                            pInputText
+                            [(ngModel)]="employer.phone"
+                            id="phone1"
+                            type="text"
+                            disabled="true"
+                        />
+                    </div>
+                    <div class="col-12">
+                        <label>Photo</label>
+                        <img
+                            class="center"
+                            style="max-width: 200px"
+                            *ngIf="employer.photo"
+                            src="{{ employer.photo }}"
+                            alt="Employer"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="grid">
+                <h5>Employee Information</h5>
+                <div class="grid formgrid">
+                    <div class="col-12">
+                        <label htmlFor="name1">Name</label>
+                        <input
+                            pInputText
+                            [(ngModel)]="employee.name"
+                            id="name1"
+                            type="text"
+                            disabled="true"
+                        />
+                    </div>
+                    <div class="col-12">
+                        <label htmlFor="lastName1">Last Name</label>
+                        <input
+                            pInputText
+                            [(ngModel)]="employee.lastname"
+                            id="lastName1"
+                            type="text"
+                            disabled="true"
+                        />
+                    </div>
+                    <div class="col-12">
+                        <label htmlFor="email1">Email</label>
+                        <input
+                            pInputText
+                            [(ngModel)]="employee.email"
+                            id="email1"
+                            type="text"
+                            disabled="true"
+                        />
+                    </div>
+                    <div class="col-12">
+                        <label htmlFor="phone1">Phone</label>
+                        <input
+                            pInputText
+                            [(ngModel)]="employee.phone"
+                            id="phone1"
+                            type="text"
+                            disabled="true"
+                        />
+                    </div>
+                    <div class="col-12">
+                        <label>Photo</label>
+                        <img
+                            class="center"
+                            style="max-width: 200px"
+                            *ngIf="employee.photo"
+                            src="{{ employee.photo }}"
+                            alt="Employee"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="grid">
+                <div class="col-12 md:col-12">
+                    <h5>Employee Facial Recognition</h5>
+                    <span *ngIf="!faceMatch" class="p-tag">Pending</span>
+                    <h6 *ngIf="!faceMatch">
+                        This person has not been verified for this job, you can
+                        use the option below to scan the employee's face.
+                    </h6>
+                    <h6 *ngIf="faceMatch">This person has been verified! ✅</h6>
+                    <input
+                        *ngIf="!faceMatch"
+                        type="file"
+                        id="file"
+                        (change)="onBasicUpload($event.target)"
+                    />
+                    <!-- <p-fileUpload *ngIf="!user.photo" mode="basic" name="demo[]" [previewWidth]="200" [customUpload]="true" [maxFileSize]="1000000" (uploadHandler)="onBasicUpload($event)"></p-fileUpload> -->
+                    <img
+                        style="max-width: 100%"
+                        *ngIf="photo"
+                        src="{{ photo }}"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12" *ngIf="jobImages.length > 0">
+        <div class="card">
+            <h5>Job Images</h5>
+            <p-galleria
+                [value]="jobImages"
+                [responsiveOptions]="galleriaResponsiveOptions"
+                [containerStyle]="{
+                    'max-width': '100%',
+                    margin: 'auto',
+                    background: 'black'
+                }"
+                [numVisible]="6"
+                [circular]="true"
+            >
+                <ng-template pTemplate="item" let-item>
+                    <img
+                        [src]="item.itemImageSrc"
+                        style="
+                            max-height: 400px;
+                            max-width: 400px;
+                            display: block;
+                        "
+                    />
+                </ng-template>
+                <ng-template pTemplate="thumbnail" let-item>
+                    <div class="grid nogutter justify-center">
+                        <img
+                            [src]="item.thumbnailImageSrc"
+                            style="
+                                max-height: 100px;
+                                max-width: 100px;
+                                display: block;
+                            "
+                        />
+                    </div>
+                </ng-template>
+            </p-galleria>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="card">
             <h5>Conversation</h5>
             <li *ngFor="let message of messages">
                 UserID: {{message.fromUserId}} Message: {{message.message}}
@@ -238,7 +489,9 @@
                 <input type="text" pInputText placeholder="Message" name="msj"/>
                 
             </div>
-            <!--<p-divider align="left">
+            
+            <!--<h5>Conversation</h5>
+            <p-divider align="left">
                 <span class="p-tag">Employee - 2 days ago</span>
             </p-divider>
             <p>
@@ -264,66 +517,6 @@
                     <button type="button" pButton pRipple label="Send"></button>
                 </div>
             </div>-->
-        </div>
-        <div class="card">
-            <div class="grid">
-                <div class="col-12 md:col-6">
-                    <h5>Employer Rating</h5>
-                    <p-rating></p-rating>
-                </div>
-                <div class="col-12 md:col-6">
-                    <label for="description">Comment</label>
-                    <textarea
-                        id="description"
-                        pInputTextarea
-                        rows="3"
-                        cols="20"
-                    ></textarea>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="grid">
-                <div class="col-12 md:col-6">
-                    <h5>Employee Rating</h5>
-                    <p-rating></p-rating>
-                </div>
-                <div class="col-12 md:col-6">
-                    <label for="description">Comment</label>
-                    <textarea
-                        id="description"
-                        pInputTextarea
-                        rows="3"
-                        cols="20"
-                    ></textarea>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="grid">
-                <div class="col-12 md:col-12">
-                    <h5>Employee Facial Recognition</h5>
-                    <span *ngIf="!faceMatch" class="p-tag">Pending</span>
-                    <h6 *ngIf="!faceMatch">
-                        This person has not been verified for this job, you can
-                        use the option below to scan the employee's face.
-                    </h6>
-                    <h6 *ngIf="faceMatch">This person has been verified! ✅</h6>
-                    <input *ngIf="!faceMatch"
-                        type="file"
-                        id="file"
-                        (change)="onBasicUpload($event.target)"
-                    />
-                    <!-- <p-fileUpload *ngIf="!user.photo" mode="basic" name="demo[]" [previewWidth]="200" [customUpload]="true" [maxFileSize]="1000000" (uploadHandler)="onBasicUpload($event)"></p-fileUpload> -->
-                    <img
-                        style="max-width: 100%"
-                        *ngIf="photo"
-                        src="{{ photo }}"
-                    />
-                </div>
-            </div>
         </div>
     </div>
 
@@ -394,7 +587,42 @@
                 icon="pi pi-check"
                 class="p-button-text"
                 label="Yes"
-                (click)="confirm()"
+                (click)="confirmCompleteJob()"
+            ></button>
+        </ng-template>
+    </p-dialog>
+
+    <p-dialog
+        [(visible)]="acceptEmployeeDialog"
+        header="Confirm"
+        [modal]="true"
+        [style]="{ width: '450px' }"
+    >
+        <div class="flex align-items-center justify-content-center">
+            <i
+                class="pi pi-exclamation-triangle mr-3"
+                style="font-size: 2rem"
+            ></i>
+            <span *ngIf="job"
+                >Are you sure you want to accept this employee?
+            </span>
+        </div>
+        <ng-template pTemplate="footer">
+            <button
+                pButton
+                pRipple
+                icon="pi pi-times"
+                class="p-button-text"
+                label="No"
+                (click)="completeJobDialog = false"
+            ></button>
+            <button
+                pButton
+                pRipple
+                icon="pi pi-check"
+                class="p-button-text"
+                label="Yes"
+                (click)="confirmEmployee()"
             ></button>
         </ng-template>
     </p-dialog>

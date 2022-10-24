@@ -65,13 +65,61 @@ export class JobService {
             );
     }
 
-    getUserJobs(userId: string) {
+    getEmployerJobs(userId: string) {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('token')}`,
         });
         return this.http
             .get<any>(environment.instrabajoURL + `jobs/employer/${userId}`, {
+                headers: headers,
+            })
+            .pipe(
+                catchError((error: HttpErrorResponse) =>
+                    this.errorHandlerService.handleError(error)
+                )
+            );
+    }
+
+    getEmployeeJobs(userId: string) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        });
+        return this.http
+            .get<any>(environment.instrabajoURL + `jobs/employee/${userId}`, {
+                headers: headers,
+            })
+            .pipe(
+                catchError((error: HttpErrorResponse) =>
+                    this.errorHandlerService.handleError(error)
+                )
+            );
+    }
+
+    getJobsByStatus(status: string) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        });
+        return this.http
+            .get<any>(environment.instrabajoURL + `jobs/status/${status}`, {
+                headers: headers,
+            })
+            .pipe(
+                catchError((error: HttpErrorResponse) =>
+                    this.errorHandlerService.handleError(error)
+                )
+            );
+    }
+
+    getJobById(id: string) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        });
+        return this.http
+            .get<any>(environment.instrabajoURL + `jobs/job/${id}`, {
                 headers: headers,
             })
             .pipe(

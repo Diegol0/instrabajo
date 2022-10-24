@@ -43,7 +43,7 @@ export interface JobDto {
     hourlyRate?: number | null;
     fixedRate?: number | null;
     status?: string | null;
-    images?: string | null;
+    images?: string[] | null;
     address?: string | null;
     employee?: string | null;
     employer?: string | null;

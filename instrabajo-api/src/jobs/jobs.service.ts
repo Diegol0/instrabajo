@@ -27,6 +27,14 @@ export class JobsService {
     return await this.jobModel.find({ employer: employer }).exec();
   }
 
+  async findByEmployee(employee: string) {
+    return await this.jobModel.find({ employee: employee }).exec();
+  }
+
+  async findByStatus(status: string) {
+    return await this.jobModel.find({ status: status }).exec();
+  }
+
   async update(_id: number, updateJobDto: CreateJobDto) {
     const params = {
       name: updateJobDto.name,

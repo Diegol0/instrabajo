@@ -1,14 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { AddressUser, AddressUserDocument } from 'src/schemas/address-user.schema';
+import {
+  AddressUser,
+  AddressUserDocument,
+} from 'src/schemas/address-user.schema';
 import { AddressDTO } from './dto/create-adress.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
 
 @Injectable()
 export class AddressService {
   constructor(
-    @InjectModel(AddressUser.name) private readonly AddressModel: Model<AddressUserDocument>,
+    @InjectModel(AddressUser.name)
+    private readonly AddressModel: Model<AddressUserDocument>,
   ) {}
 
   async create(createAddressDto: AddressDTO) {
@@ -20,7 +24,7 @@ export class AddressService {
     return await this.AddressModel.find().exec();
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     return await this.AddressModel.findById(id).exec();
   }
 
@@ -34,12 +38,13 @@ export class AddressService {
   }
 
   async update(addressDto: AddressDTO) {
-    return  await this.AddressModel
-      .findOneAndUpdate({ _id: addressDto._id }, addressDto)
-      .exec();
+    return await this.AddressModel.findOneAndUpdate(
+      { _id: addressDto._id },
+      addressDto,
+    ).exec();
   }
 
   async remove(id: string) {
-    return  await this.AddressModel.findByIdAndDelete({_id: id} ).exec();
+    return await this.AddressModel.findByIdAndDelete({ _id: id }).exec();
   }
 }

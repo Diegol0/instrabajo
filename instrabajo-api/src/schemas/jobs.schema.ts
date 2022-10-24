@@ -31,7 +31,7 @@ export class Job {
   status: string;
 
   @Prop()
-  images: string;
+  images: string[];
 
   @Prop()
   address: string;
