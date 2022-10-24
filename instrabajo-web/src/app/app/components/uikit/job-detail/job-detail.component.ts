@@ -5,9 +5,10 @@ import { MessageService, SelectItem } from 'primeng/api';
 import { map, switchMap, take } from 'rxjs';
 import { Address } from 'src/app/app/api/address';
 import { Job } from 'src/app/app/api/job';
-import { CompareDto, UpdateUserDto } from 'src/app/app/models/service.dto';
+import { CompareDto, GalleryImage, JobImageDto, UpdateUserDto } from 'src/app/app/models/service.dto';
 import { AddressService } from 'src/app/app/service/address.service';
 import { CountryService } from 'src/app/app/service/country.service';
+import { JobImageService } from 'src/app/app/service/job-image.service';
 import { JobService } from 'src/app/app/service/job.service';
 import { InstrabajoService } from 'src/app/services/instrabajo.service';
 declare var google: any;
@@ -51,13 +52,35 @@ export class JobDetailComponent implements OnInit {
 
     faceMatch = false;
 
+    jobImages: any[] = [];
+
+    galleriaResponsiveOptions: any[] = [
+        {
+            breakpoint: '1024px',
+            numVisible: 5
+        },
+        {
+            breakpoint: '960px',
+            numVisible: 4
+        },
+        {
+            breakpoint: '768px',
+            numVisible: 3
+        },
+        {
+            breakpoint: '560px',
+            numVisible: 1
+        }
+    ];
+
     constructor(
         private countryService: CountryService,
         public instrabajoService: InstrabajoService,
         private messageService: MessageService,
         private jobService: JobService,
         private addressService: AddressService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private jobImagesService: JobImageService
     ) {
         this.options = {
             center: { lat: this.center.lat, lng: this.center.lng },
@@ -65,8 +88,8 @@ export class JobDetailComponent implements OnInit {
         };
     }
 
-    ngOnInit() {
-        this.instrabajoService.getLoggedUser
+    async ngOnInit() {
+        await this.instrabajoService.getLoggedUser
             .pipe(take(1))
             .subscribe((user: any) => {
                 this.user = user;
@@ -75,29 +98,32 @@ export class JobDetailComponent implements OnInit {
 
         const id = this.route.snapshot.paramMap.get('id')!;
 
-        this.jobService.getJobs().then((data) => {
-            this.jobs = data;
-            this.job = this.jobs.filter((job) => (job._id = id))[0];
-            this.addressService.getAddresss().then((data) => {
-                this.addresss = data;
-                this.address = this.addresss.filter(
-                    (address) => (address._id = this.job.address)
-                )[0];
-
-                this.center = {
-                    lat: this.address.lat!,
-                    lng: this.address.lng!,
-                };
-                this.overlays = [
-                    new google.maps.Marker({
-                        position: this.center,
-                        title: this.address.name,
-                    }),
-                ];
-                this.options.center = this.center;
-                this.options.zoom = 14;
+        this.jobService
+            .getJobById(id)
+            .pipe(take(1))
+            .subscribe((job: any) => {
+                this.job = job;
+                this.loadImages();
+                this.addressService
+                    .getAddressById(this.job.address!)
+                    .pipe(take(1))
+                    .subscribe((data: any) => {
+                        console.log(data)
+                        this.address = data;
+                        this.center = {
+                            lat: +this.address.lat!,
+                            lng: +this.address.lng!,
+                        };
+                        this.overlays = [
+                            new google.maps.Marker({
+                                position: this.center,
+                                title: this.address.name,
+                            }),
+                        ];
+                        this.options.center = this.center;
+                        this.options.zoom = 14;
+                    });
             });
-        });
 
         this.skills = [
             { label: 'ELECTRONIC', value: 'ELECTRONIC' },
@@ -159,6 +185,23 @@ export class JobDetailComponent implements OnInit {
         }
 
         this.filteredCountries = filtered;
+    }
+
+    loadImages(){
+
+        this.jobImages = [];
+        this.jobImagesService.getJobImages(this.job._id)
+        .pipe(take(1))
+        .subscribe((data: JobImageDto[]) => {
+            data.forEach((jobImage: JobImageDto) => {
+                let image: GalleryImage = {};
+                image.itemImageSrc = jobImage.imageKey;
+                image.thumbnailImageSrc = jobImage.imageKey;
+                image.alt = 'alt';
+                image.title = 'Job Image';
+                this.jobImages.push(image);
+            });
+        });
     }
 
     cancelJob() {

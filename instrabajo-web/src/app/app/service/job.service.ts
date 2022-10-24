@@ -113,6 +113,22 @@ export class JobService {
             );
     }
 
+    getJobById(id: string) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        });
+        return this.http
+            .get<any>(environment.instrabajoURL + `jobs/job/${id}`, {
+                headers: headers,
+            })
+            .pipe(
+                catchError((error: HttpErrorResponse) =>
+                    this.errorHandlerService.handleError(error)
+                )
+            );
+    }
+
     removeJob(jobId: any) {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',

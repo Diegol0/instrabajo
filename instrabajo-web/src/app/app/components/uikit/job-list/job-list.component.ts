@@ -124,6 +124,8 @@ export class JobListComponent implements OnInit {
         }
     }
 
+    // https://en.wikipedia.org/wiki/Haversine_formula
+    
     getDistanceFromLatLonInKm(
         lat1: string,
         lon1: string,

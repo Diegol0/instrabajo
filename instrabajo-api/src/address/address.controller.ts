@@ -25,10 +25,10 @@ export class AddressController {
     return this.addressService.findAll();
   }
 
-  /*@Get(':id')
+  @Get('address/:id')
   findOne(@Param('id') id: string) {
-    return this.addressService.findOne(+id);
-  }*/
+    return this.addressService.findOne(id);
+  }
 
   @Get(':userId')
   findByEmployer(@Param('userId') id: string) {
@@ -36,8 +36,8 @@ export class AddressController {
   }
 
   @Patch()
-  update( @Body() adressDto: AddressDTO) {
-    return this.addressService.update( adressDto);
+  update(@Body() adressDto: AddressDTO) {
+    return this.addressService.update(adressDto);
   }
 
   @Delete(':id')

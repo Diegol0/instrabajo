@@ -146,7 +146,7 @@
             </div>
         </div>
 
-        <div class="card">
+        <div *ngIf="address" class="card">
             <h5>Address</h5>
             <div class="grid formgrid">
                 <div class="col-12">
@@ -230,36 +230,6 @@
 
     <div class="col-12 md:col-6">
         <div class="card">
-            <h5>Conversation</h5>
-
-            <p-divider align="left">
-                <span class="p-tag">Employee - 2 days ago</span>
-            </p-divider>
-            <p>
-                I want to change the fixed rate to GTQ250.00 since this is a
-                very complicated job.
-            </p>
-
-            <p-divider align="right">
-                <span class="p-tag">Employer - 2 days ago</span>
-            </p-divider>
-            <p align="right">I can go up to QTG220.00, that's all my bugdet.</p>
-
-            <p-divider align="left">
-                <span class="p-tag">Employee - 1 days ago</span>
-            </p-divider>
-            <p>Allright I'll take it.</p>
-            <p-divider align="left">
-                <span></span>
-            </p-divider>
-            <div class="col-12">
-                <div class="p-inputgroup">
-                    <input type="text" pInputText placeholder="Message" />
-                    <button type="button" pButton pRipple label="Send"></button>
-                </div>
-            </div>
-        </div>
-        <div class="card">
             <div class="grid">
                 <div class="col-12 md:col-6">
                     <h5>Employer Rating</h5>
@@ -305,7 +275,8 @@
                         use the option below to scan the employee's face.
                     </h6>
                     <h6 *ngIf="faceMatch">This person has been verified! ✅</h6>
-                    <input *ngIf="!faceMatch"
+                    <input
+                        *ngIf="!faceMatch"
                         type="file"
                         id="file"
                         (change)="onBasicUpload($event.target)"
@@ -316,6 +287,76 @@
                         *ngIf="photo"
                         src="{{ photo }}"
                     />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12" *ngIf="jobImages.length > 0">
+        <div class="card">
+            <h5>Job Images</h5>
+            <p-galleria
+                [value]="jobImages"
+                [responsiveOptions]="galleriaResponsiveOptions"
+                [containerStyle]="{
+                    'max-width': '100%',
+                    margin: 'auto',
+                    background: 'black'
+                }"
+                [numVisible]="6"
+                [circular]="true"
+            >
+                <ng-template pTemplate="item" let-item>
+                    <img
+                        [src]="item.itemImageSrc"
+                        style="
+                            max-height: 400px;
+                            max-width: 400px;
+                            display: block;
+                        "
+                    />
+                </ng-template>
+                <ng-template pTemplate="thumbnail" let-item>
+                    <div class="grid nogutter justify-center">
+                        <img
+                            [src]="item.thumbnailImageSrc"
+                            style="
+                                max-height: 100px;
+                                max-width: 100px;
+                                display: block;
+                            "
+                        />
+                    </div>
+                </ng-template>
+            </p-galleria>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <h5>Conversation</h5>
+            <p-divider align="left">
+                <span class="p-tag">Employee - 2 days ago</span>
+            </p-divider>
+            <p>
+                I want to change the fixed rate to GTQ250.00 since this is a
+                very complicated job.
+            </p>
+
+            <p-divider align="right">
+                <span class="p-tag">Employer - 2 days ago</span>
+            </p-divider>
+            <p align="right">I can go up to QTG220.00, that's all my bugdet.</p>
+
+            <p-divider align="left">
+                <span class="p-tag">Employee - 1 days ago</span>
+            </p-divider>
+            <p>Allright I'll take it.</p>
+            <p-divider align="left">
+                <span></span>
+            </p-divider>
+            <div class="col-12">
+                <div class="p-inputgroup">
+                    <input type="text" pInputText placeholder="Message" />
+                    <button type="button" pButton pRipple label="Send"></button>
                 </div>
             </div>
         </div>

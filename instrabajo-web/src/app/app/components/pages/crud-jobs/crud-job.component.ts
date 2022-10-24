@@ -28,7 +28,7 @@ export class CrudJobComponent implements OnInit {
 
     jobs: Job[] = [];
 
-    addresss: Job[] = [];
+    addresss: any[] = [];
 
     job: JobDto = {};
 
@@ -255,6 +255,7 @@ export class CrudJobComponent implements OnInit {
             this.job.fixedRate = undefined;
         }
 
+        
         if (this.job.name?.trim()) {
             if (this.job._id) {
                 // update job
