@@ -34,6 +34,16 @@ export class JobsController {
     return this.jobsService.findByEmployer(id);
   }
 
+  @Get('employee/:userId')
+  findByEmployee(@Param('userId') id: string) {
+    return this.jobsService.findByEmployee(id);
+  }
+
+  @Get('status/:status')
+  findByStatus(@Param('status') status: string) {
+    return this.jobsService.findByStatus(status);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateJobDto: CreateJobDto) {
     return this.jobsService.update(+id, updateJobDto);

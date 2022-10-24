@@ -93,7 +93,7 @@ export class CrudJobComponent implements OnInit {
 
     loadJobs(){
         this.jobService
-            .getUserJobs(this.user._id)
+            .getEmployerJobs(this.user._id)
             .pipe(take(1))
             .subscribe((data: any) => {
                 this.jobs = data
