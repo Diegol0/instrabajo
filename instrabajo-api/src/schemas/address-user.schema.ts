@@ -18,7 +18,7 @@ export class AddressUser {
   @Prop({ required: true })
   addressLine1: string;
 
-  @Prop({ required: true })
+  @Prop()
   addressLine2: string;
 
   @Prop({ required: true })

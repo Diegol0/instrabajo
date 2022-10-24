@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Product } from '../../api/product';
 import { ProductService } from '../../service/product.service';
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { Job } from '../../api/job';
 import { JobService } from '../../service/job.service';
@@ -10,7 +10,6 @@ import { ReviewService } from 'src/app/app/service/review.service';
 import { InstrabajoService } from 'src/app/services/instrabajo.service';
 import { MessagesService } from 'src/app/app/service/message.service';
 import { Review } from 'src/app/app/api/review';
-import { map, switchMap, take } from 'rxjs';
 @Component({
     templateUrl: './dashboard.component.html',
 })
@@ -69,6 +68,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.messages = data.length
             
         });
+
+        this.jobService
+        .getJobsByStatus('AVAILABLE')
+        .pipe(take(1))
+        .subscribe((jobs: any) => {
+            this.jobs = jobs.slice(0,3);
+        });
+
         this.initChart();
         this.productService.getProductsSmall().then(data => this.products = data);
 

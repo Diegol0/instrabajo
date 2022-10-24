@@ -4,13 +4,13 @@
                 <div class="flex justify-content-between mb-3">
                     <div>
                         <span class="block text-500 font-medium mb-3">Total Jobs</span>
-                        <div class="text-900 font-medium text-xl">3</div>
+                        <div class="text-900 font-medium text-xl">{{jobs.length}}</div>
                     </div>
                     <div class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
                         <i class="pi pi-briefcase text-blue-500 text-xl"></i>
                     </div>
                 </div>
-                <span class="text-green-500 font-medium">1 new </span>
+                <span class="text-green-500 font-medium">Available </span>
                 <span class="text-500">today</span>
             </div>
         </div>
@@ -19,14 +19,14 @@
                 <div class="flex justify-content-between mb-3">
                     <div>
                         <span class="block text-500 font-medium mb-3">Jobs near you</span>
-                        <div class="text-900 font-medium text-xl">1</div>
+                        <div class="text-900 font-medium text-xl">{{jobs.length}}</div>
                     </div>
                     <div class="flex align-items-center justify-content-center bg-orange-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
                         <i class="pi pi-map-marker text-orange-500 text-xl"></i>
                     </div>
                 </div>
-                <span class="text-green-500 font-medium">3KM </span>
-                <span class="text-500">from your location</span>
+                <span class="text-green-500 font-medium">near </span>
+                <span class="text-500"> your location</span>
             </div>
         </div>
         <div class="col-12 lg:col-6 xl:col-3">

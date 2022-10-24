@@ -76,8 +76,8 @@
                         </td>
                         <td>
                             <div class="flex">
-                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editJob(job)"></button>
-                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mr-2" (click)="deleteJob(job)"></button>
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" *ngIf="job.status !== 'COMPLETED'" (click)="editJob(job)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mr-2" *ngIf="job.status !== 'COMPLETED' || job.status !== 'PENDING'" (click)="deleteJob(job)"></button>
                                 <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-info" [disabled]="job.status == 'NEW' || job.status == 'AVAILABLE'" (click)="viewJob(job)"></button>
                             </div>
                         </td>
