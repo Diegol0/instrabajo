@@ -87,6 +87,22 @@ export class InstrabajoService {
             );
     }
 
+    getUser(id: string) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        });
+        return this.http
+            .get<any>(environment.instrabajoURL + `users/${id}`, {
+                headers: headers,
+            })
+            .pipe(
+                catchError((error: HttpErrorResponse) =>
+                    this.errorHandlerService.handleError(error)
+                )
+            );
+    }
+
     compare(compare: CompareDto) {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',

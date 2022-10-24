@@ -58,7 +58,7 @@
 							<div class="flex align-items-center justify-content-between">
 								<span class="text-2xl font-semibold">GTQ{{job.hourlyRate? job.hourlyRate : job.fixedRate}}</span>
 								<p-button *ngIf="job.status == 'AVAILABLE' && job.employer != user._id" icon="pi pi-check-circle" (click)="applyJob(job)"></p-button>
-								<p-button *ngIf="job.status == 'PENDING'" icon="pi pi-eye" (click)="viewJob(job)"></p-button>
+								<p-button *ngIf="job.status == 'PENDING' || job.status == 'ACCEPTED' || job.status == 'COMPLETED'" icon="pi pi-eye" (click)="viewJob(job)"></p-button>
 							</div>
 						</div>
 					</div>
