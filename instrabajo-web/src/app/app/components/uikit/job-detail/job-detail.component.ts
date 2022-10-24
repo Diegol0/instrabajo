@@ -197,6 +197,10 @@ export class JobDetailComponent implements OnInit {
                 .subscribe((data: any) => {
                     this.messages = data;
                 });
+                this.messagesService.updateReadMessages(job._id,this.user._id).pipe(take(1))
+                    .subscribe((data: any) => {
+                
+                });
                 this.loadImages();
                 if (job.employee) {
                     this.instrabajoService

@@ -9,11 +9,11 @@ export class Review {
   @Prop()
   userId: string;
   @Prop()
+  jobId: string;
+  @Prop()
   nameJob: string;   
-
   @Prop()
   Comment: string;
-
   @Prop()
   stars: number;
 

@@ -78,6 +78,7 @@ export interface AddressDto {
 export interface ReviewDto {
     _id?: string | null;
     userId?: string | null;
+    jobId?:string | null;
     nameJob?: string | null;
     Comment?: string | null;
     stars?: number | null;

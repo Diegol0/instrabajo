@@ -5,7 +5,7 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
+  Delete
 } from '@nestjs/common';
 import { MessageService } from './message.service';
 import { MessageDTO } from './dto/create-message.dto';
@@ -35,7 +35,7 @@ export class MessageController {
     return this.messageService.findByJobId(id);
   }
   
-  @Patch('readMessages/:jobId/:userId')
+  @Get('readMessages/:jobId/:userId')
   readMessages(@Param('jobId') jobId: string,@Param('userId') userId: string) {
     return this.messageService.readMessagesByUserId( jobId, userId);
   }
