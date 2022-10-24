@@ -25,16 +25,7 @@ declare var google: any;
 @Component({
     templateUrl: './job-detail.component.html',
     providers: [MessageService],
-    styles: [
-        `
-            .center {
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-                width: 50%;
-            }
-        `,
-    ],
+    styleUrls: ['./job-detail.component.scss']
 })
 export class JobDetailComponent implements OnInit {
     countries: any[] = [];
@@ -119,7 +110,7 @@ export class JobDetailComponent implements OnInit {
             zoom: 12,
         };
 
-        const source = interval(5000);
+        const source = interval(2000);
         const text = 'Your Text Here';
         this.subscription = source.subscribe((val) => {
             if (this.job._id) {
@@ -200,7 +191,12 @@ export class JobDetailComponent implements OnInit {
             .pipe(take(1))
             .subscribe((job: any) => {
                 this.job = job;
-
+                this.messagesService
+                .getAllMessages(job._id)
+                .pipe(take(1))
+                .subscribe((data: any) => {
+                    this.messages = data;
+                });
                 this.loadImages();
                 if (job.employee) {
                     this.instrabajoService

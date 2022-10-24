@@ -486,9 +486,11 @@
     <div class="col-12">
         <div class="card">
             <h5>Conversation</h5>
-            <li *ngFor="let message of messages">
-                UserID: {{message.fromUserId}} Message: {{message.message}}
-            </li>
+            <div *ngFor="let message of messages" class="imessage">
+                <p class="from-them" *ngIf="message.fromUserId != user._id">{{message.message}}</p>
+                <p class="from-me" *ngIf="message.fromUserId == user._id">{{message.message}}</p>
+            </div>
+
             <div class="p-inputgroup">
                 <input type="text" pInputText placeholder="Message" [(ngModel)]="mess.message"/>
                 <button type="button" pButton pRipple label="Send" (click)="sendMessage()"></button>
