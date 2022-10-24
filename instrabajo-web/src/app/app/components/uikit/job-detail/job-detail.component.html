@@ -491,7 +491,7 @@
                 <p class="from-me" *ngIf="message.fromUserId == user._id">{{message.message}}</p>
             </div>
 
-            <div class="p-inputgroup">
+            <div class="p-inputgroup" *ngIf="job.status == 'COMPLETED'">
                 <input type="text" pInputText placeholder="Message" [(ngModel)]="mess.message"/>
                 <button type="button" pButton pRipple label="Send" (click)="sendMessage()"></button>
             </div>
