@@ -14,6 +14,7 @@ import { PhotoService } from './app/service/photo.service';
 import { AddressService } from './app/service/address.service';
 import { JobService } from './app/service/job.service';
 import { ReviewService } from './app/service/review.service';
+import { MessagesService } from './app/service/message.service';
 import { InstrabajoService } from './services/instrabajo.service';
 import { JobImageService } from './app/service/job-image.service';
 
@@ -29,7 +30,8 @@ import { JobImageService } from './app/service/job-image.service';
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService, JobImageService,
-        PhotoService, ProductService, AddressService, JobService, ReviewService, InstrabajoService
+        PhotoService, ProductService, AddressService, JobService, ReviewService, InstrabajoService, 
+        MessagesService
     ],
     bootstrap: [AppComponent]
 })

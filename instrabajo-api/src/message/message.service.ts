@@ -33,6 +33,21 @@ export class MessageService {
     return await this.messageModel.find({ userId: userId }).exec();
   }
 
+  async findByToUserAndUnread(userId: string) {
+    //return "UserId"+userId;
+    return await this.messageModel.find({ toUserId: userId, read:false }).exec();
+  }
+
+  async findByJobId(jobId: string,) {
+    //return "UserId"+userId;
+    return await this.messageModel.find({ jobId: jobId}).exec();
+  }
+
+  async readMessagesByUserId(jobId: string, userId: string) {
+    //return "UserId"+userId;
+    return await this.messageModel.updateMany({jobId:jobId,toUserId:userId},{$set: {read:true}}).exec;
+  }
+
   async update(addressDto: MessageDTO) {
     return  await this.messageModel
       .findOneAndUpdate({ _id: addressDto._id }, addressDto)

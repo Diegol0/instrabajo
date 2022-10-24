@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { MessageService, SelectItem } from 'primeng/api';
+import { MessagesService } from 'src/app/app/service/message.service';
 import { map, switchMap, take } from 'rxjs';
 import { Address } from 'src/app/app/api/address';
 import { Job } from 'src/app/app/api/job';
@@ -10,6 +11,7 @@ import { AddressService } from 'src/app/app/service/address.service';
 import { CountryService } from 'src/app/app/service/country.service';
 import { JobService } from 'src/app/app/service/job.service';
 import { InstrabajoService } from 'src/app/services/instrabajo.service';
+import { Message } from 'src/app/app/api/message';
 declare var google: any;
 
 @Component({
@@ -18,6 +20,8 @@ declare var google: any;
 })
 export class JobDetailComponent implements OnInit {
     countries: any[] = [];
+    messages: Message[] = [];
+    mess: Message = {};
     user: any = {};
     filteredCountries: any[] = [];
     selectedCountryAdvanced: any[] = [];
@@ -57,7 +61,8 @@ export class JobDetailComponent implements OnInit {
         private messageService: MessageService,
         private jobService: JobService,
         private addressService: AddressService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private messagesService: MessagesService
     ) {
         this.options = {
             center: { lat: this.center.lat, lng: this.center.lng },
@@ -71,6 +76,10 @@ export class JobDetailComponent implements OnInit {
             .subscribe((user: any) => {
                 this.user = user;
                 console.log(user);
+            });
+        this.messagesService.getAllMessages("63536a17291618b0f18c5915").pipe(take(1))
+            .subscribe((data: any) => {
+                this.messages = data;
             });
 
         const id = this.route.snapshot.paramMap.get('id')!;
@@ -159,6 +168,20 @@ export class JobDetailComponent implements OnInit {
         }
 
         this.filteredCountries = filtered;
+    }
+
+    sendMessage(msj: string){
+        this.mess.jobId="63536a17291618b0f18c5915"
+        this.mess.fromUserId=this.user._id;
+        this.mess.toUserId=this.user._id === "63536a17291618b0f18c5915"?"6351e55ddf64558c4378fe64":"63536a17291618b0f18c5915";
+        this.mess.message = msj;
+        this.mess.read=false;
+        this.messagesService.createMessage(this.mess).pipe(take(1))
+                .subscribe((data: any) => {
+                    if (data) {
+                        console.log("_id: "+data._id);
+                    }
+                });
     }
 
     cancelJob() {

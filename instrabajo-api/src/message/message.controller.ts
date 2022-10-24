@@ -25,9 +25,19 @@ export class MessageController {
     return this.messageService.findAll();
   }
 
-  @Get(':userId')
+  @Get('unreadMessages/:userId')
   findByEmployer(@Param('userId') id: string) {
-    return this.messageService.findByUser(id);
+    return this.messageService.findByToUserAndUnread(id);
+  }
+
+  @Get('findByJobId/:jobId')
+  findByJobId(@Param('jobId') id: string) {
+    return this.messageService.findByJobId(id);
+  }
+  
+  @Patch('readMessages/:jobId/:userId')
+  readMessages(@Param('jobId') jobId: string,@Param('userId') userId: string) {
+    return this.messageService.readMessagesByUserId( jobId, userId);
   }
 
   @Patch()

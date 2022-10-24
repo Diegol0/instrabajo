@@ -7,22 +7,18 @@ export type MessageDocument = Message & Document;
 export class Message {
 
   @Prop({ required: true })
-  addressLine1: string;
+  jobId: string;
 
   @Prop({ required: true })
-  addressLine2: string;
+  fromUserId: string;
+  @Prop({ required: true })
+  toUserId: string;
 
   @Prop({ required: true })
-  city: string;
-
-  @Prop({ required: true })
-  country: string;
+  message: string;
 
   @Prop()
-  lat: number;
-
-  @Prop()
-  lng: number;
+  read: boolean;
 }
 
 export const MessageSchema = SchemaFactory.createForClass(Message);

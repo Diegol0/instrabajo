@@ -6,7 +6,11 @@ import { Subscription } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { Job } from '../../api/job';
 import { JobService } from '../../service/job.service';
-
+import { ReviewService } from 'src/app/app/service/review.service';
+import { InstrabajoService } from 'src/app/services/instrabajo.service';
+import { MessagesService } from 'src/app/app/service/message.service';
+import { Review } from 'src/app/app/api/review';
+import { map, switchMap, take } from 'rxjs';
 @Component({
     templateUrl: './dashboard.component.html',
 })
@@ -24,15 +28,47 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     subscription!: Subscription;
 
-    constructor(private productService: ProductService, public layoutService: LayoutService,
-        private jobService: JobService) {
+    totalReviews:any;
+    reviews: Review[] = [];
+
+    review: any;
+    user:any;
+    messages: any;
+
+    constructor(
+        private productService: ProductService, 
+        public layoutService: LayoutService, 
+        private reviewService:ReviewService,
+        private instrabajoService: InstrabajoService,
+        private jobService: JobService,
+        private messageService: MessagesService) {
         this.subscription = this.layoutService.configUpdate$.subscribe(() => {
             this.initChart();
         });
     }
 
     ngOnInit() {
+        this.instrabajoService.getLoggedUser
+            .pipe(take(1))
+            .subscribe((user: any) => {
+                this.user = user;
+            });
+
         this.jobService.getJobs().then((data) => (this.jobs = data));
+        this.reviewService.getReviews(this.user._id).pipe(take(1))
+        .subscribe((data: any) => {
+            this.reviews = data
+            this.totalReviews = this.reviews.length
+            let sum = 0;
+            this.reviews.forEach(review=> sum += review.stars!);
+            this.review = sum/this.reviews.length;
+        });
+
+        this.messageService.getUnreadMessages(this.user._id).pipe(take(1))
+        .subscribe((data: any) => {
+            this.messages = data.length
+            
+        });
         this.initChart();
         this.productService.getProductsSmall().then(data => this.products = data);
 

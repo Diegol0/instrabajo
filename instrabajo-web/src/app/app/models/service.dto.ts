@@ -74,3 +74,12 @@ export interface AddressDto {
     lat?: string | null;
     lng?: string | null;
 }
+
+export interface MessageDto {
+    _id?: string | null;
+    jobId?: string | null;
+    fromUserId?: string | null;
+    toUserId?: string | null;
+    message?: string | null;
+    read?: boolean | null;
+}

@@ -2,8 +2,8 @@ export class MessageDTO {
   
   _id?: string;
   jobId?: string;
-  userId?: string;
+  fromUserId?: string;
+  toUserId?: string;
   message?: string;
-  date?: string;
   read?: boolean;
 }

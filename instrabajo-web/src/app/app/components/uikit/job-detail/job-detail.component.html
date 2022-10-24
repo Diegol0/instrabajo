@@ -231,8 +231,14 @@
     <div class="col-12 md:col-6">
         <div class="card">
             <h5>Conversation</h5>
-
-            <p-divider align="left">
+            <li *ngFor="let message of messages">
+                UserID: {{message.fromUserId}} Message: {{message.message}}
+            </li>
+            <div class="p-inputgroup">
+                <input type="text" pInputText placeholder="Message" name="msj"/>
+                
+            </div>
+            <!--<p-divider align="left">
                 <span class="p-tag">Employee - 2 days ago</span>
             </p-divider>
             <p>
@@ -257,7 +263,7 @@
                     <input type="text" pInputText placeholder="Message" />
                     <button type="button" pButton pRipple label="Send"></button>
                 </div>
-            </div>
+            </div>-->
         </div>
         <div class="card">
             <div class="grid">
