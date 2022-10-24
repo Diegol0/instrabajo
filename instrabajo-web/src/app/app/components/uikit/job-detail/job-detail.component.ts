@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { MessageService, SelectItem } from 'primeng/api';
 import { MessagesService } from 'src/app/app/service/message.service';
-import { map, switchMap, take } from 'rxjs';
+import { interval, map, Subscription, switchMap, take } from 'rxjs';
 import { Address } from 'src/app/app/api/address';
 import { Review } from 'src/app/app/api/review';
 import { Job } from 'src/app/app/api/job';
@@ -82,6 +82,8 @@ export class JobDetailComponent implements OnInit {
     employer: any = {};
     employee: any = {};
 
+    subscription: Subscription;
+
     galleriaResponsiveOptions: any[] = [
         {
             breakpoint: '1024px',
@@ -116,6 +118,19 @@ export class JobDetailComponent implements OnInit {
             center: { lat: this.center.lat, lng: this.center.lng },
             zoom: 12,
         };
+
+        const source = interval(5000);
+        const text = 'Your Text Here';
+        this.subscription = source.subscribe((val) => {
+            if (this.job._id) {
+                this.messagesService
+                    .getAllMessages(this.job._id)
+                    .pipe(take(1))
+                    .subscribe((data: any) => {
+                        this.messages = data;
+                    });
+            }
+        });
     }
 
     async ngOnInit() {
@@ -125,7 +140,6 @@ export class JobDetailComponent implements OnInit {
                 this.user = user;
                 console.log(user);
             });
-        
 
         this.id = await this.route.snapshot.paramMap.get('id')!;
 
@@ -186,10 +200,7 @@ export class JobDetailComponent implements OnInit {
             .pipe(take(1))
             .subscribe((job: any) => {
                 this.job = job;
-                this.messagesService.getAllMessages(job._id).pipe(take(1))
-                    .subscribe((data: any) => {
-                    this.messages = data;
-                });
+
                 this.loadImages();
                 if (job.employee) {
                     this.instrabajoService
@@ -243,18 +254,23 @@ export class JobDetailComponent implements OnInit {
         this.filteredCountries = filtered;
     }
 
-    sendMessage(){
-        this.mess.jobId=this.job._id;
-        this.mess.fromUserId=this.user._id;
-        this.mess.toUserId=this.user._id == this.job.employer? this.job.employee : this.job.employer;
-        this.mess.read=false;
-        this.messagesService.createMessage(this.mess).pipe(take(1))
-                .subscribe((data: any) => {
-                    if (data) {
-                        console.log("_id: "+data._id);
-                    }
-                    this.loadJob();
-                });
+    sendMessage() {
+        this.mess.jobId = this.job._id;
+        this.mess.fromUserId = this.user._id;
+        this.mess.toUserId =
+            this.user._id == this.job.employer
+                ? this.job.employee
+                : this.job.employer;
+        this.mess.read = false;
+        this.messagesService
+            .createMessage(this.mess)
+            .pipe(take(1))
+            .subscribe((data: any) => {
+                if (data) {
+                    console.log('_id: ' + data._id);
+                }
+                this.loadJob();
+            });
     }
     loadImages() {
         this.jobImages = [];
@@ -329,21 +345,26 @@ export class JobDetailComponent implements OnInit {
             });
     }
 
-    createReview(){
-        this.review.nameJob=this.job.name;
-        this.review.userId = this.user._id == this.job.employer? this.job.employee : this.job.employer;
-        this.reviewService.createReview(this.review).pipe(take(1))
-                .subscribe((data: any) => {
-                    if (data) {
-                        console.log("_id: "+data._id);
-                    }
-                    this.messageService.add({
-                        severity: 'success',
-                        summary: 'Successful',
-                        detail: 'Thank you for your review',
-                        life: 3000,
-                    });
+    createReview() {
+        this.review.nameJob = this.job.name;
+        this.review.userId =
+            this.user._id == this.job.employer
+                ? this.job.employee
+                : this.job.employer;
+        this.reviewService
+            .createReview(this.review)
+            .pipe(take(1))
+            .subscribe((data: any) => {
+                if (data) {
+                    console.log('_id: ' + data._id);
+                }
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'Thank you for your review',
+                    life: 3000,
                 });
+            });
     }
 
     compare() {
@@ -375,5 +396,9 @@ export class JobDetailComponent implements OnInit {
                     detail: 'User updated',
                 });
             });
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 }
