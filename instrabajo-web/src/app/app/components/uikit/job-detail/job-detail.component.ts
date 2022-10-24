@@ -365,7 +365,7 @@ export class JobDetailComponent implements OnInit {
 
     compare() {
         let compare: CompareDto = {
-            source: this.user.photo,
+            source: this.employee.photo,
             target: this.photo!,
         };
 
@@ -373,6 +373,7 @@ export class JobDetailComponent implements OnInit {
             .compare(compare)
             .pipe(take(1))
             .subscribe((data: any) => {
+                debugger
                 console.log(data);
                 if (
                     data.payload.FaceMatches &&
