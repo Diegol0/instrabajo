@@ -5,6 +5,7 @@ import { MessageService, SelectItem } from 'primeng/api';
 import { MessagesService } from 'src/app/app/service/message.service';
 import { map, switchMap, take } from 'rxjs';
 import { Address } from 'src/app/app/api/address';
+import { Review } from 'src/app/app/api/review';
 import { Job } from 'src/app/app/api/job';
 import {
     CompareDto,
@@ -17,6 +18,7 @@ import { CountryService } from 'src/app/app/service/country.service';
 import { JobImageService } from 'src/app/app/service/job-image.service';
 import { JobService } from 'src/app/app/service/job.service';
 import { InstrabajoService } from 'src/app/services/instrabajo.service';
+import { ReviewService } from 'src/app/app/service/review.service';
 import { Message } from 'src/app/app/api/message';
 declare var google: any;
 
@@ -39,6 +41,7 @@ export class JobDetailComponent implements OnInit {
     messages: Message[] = [];
     mess: Message = {};
     user: any = {};
+    review: Review = {};
     filteredCountries: any[] = [];
     selectedCountryAdvanced: any[] = [];
     options: any;
@@ -106,7 +109,8 @@ export class JobDetailComponent implements OnInit {
         private addressService: AddressService,
         private route: ActivatedRoute,
         private messagesService: MessagesService,
-        private jobImagesService: JobImageService
+        private jobImagesService: JobImageService,
+        private reviewService: ReviewService
     ) {
         this.options = {
             center: { lat: this.center.lat, lng: this.center.lng },
@@ -121,10 +125,7 @@ export class JobDetailComponent implements OnInit {
                 this.user = user;
                 console.log(user);
             });
-        this.messagesService.getAllMessages("63536a17291618b0f18c5915").pipe(take(1))
-            .subscribe((data: any) => {
-                this.messages = data;
-            });
+        
 
         this.id = await this.route.snapshot.paramMap.get('id')!;
 
@@ -185,6 +186,10 @@ export class JobDetailComponent implements OnInit {
             .pipe(take(1))
             .subscribe((job: any) => {
                 this.job = job;
+                this.messagesService.getAllMessages(job._id).pipe(take(1))
+                    .subscribe((data: any) => {
+                    this.messages = data;
+                });
                 this.loadImages();
                 if (job.employee) {
                     this.instrabajoService
@@ -238,17 +243,17 @@ export class JobDetailComponent implements OnInit {
         this.filteredCountries = filtered;
     }
 
-    sendMessage(msj: string){
+    sendMessage(){
         this.mess.jobId=this.job._id;
         this.mess.fromUserId=this.user._id;
         this.mess.toUserId=this.user._id == this.job.employer? this.job.employee : this.job.employer;
-        this.mess.message = msj;
         this.mess.read=false;
         this.messagesService.createMessage(this.mess).pipe(take(1))
                 .subscribe((data: any) => {
                     if (data) {
                         console.log("_id: "+data._id);
                     }
+                    this.loadJob();
                 });
     }
     loadImages() {
@@ -322,6 +327,23 @@ export class JobDetailComponent implements OnInit {
                 this.photo = data.payload.url;
                 this.compare();
             });
+    }
+
+    createReview(){
+        this.review.nameJob=this.job.name;
+        this.review.userId = this.user._id == this.job.employer? this.job.employee : this.job.employer;
+        this.reviewService.createReview(this.review).pipe(take(1))
+                .subscribe((data: any) => {
+                    if (data) {
+                        console.log("_id: "+data._id);
+                    }
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'Thank you for your review',
+                        life: 3000,
+                    });
+                });
     }
 
     compare() {

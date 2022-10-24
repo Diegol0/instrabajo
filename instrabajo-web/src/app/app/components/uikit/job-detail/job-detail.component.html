@@ -81,7 +81,7 @@
             <p>It's time to rate this Employer</p>
             <div class="col-12">
                 <h5>Employer Rating</h5>
-                <p-rating></p-rating>
+                <p-rating [(ngModel)]="review.stars"></p-rating>
             </div>
             <div class="col-12 md:col-6">
                 <label for="description">Comment</label>
@@ -90,7 +90,9 @@
                     pInputTextarea
                     rows="3"
                     cols="20"
+                    [(ngModel)]="review.Comment"
                 ></textarea>
+                <button type="button" pButton pRipple label="Rate" (click)="createReview()"></button>
             </div>
         </div>
     </div>
@@ -104,7 +106,7 @@
             <p>It's time to rate this Employee</p>
             <div class="col-12">
                 <h5>Employee Rating</h5>
-                <p-rating></p-rating>
+                <p-rating [(ngModel)]="review.stars"></p-rating>
             </div>
             <div class="col-12 md:col-6">
                 <label for="description">Comment</label>
@@ -113,8 +115,10 @@
                     pInputTextarea
                     rows="3"
                     cols="20"
+                    [(ngModel)]="review.Comment"
                 ></textarea>
             </div>
+            <button type="button" pButton pRipple label="Rate" (click)="createReview()"></button>
         </div>
     </div>
 
@@ -486,8 +490,8 @@
                 UserID: {{message.fromUserId}} Message: {{message.message}}
             </li>
             <div class="p-inputgroup">
-                <input type="text" pInputText placeholder="Message" name="msj"/>
-                
+                <input type="text" pInputText placeholder="Message" [(ngModel)]="mess.message"/>
+                <button type="button" pButton pRipple label="Rate" (click)="sendMessage()"></button>
             </div>
             
             <!--<h5>Conversation</h5>

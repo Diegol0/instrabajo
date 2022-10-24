@@ -75,6 +75,14 @@ export interface AddressDto {
     lng?: string | null;
 }
 
+export interface ReviewDto {
+    _id?: string | null;
+    userId?: string | null;
+    nameJob?: string | null;
+    Comment?: string | null;
+    stars?: number | null;
+}
+
 export interface MessageDto {
     _id?: string | null;
     jobId?: string | null;

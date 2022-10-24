@@ -1,11 +1,20 @@
-import { HttpClient } from '@angular/common/http';
+import {
+    HttpClient,
+    HttpErrorResponse,
+    HttpHeaders,
+    HttpParams,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Review } from '../api/review';
+import { BehaviorSubject, catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { UserDto, ReviewDto } from 'src/app/app/models/service.dto';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+
 
 @Injectable()
 export class ReviewService {
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private errorHandlerService:ErrorHandlerService) {}
 
     getReviewsSmall() {
         return this.http
@@ -13,6 +22,15 @@ export class ReviewService {
             .toPromise()
             .then((res) => res.data as Review[])
             .then((data) => data);
+    }
+    createReview(review: Review) {
+        return this.http
+            .post<ReviewDto>(environment.instrabajoURL + 'review', review)
+            .pipe(
+                catchError((error: HttpErrorResponse) =>
+                    this.errorHandlerService.handleError(error)
+                )
+            );
     }
 
     getReviews(userId: string) {
