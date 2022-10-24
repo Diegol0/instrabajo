@@ -7,9 +7,9 @@ export type ReviewDocument = Review & Document;
 export class Review {
 
   @Prop()
-  userId: number;
+  userId: string;
   @Prop()
-  jobId: number;   
+  nameJob: string;   
 
   @Prop()
   Comment: string;
