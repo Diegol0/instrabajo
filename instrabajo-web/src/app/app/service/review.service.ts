@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Review } from '../api/review';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class ReviewService {
@@ -14,13 +15,17 @@ export class ReviewService {
             .then((data) => data);
     }
 
-    getReviews() {
+    getReviews(userId: string) {
         return this.http
+        .get<any>(environment.instrabajoURL + 'review/'+userId);
+    }
+        /*return this.http
             .get<any>('assets/app/data/reviews.json')
             .toPromise()
             .then((res) => res.data as Review[])
-            .then((data) => data);
-    }
+            .then((data) => data);*/
+
+            
 
     getReviewsMixed() {
         return this.http

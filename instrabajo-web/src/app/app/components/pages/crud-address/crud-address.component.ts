@@ -18,6 +18,7 @@ declare var google: any;
 })
 export class CrudAddressComponent implements OnInit {
 
+    user: any;
     addressDialog: boolean = false;
 
     deleteAddressDialog: boolean = false;
@@ -68,22 +69,27 @@ export class CrudAddressComponent implements OnInit {
                 zoom: 12,
             };
         });
+
+        this.instrabajoService.getLoggedUser
+            .pipe(take(1))
+            .subscribe((user: any) => {
+                this.user = user;
+            });
         
     }
 
-    ngOnInit() {
-        this.instrabajoService.getLoggedUser?.pipe(take(1))
-        .subscribe((user: any) => {
-            if (user !==null) {
-                console.log(user);
+    loadAddress(){
+        
                 this.addressService
-                .getAddressByUser(user?._id)
-                .then((data) => (this.addresss = data));
-                this.userId = user._id;
-            }
+                .getAddressByUser(this.user._id).pipe(take(1))
+                .subscribe((data: any) => {
+                    this.addresss = data
+                });
+    }
+
+    ngOnInit() {
         
-        });
-        
+        this.loadAddress();
 
         this.cols = [
             { field: 'name', header: 'Name' },
@@ -186,15 +192,16 @@ export class CrudAddressComponent implements OnInit {
                         if (data) {
                             console.log("_id: "+data._id);
                         }
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: 'Successful',
+                            detail: 'Address Deleted',
+                            life: 3000,
+                        });
+                        this.loadAddress();
                     }); 
-        this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Address Deleted',
-            life: 3000,
-        });
+        
         this.address = {};
-        this.ngOnInit();
     }
 
     hideDialog() {
@@ -224,36 +231,39 @@ export class CrudAddressComponent implements OnInit {
                         if (data) {
                             console.log("_id: "+data._id);
                         }
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: 'Successful',
+                            detail: 'Address Updated',
+                            life: 3000,
+                        });
+                        this.loadAddress();
                     });   
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Address Updated',
-                    life: 3000,
-                });
+                
             } else {
-                this.address.userId = this.userId;
-                console.log("USER ID: "+this.userId);
+                this.address.userId = this.user._id;
                 this.addressService.createAdress(this.address).pipe(take(1))
                 .subscribe((data: any) => {
                     if (data) {
                         console.log("_id: "+data._id);
                     }
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'Address Created',
+                        life: 3000,
+                    });
+                    this.loadAddress();
                 });
                 
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Address Created',
-                    life: 3000,
-                });
+               
             }
 
             this.addresss = [...this.addresss];
             this.addressDialog = false;
             this.address = {};
         }
-        this.ngOnInit();
+       
     }
 
     findIndexById(id: string): number {

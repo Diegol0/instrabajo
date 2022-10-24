@@ -26,13 +26,13 @@
 				<ng-template pTemplate="body" let-review>
 					<tr>
 						<td style="min-width: 12rem;">
-							{{review.job}}
+							{{review.nameJob}}
 						</td>
 						<td style="min-width: 12rem;">
 							<p-rating [ngModel]="review.stars" [readonly]="true" [cancel]="false"></p-rating>
 						</td>
 						<td style="min-width: 12rem;">
-							{{review.comment}}
+							{{review.Comment}}
 						</td>
 					</tr>
 				</ng-template>

@@ -44,10 +44,7 @@ export class AddressService {
 
     getAddressByUser(userId: string) {
         return this.http
-        .get<any>(environment.instrabajoURL + 'address/'+userId)
-            .toPromise()
-            .then((res) => res as Address[])
-            .then((data) => data);
+        .get<any>(environment.instrabajoURL + 'address/'+userId);
     }
 
     getAddresssMixed() {

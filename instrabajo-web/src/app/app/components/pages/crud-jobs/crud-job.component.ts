@@ -108,7 +108,9 @@ export class CrudJobComponent implements OnInit {
 
         this.addressService
             .getAddressByUser(this.user._id)
-            .then((data) => (this.addresss = data));
+            .subscribe((data: any) => {
+                this.addresss = data
+            });
 
             /*this.addressService
             .getAddresss()
