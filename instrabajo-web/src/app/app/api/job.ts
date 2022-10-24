@@ -3,7 +3,7 @@ interface Rating {
     comment?: string;
 }
 export interface Job {
-    id?: string;
+    _id?: string;
     name?: string;
     description?: string;
     skill?: string;
@@ -11,7 +11,7 @@ export interface Job {
     hourlyRate?: number;
     fixedRate?: number;
     status?: string;
-    images?: string[];
+    images?: any[];
     address?: string;
     employee?: string;
     employer?: string;

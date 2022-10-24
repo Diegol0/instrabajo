@@ -2,10 +2,10 @@
 	<div class="col-12">
 		<div class="card">
 			<h5>Jobs</h5>
-			<p-dataView #dv [value]="jobs" [paginator]="true" [rows]="9" filterBy="name" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+			<p-dataView #dv [value]="filteredJobs" [paginator]="true" [rows]="9" filterBy="name" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
 				<ng-template pTemplate="header">
 					<div class="grid grid-nogutter flex-column md:flex-row justify-content-between">
-						<p-dropdown [options]="sortOptions" placeholder="Sort By Price" (onChange)="onSortChange($event)"></p-dropdown>
+						<p-dropdown [options]="sortOptions" placeholder="All Jobs" (onChange)="onSortChange($event)"></p-dropdown>
 						<span class="p-input-icon-left mb-2 md:mb-0">
                             <i class="pi pi-search"></i>
                             <input type="search" pInputText placeholder="Search by Name" (input)="onFilter(dv, $event)">
@@ -17,7 +17,7 @@
 				<ng-template let-job pTemplate="listItem">
 					<div class="col-12">
 						<div class="flex flex-column md:flex-row align-items-center p-3 w-full">
-							<img [src]="'assets/app/images/product/' + job.images[0]" [alt]="job.name" class="my-4 md:my-0 w-9 md:w-10rem shadow-2 mr-5"/>
+							<img [src]="job.images.length > 0 ? job.images[job.images.length-1].imageKey : 'assets/app/images/job/default-job.jpg'" [alt]="job.name" class="my-4 md:my-0 w-9 md:w-10rem shadow-2 mr-5"/>
 							<div class="flex-1 text-center md:text-left">
 								<div class="font-bold text-2xl">{{job.name}}</div>
 								<div class="mb-2">{{job.description}}</div>
@@ -50,13 +50,14 @@
 								<span [class]="'product-badge status-status'">{{job.status}}</span>
 							</div>
 							<div class="text-center mb-3">
-								<img [src]="'assets/app/images/product/' + job.images[0]" [alt]="job.name" class="w-9 shadow-2 my-3 mx-0"/>
+								<img [src]="job.images.length > 0 ? job.images[job.images.length-1].imageKey : 'assets/app/images/job/default-job.jpg'" 
+								style="height: 200px;" [alt]="job.name" class="w-9 shadow-2 my-3 mx-0"/>
 								<div class="text-2xl font-bold">{{job.name}}</div>
 								<div class="mb-3">{{job.description}}</div>
 							</div>
 							<div class="flex align-items-center justify-content-between">
 								<span class="text-2xl font-semibold">GTQ{{job.hourlyRate? job.hourlyRate : job.fixedRate}}</span>
-								<p-button *ngIf="job.status == 'AVAILABLE'" icon="pi pi-check-circle" (click)="applyJob(job)"></p-button>
+								<p-button *ngIf="job.status == 'AVAILABLE' && job.employer != user._id" icon="pi pi-check-circle" (click)="applyJob(job)"></p-button>
 								<p-button *ngIf="job.status == 'PENDING'" icon="pi pi-eye" (click)="viewJob(job)"></p-button>
 							</div>
 						</div>

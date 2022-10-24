@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService, SelectItem } from 'primeng/api';
 import { DataView } from 'primeng/dataview';
+import { take } from 'rxjs';
 import { Job } from 'src/app/app/api/job';
 import { JobImageService } from 'src/app/app/service/job-image.service';
 import { JobService } from 'src/app/app/service/job.service';
+import { InstrabajoService } from 'src/app/services/instrabajo.service';
 
 @Component({
     templateUrl: './job-list.component.html',
@@ -23,48 +25,127 @@ export class JobListComponent implements OnInit {
 
     sortField: string = '';
 
+    user: any;
+
+    availableJobs: Job[] = [];
+
+    employeeJobs: Job[] = [];
+
+    filteredJobs: Job[] = [];
+
+    userLocation = { lat: 0, lng: 0 };
+
     constructor(
         private jobService: JobService,
         private messageService: MessageService,
         private route: ActivatedRoute,
         private router: Router,
         private jobImagesService: JobImageService,
-    ) {}
+        private instrabajoService: InstrabajoService
+    ) {
+        this.instrabajoService.getLoggedUser
+            .pipe(take(1))
+            .subscribe((user: any) => {
+                this.user = user;
+            });
+    }
 
-    ngOnInit() {
-        this.jobService.getJobs().then((data) => (this.jobs = data));
+    async ngOnInit() {
+        this.loadJobs();
 
         this.sortOptions = [
+            { label: 'All Jobs Available', value: 'ALL' },
             { label: 'My Jobs', value: 'MY' },
-            { label: 'All Jobs', value: 'ALL' },
-            { label: 'Jobs near me', value: 'NEAR' },
-            { label: 'Jobs with my skills', value: 'SKILLS' },
+            // { label: 'Jobs near me (15Km)', value: 'NEAR' },
+            // { label: 'Jobs with my skills', value: 'SKILLS' },
         ];
     }
 
-    onSortChange(event: any) {
+    async loadJobs() {
+        await this.jobService
+            .getJobsByStatus('AVAILABLE')
+            .pipe(take(1))
+            .subscribe((jobs: any) => {
+                jobs.forEach((job: Job) => {
+                    this.jobImagesService
+                        .getJobImages(job._id)
+                        .pipe(take(1))
+                        .subscribe((images: any) => {
+                            job.images = images;
+                        });
+                });
+                this.availableJobs = jobs;
+                this.filteredJobs = jobs;
+            });
+
+        await this.jobService
+            .getEmployeeJobs(this.user._id)
+            .pipe(take(1))
+            .subscribe((jobs: any) => {
+                jobs.forEach((job: Job) => {
+                    this.jobImagesService
+                        .getJobImages(job._id)
+                        .pipe(take(1))
+                        .subscribe((images: any) => {
+                            job.images = images;
+                        });
+                });
+                this.employeeJobs = jobs;
+            });
+    }
+
+    async onSortChange(event: any) {
         const value = event.value;
 
         switch (value) {
             case 'MY':
+                this.filteredJobs = this.employeeJobs;
                 break;
             case 'ALL':
+                this.filteredJobs = this.availableJobs;
                 break;
             case 'NEAR':
+                if (this.userLocation.lat == 0) {
+                    await navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            this.userLocation = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude,
+                            };
+                        }
+                    );
+                }
                 break;
             case 'SKILLS':
+                this.filteredJobs = this.availableJobs.filter((job: Job) => {});
                 break;
             default:
                 break;
         }
+    }
 
-        if (value.indexOf('!') === 0) {
-            this.sortOrder = -1;
-            this.sortField = value.substring(1, value.length);
-        } else {
-            this.sortOrder = 1;
-            this.sortField = value;
-        }
+    getDistanceFromLatLonInKm(
+        lat1: string,
+        lon1: string,
+        lat2: string,
+        lon2: string
+    ) {
+        var R = 6371; // Radius of the earth in km
+        var dLat = this.deg2rad(+lat2 - +lat1); // deg2rad below
+        var dLon = this.deg2rad(+lon2 - +lon1);
+        var a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(this.deg2rad(+lat1)) *
+                Math.cos(this.deg2rad(+lat2)) *
+                Math.sin(dLon / 2) *
+                Math.sin(dLon / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = R * c; // Distance in km
+        return d;
+    }
+
+    deg2rad(deg: number) {
+        return deg * (Math.PI / 180);
     }
 
     onFilter(dv: DataView, event: Event) {
@@ -78,9 +159,17 @@ export class JobListComponent implements OnInit {
 
     confirmApply() {
         this.applyJobDialog = false;
-        this.jobs = this.jobs.filter((val) => val.id !== this.job.id);
+        this.jobs = this.jobs.filter((val) => val._id !== this.job._id);
         this.job.status = 'PENDING';
-        this.jobs.push(this.job);
+        this.job.employee = this.user._id;
+        this.jobService
+            .updateJob(this.job)
+            .pipe(take(1))
+            .subscribe((job: any) => {
+                console.log(job);
+                this.loadJobs();
+            });
+
         this.messageService.add({
             severity: 'success',
             summary: 'Successful',
@@ -91,6 +180,6 @@ export class JobListComponent implements OnInit {
     }
 
     viewJob(job: Job) {
-        this.router.navigate(['/uikit/job-detail', { id: job.id }]);
+        this.router.navigate(['/uikit/job-detail', { id: job._id }]);
     }
 }

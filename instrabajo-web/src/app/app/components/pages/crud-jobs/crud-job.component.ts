@@ -134,6 +134,9 @@ export class CrudJobComponent implements OnInit {
             { label: 'CLEARNER', value: 'CLEARNER' },
             { label: 'GARDENER', value: 'GARDENER' },
             { label: 'BABYSITTER', value: 'BABYSITTER' },
+            { label: 'WAITER', value: 'WAITER' },
+            { label: 'PLUMBER', value: 'PLUMBER' },
+            { label: 'BLACKSMITH', value: 'BLACKSMITH' },
         ];
         this.rateTypes = [
             { label: 'Hourly Rate', value: 'HOURLY' },
@@ -298,7 +301,7 @@ export class CrudJobComponent implements OnInit {
     findIndexById(id: string): number {
         let index = -1;
         for (let i = 0; i < this.jobs.length; i++) {
-            if (this.jobs[i].id === id) {
+            if (this.jobs[i]._id === id) {
                 index = i;
                 break;
             }
@@ -336,6 +339,6 @@ export class CrudJobComponent implements OnInit {
     }
 
     viewJob(job: Job) {
-        this.router.navigate(['/uikit/job-detail', { id: job.id }]);
+        this.router.navigate(['/uikit/job-detail', { id: job._id }]);
     }
 }

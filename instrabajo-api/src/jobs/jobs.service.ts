@@ -32,7 +32,7 @@ export class JobsService {
   }
 
   async findByStatus(status: string) {
-    return await this.jobModel.find({ employee: status }).exec();
+    return await this.jobModel.find({ status: status }).exec();
   }
 
   async update(_id: number, updateJobDto: CreateJobDto) {

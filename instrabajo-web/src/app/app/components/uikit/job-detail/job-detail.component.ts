@@ -26,7 +26,7 @@ export class JobDetailComponent implements OnInit {
     center = { lat: 0, lng: 0 };
     job: Job = {};
     jobs: Job[] = [];
-    addresss: Job[] = [];
+    addresss: Address[] = [];
     address: Address = {};
     valSlider = 50;
     valColor = '#424242';
@@ -77,11 +77,11 @@ export class JobDetailComponent implements OnInit {
 
         this.jobService.getJobs().then((data) => {
             this.jobs = data;
-            this.job = this.jobs.filter((job) => (job.id = id))[0];
+            this.job = this.jobs.filter((job) => (job._id = id))[0];
             this.addressService.getAddresss().then((data) => {
                 this.addresss = data;
                 this.address = this.addresss.filter(
-                    (address) => (address.id = this.job.address)
+                    (address) => (address._id = this.job.address)
                 )[0];
 
                 this.center = {
