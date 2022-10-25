@@ -41,7 +41,7 @@ export class MessagesService {
     }
     updateReadMessages(jobId: string, userId: string){
         return this.http
-        .post<any>(environment.instrabajoURL + 'message/readMessages/'+jobId+'/'+userId,null);
+        .get<any>(environment.instrabajoURL + 'message/readMessages/'+jobId+'/'+userId);
     }
 
     getUnreadMessages(userId: string){

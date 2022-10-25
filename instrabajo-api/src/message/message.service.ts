@@ -45,7 +45,8 @@ export class MessageService {
 
   async readMessagesByUserId(jobId: string, userId: string) {
     //return "UserId"+userId;
-    return await this.messageModel.updateMany({jobId:jobId,toUserId:userId},{$set: {read:true}}).exec;
+    return await this.messageModel.updateMany({jobId:jobId,toUserId:userId},{$set: {read:true}}).exec();
+    //return jobId+"  "+userId;
   }
 
   async update(addressDto: MessageDTO) {
