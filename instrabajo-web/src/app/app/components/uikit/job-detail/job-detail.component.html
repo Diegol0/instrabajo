@@ -424,8 +424,7 @@
                     <h5>Employee Facial Recognition</h5>
                     <span *ngIf="!faceMatch" class="p-tag">Pending</span>
                     <h6 *ngIf="!faceMatch">
-                        This person has not been verified for this job, you can
-                        use the option below to scan the employee's face.
+                        Do you want to verify this employee?
                     </h6>
                     <h6 *ngIf="faceMatch">This person has been verified! ✅</h6>
                     <input
@@ -491,7 +490,7 @@
                 <p class="from-me" *ngIf="message.fromUserId == user._id">{{message.message}}</p>
             </div>
 
-            <div class="p-inputgroup" *ngIf="job.status == 'COMPLETED'">
+            <div class="p-inputgroup" >
                 <input type="text" pInputText placeholder="Message" [(ngModel)]="mess.message"/>
                 <button type="button" pButton pRipple label="Send" (click)="sendMessage()"></button>
             </div>

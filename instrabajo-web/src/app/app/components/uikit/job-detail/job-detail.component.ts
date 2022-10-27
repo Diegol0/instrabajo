@@ -377,17 +377,14 @@ export class JobDetailComponent implements OnInit {
             .compare(compare)
             .pipe(take(1))
             .subscribe((data: any) => {
-                debugger
                 console.log(data);
                 if (
                     data.payload.FaceMatches &&
                     data.payload.FaceMatches.length > 0
                 ) {
-                    alert('Faces match!!!!');
-                    alert(JSON.stringify(data.payload.FaceMatches));
                     this.faceMatch = true;
                 } else {
-                    alert('No, this is not the employee!');
+                    alert('No, this is not the employee! Be careful!!!!');
                     this.faceMatch = false;
                 }
 
