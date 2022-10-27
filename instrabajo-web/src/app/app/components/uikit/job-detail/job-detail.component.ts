@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { MessageService, SelectItem } from 'primeng/api';
 import { MessagesService } from 'src/app/app/service/message.service';
-import { interval, map, Subscription, switchMap, take } from 'rxjs';
+import { interval, map, Observable, Subscription, switchMap, take } from 'rxjs';
 import { Address } from 'src/app/app/api/address';
 import { Review } from 'src/app/app/api/review';
 import { Job } from 'src/app/app/api/job';
@@ -25,7 +25,7 @@ declare var google: any;
 @Component({
     templateUrl: './job-detail.component.html',
     providers: [MessageService],
-    styleUrls: ['./job-detail.component.scss']
+    styleUrls: ['./job-detail.component.scss'],
 })
 export class JobDetailComponent implements OnInit {
     countries: any[] = [];
@@ -185,22 +185,26 @@ export class JobDetailComponent implements OnInit {
         ];
     }
 
+    loadMessages(jobId: string) {
+        this.messagesService
+            .getAllMessages(jobId)
+            .pipe(take(1))
+            .subscribe((data: any) => {
+                this.messages = data;
+            });
+        this.messagesService
+            .updateReadMessages(jobId, this.user._id)
+            .pipe(take(1))
+            .subscribe((data: any) => {});
+    }
+
     loadJob() {
         this.jobService
             .getJobById(this.id)
             .pipe(take(1))
             .subscribe((job: any) => {
                 this.job = job;
-                this.messagesService
-                .getAllMessages(job._id)
-                .pipe(take(1))
-                .subscribe((data: any) => {
-                    this.messages = data;
-                });
-                this.messagesService.updateReadMessages(job._id,this.user._id).pipe(take(1))
-                    .subscribe((data: any) => {
-                
-                });
+                this.loadMessages(job._id);
                 this.loadImages();
                 if (job.employee) {
                     this.instrabajoService
@@ -267,11 +271,29 @@ export class JobDetailComponent implements OnInit {
             .pipe(take(1))
             .subscribe((data: any) => {
                 if (data) {
+                    this.mess = {};
                     console.log('_id: ' + data._id);
                 }
-                this.loadJob();
+                this.loadMessages(this.job._id!);
             });
     }
+
+    sendMessageFile(event: any) {
+        debugger;
+        this.instrabajoService
+            .saveUserPhoto(event.files[0])
+            .pipe(take(1))
+            .subscribe((data: any) => {
+                console.log(data);
+                this.mess.message = data.payload.url;
+                this.sendMessage();
+            });
+    }
+
+    downloadAttachment(url: string) {
+        window.open(url, '_blank');
+    }
+
     loadImages() {
         this.jobImages = [];
         this.jobImagesService

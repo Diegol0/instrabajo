@@ -29,6 +29,7 @@ import { GMapModule } from 'primeng/gmap';
 import { DividerModule } from 'primeng/divider';
 import { DialogModule } from 'primeng/dialog';
 import { GalleriaModule } from 'primeng/galleria';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
     imports: [
@@ -61,6 +62,7 @@ import { GalleriaModule } from 'primeng/galleria';
         DividerModule,
         DialogModule,
         GalleriaModule,
+        FileUploadModule
     ],
     declarations: [JobDetailComponent],
 })
