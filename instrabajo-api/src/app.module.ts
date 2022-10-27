@@ -11,6 +11,7 @@ import { MessageModule } from './message/message.module';
 import { FileUploadController } from './users/file-upload.controller';
 import { FileService } from './users/file-service';
 import { JobImageModule } from './job-image/job-image.module';
+import { JobProfileModule } from './Job-profile/job-profile.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { JobImageModule } from './job-image/job-image.module';
     JobImageModule,
     AddressModule,
     ReviewModule,
-    MessageModule
+    MessageModule,
+    JobProfileModule
   ],
   controllers: [AppController, FileUploadController],
   providers: [AppService, FileService],

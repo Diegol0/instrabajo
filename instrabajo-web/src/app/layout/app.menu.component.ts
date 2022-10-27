@@ -32,6 +32,7 @@ export class AppMenuComponent implements OnInit {
                     // { label: 'List', icon: 'pi pi-fw pi-list', routerLink: ['/uikit/list'] },
                     { label: 'Job List', icon: 'pi pi-fw pi-list', routerLink: ['/uikit/job-list'] },
                     { label: 'Review List', icon: 'pi pi-fw pi-star', routerLink: ['/uikit/review'] },
+                    { label: 'My Job Profile',icon: 'pi pi-fw pi-inbox',routerLink: ['/pages/crud-job-profile']},
                     // { label: 'Tree', icon: 'pi pi-fw pi-share-alt', routerLink: ['/uikit/tree'] },
                     // { label: 'Panel', icon: 'pi pi-fw pi-tablet', routerLink: ['/uikit/panel'] },
                     // { label: 'Overlay', icon: 'pi pi-fw pi-clone', routerLink: ['/uikit/overlay'] },
@@ -103,6 +104,7 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-fw pi-pencil',
                         routerLink: ['/pages/crud-job']
                     },
+                   
                     
                     // {
                     //     label: 'Timeline',
