@@ -10,6 +10,9 @@ export class JobProfile {
   _id: ObjectId;
 
   @Prop({ required: true })
+  employee: string;
+
+  @Prop({ required: true })
   name: string;
 
   @Prop({ required: true })

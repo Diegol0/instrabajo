@@ -93,7 +93,7 @@ export class CrudJobProfileComponent implements OnInit {
 
     loadJobs(){
         this.jobService
-            .getEmployerJobs(this.user._id)
+            .getemployeeJobs(this.user._id)
             .pipe(take(1))
             .subscribe((data: any) => {
                 this.jobs = data
@@ -277,7 +277,7 @@ export class CrudJobProfileComponent implements OnInit {
                 // create job
                 // @ts-ignore
                 this.job.status = 'AVAILABLE'
-                this.job.employer = this.user._id;
+                this.job.employee = this.user._id;
                 this.jobService
                     .createJob(this.job)
                     .pipe(take(1))
