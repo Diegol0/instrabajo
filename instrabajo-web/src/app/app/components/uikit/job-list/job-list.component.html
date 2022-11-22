@@ -5,7 +5,7 @@
 			<p-dataView #dv [value]="filteredJobs" [paginator]="true" [rows]="9" filterBy="name" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
 				<ng-template pTemplate="header">
 					<div class="grid grid-nogutter flex-column md:flex-row justify-content-between">
-						<p-dropdown [options]="sortOptions" placeholder="All Jobs" (onChange)="onSortChange($event)"></p-dropdown>
+						<p-dropdown appendTo="body" [options]="sortOptions" placeholder="All Jobs" (onChange)="onSortChange($event)"></p-dropdown>
 						<span class="p-input-icon-left mb-2 md:mb-0">
                             <i class="pi pi-search"></i>
                             <input type="search" pInputText placeholder="Search by Name" (input)="onFilter(dv, $event)">
@@ -39,7 +39,7 @@
 				</ng-template>
 
 				<ng-template let-job pTemplate="gridItem">
-					<div class="col-12 md:col-4">
+					<div class="col-12 md:col-6 lg:col-6 xl:col-4 xxl:col-4">
 						<div class="card m-3 border-1 surface-border">
 							<div class="flex align-items-center justify-content-between mb-2">
 								<div class="flex align-items-center">
@@ -47,7 +47,7 @@
 									<span class="font-semibold">{{job.rateType}}</span>
 								</div>
 								<span [class]="'sm:ml-2 product-badge status-instock'">{{job.skill}}</span>
-								<span [class]="'product-badge status-status'">{{job.status}}</span>
+								<span [class]="'sm:ml-2 product-badge status-status'">{{job.status}}</span>
 							</div>
 							<div class="text-center mb-3">
 								<img [src]="job.images.length > 0 ? job.images[job.images.length-1].imageKey : 'assets/app/images/job/default-job.jpg'" 

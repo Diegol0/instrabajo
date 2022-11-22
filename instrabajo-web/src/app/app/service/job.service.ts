@@ -8,7 +8,7 @@ import { catchError } from 'rxjs';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { environment } from 'src/environments/environment';
 import { Job } from '../api/job';
-import { JobDto } from '../models/service.dto';
+import { JobDto, JobUserDto } from '../models/service.dto';
 
 @Injectable()
 export class JobService {
@@ -129,6 +129,38 @@ export class JobService {
             );
     }
 
+    getApplyByJob(id: string) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        });
+        return this.http
+            .get<any>(environment.instrabajoURL + `jobs/apply/job/${id}`, {
+                headers: headers,
+            })
+            .pipe(
+                catchError((error: HttpErrorResponse) =>
+                    this.errorHandlerService.handleError(error)
+                )
+            );
+    }
+
+    getApplyByUser(id: string) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        });
+        return this.http
+            .get<any>(environment.instrabajoURL + `jobs/apply/user/${id}`, {
+                headers: headers,
+            })
+            .pipe(
+                catchError((error: HttpErrorResponse) =>
+                    this.errorHandlerService.handleError(error)
+                )
+            );
+    }
+
     removeJob(jobId: any) {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
@@ -136,6 +168,22 @@ export class JobService {
         });
         return this.http
             .delete<any>(environment.instrabajoURL + `jobs/${jobId}`, {
+                headers: headers,
+            })
+            .pipe(
+                catchError((error: HttpErrorResponse) =>
+                    this.errorHandlerService.handleError(error)
+                )
+            );
+    }
+
+    createJobUser(jobUser: JobUserDto) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        });
+        return this.http
+            .post<JobDto>(environment.instrabajoURL + 'jobs/apply', jobUser, {
                 headers: headers,
             })
             .pipe(

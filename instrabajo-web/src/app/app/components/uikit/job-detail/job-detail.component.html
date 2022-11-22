@@ -20,7 +20,7 @@
                         "
                     ></button>
                 </div>
-                <div>
+                <!-- <div>
                     <button
                         pButton
                         pRipple
@@ -32,7 +32,7 @@
                         "
                         (click)="acceptEmployee()"
                     ></button>
-                </div>
+                </div> -->
                 <div>
                     <a href="mailto:admin@instrabajo.com"
                         ><button
@@ -175,6 +175,7 @@
                 <div class="col-12">
                     <label for="skill">Skill</label>
                     <p-dropdown
+                        appendTo="body"
                         id="skill"
                         [options]="skills"
                         optionLabel="label"
@@ -191,6 +192,7 @@
                 <div class="col-12">
                     <label for="rateType">Rate Type</label>
                     <p-dropdown
+                        appendTo="body"
                         id="rateType"
                         [options]="rateTypes"
                         optionLabel="label"
@@ -267,6 +269,7 @@
                 <div class="col-12">
                     <label for="country">Country</label>
                     <p-dropdown
+                        appendTo="body"
                         id="country"
                         [options]="countries"
                         optionLabel="label"
@@ -283,6 +286,7 @@
                 <div class="col-12">
                     <label for="city">City</label>
                     <p-dropdown
+                        appendTo="body"
                         id="city"
                         [options]="cities"
                         optionLabel="label"
@@ -372,7 +376,7 @@
             </div>
         </div>
 
-        <div class="card">
+        <div class="card" *ngIf="job.employee">
             <div class="grid">
                 <h5>Employee Information</h5>
                 <div class="grid formgrid">
@@ -430,7 +434,49 @@
             </div>
         </div>
 
-        <div class="card">
+        <div class="card" *ngIf="!job.employee">
+            <div class="grid">
+                <h5>People applying for this position</h5>
+                <p-table
+                    [value]="jobUsers"
+                    [paginator]="true"
+                    [rows]="5"
+                    style="width: 100%"
+                    responsiveLayout="scroll"
+                >
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="name">Name</th>
+                            <th pSortableColumn="status">Phone</th>
+                            <th></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-user>
+                        <tr>
+                            <td style="min-width: 10rem">
+                                <span class="p-column-title">Name</span>
+                                {{ user.name }}
+                            </td>
+                            <td style="min-width: 8rem">
+                                <span class="p-column-title">Status</span>
+                                {{ user.phone }}
+                            </td>
+                            <td style="text-align: center">
+                                <button
+                                    pButton
+                                    type="button"
+                                    class="p-button-secondary"
+                                    icon="pi pi-eye"
+                                    (click)="viewEmployee(user)"
+                                ></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+
+        <div class="card" *ngIf="job.employee">
             <div class="grid">
                 <div class="col-12 md:col-12">
                     <h5>Employee Facial Recognition</h5>
@@ -494,7 +540,7 @@
             </p-galleria>
         </div>
     </div>
-    <div class="col-12">
+    <div class="col-12" *ngIf="job.employee">
         <div class="card">
             <h5>Conversation</h5>
             <div class="imessage">
@@ -682,7 +728,7 @@
                 icon="pi pi-times"
                 class="p-button-text"
                 label="No"
-                (click)="completeJobDialog = false"
+                (click)="acceptEmployeeDialog = false"
             ></button>
             <button
                 pButton
@@ -691,6 +737,89 @@
                 class="p-button-text"
                 label="Yes"
                 (click)="confirmEmployee()"
+            ></button>
+        </ng-template>
+    </p-dialog>
+
+    <p-dialog
+        [(visible)]="viewEmployeeDialog"
+        header="Confirm"
+        [modal]="true"
+        [style]="{ width: '450px' }"
+    >
+        <div class="card">
+            <div class="grid">
+                <h5>Employee Information</h5>
+                <div class="grid formgrid">
+                    <div class="col-12">
+                        <label htmlFor="name1">Name</label>
+                        <input
+                            pInputText
+                            [(ngModel)]="selectedEmployee.name"
+                            id="name1"
+                            type="text"
+                            disabled="true"
+                        />
+                    </div>
+                    <div class="col-12">
+                        <label htmlFor="lastName1">Last Name</label>
+                        <input
+                            pInputText
+                            [(ngModel)]="selectedEmployee.lastname"
+                            id="lastName1"
+                            type="text"
+                            disabled="true"
+                        />
+                    </div>
+                    <div class="col-12">
+                        <label htmlFor="email1">Email</label>
+                        <input
+                            pInputText
+                            [(ngModel)]="selectedEmployee.email"
+                            id="email1"
+                            type="text"
+                            disabled="true"
+                        />
+                    </div>
+                    <div class="col-12">
+                        <label htmlFor="phone1">Phone</label>
+                        <input
+                            pInputText
+                            [(ngModel)]="selectedEmployee.phone"
+                            id="phone1"
+                            type="text"
+                            disabled="true"
+                        />
+                    </div>
+                    <div class="col-12">
+                        <label>Photo</label>
+                        <img
+                            class="center"
+                            style="max-width: 200px"
+                            *ngIf="selectedEmployee.photo"
+                            src="{{ selectedEmployee.photo }}"
+                            alt="Employee"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-template pTemplate="footer">
+            <button
+                pButton
+                pRipple
+                icon="pi pi-times"
+                class="p-button-text"
+                label="No"
+                (click)="viewEmployeeDialog = false"
+            ></button>
+            <button
+                pButton
+                pRipple
+                icon="pi pi-check"
+                class="p-button-text"
+                label="Yes"
+                (click)="acceptEmployee()"
             ></button>
         </ng-template>
     </p-dialog>

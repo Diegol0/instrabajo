@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { JobsService } from './jobs.service';
 import { CreateJobDto } from './dto/create-job.dto';
+import { CreateJobUserDto } from './dto/create-job-user.dto';
 
 @Controller('jobs')
 export class JobsController {
@@ -19,6 +20,11 @@ export class JobsController {
     return this.jobsService.create(createJobDto);
   }
 
+  @Post('apply')
+  createJobUser(@Body() createJobDto: CreateJobUserDto) {
+    return this.jobsService.createJobUser(createJobDto);
+  }
+
   @Get()
   findAll() {
     return this.jobsService.findAll();
@@ -27,6 +33,16 @@ export class JobsController {
   @Get('job/:id')
   findOne(@Param('id') id: string) {
     return this.jobsService.findOne(id);
+  }
+
+  @Get('apply/job/:id')
+  findJobAppliedByJob(@Param('id') id: string) {
+    return this.jobsService.findJobAppliedByJob(id);
+  }
+
+  @Get('apply/user/:id')
+  findJobAppliedByEmployee(@Param('id') id: string) {
+    return this.jobsService.findJobAppliedByEmployee(id);
   }
 
   @Get('employer/:userId')

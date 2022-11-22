@@ -4,6 +4,7 @@ import { MessageService, SelectItem } from 'primeng/api';
 import { DataView } from 'primeng/dataview';
 import { take } from 'rxjs';
 import { Job } from 'src/app/app/api/job';
+import { JobUserDto } from 'src/app/app/models/service.dto';
 import { JobImageService } from 'src/app/app/service/job-image.service';
 import { JobService } from 'src/app/app/service/job.service';
 import { InstrabajoService } from 'src/app/services/instrabajo.service';
@@ -125,7 +126,7 @@ export class JobListComponent implements OnInit {
     }
 
     // https://en.wikipedia.org/wiki/Haversine_formula
-    
+
     getDistanceFromLatLonInKm(
         lat1: string,
         lon1: string,
@@ -161,25 +162,51 @@ export class JobListComponent implements OnInit {
 
     confirmApply() {
         this.applyJobDialog = false;
-        this.jobs = this.jobs.filter((val) => val._id !== this.job._id);
-        this.job.status = 'PENDING';
-        this.job.employee = this.user._id;
-        this.jobService
-            .updateJob(this.job)
-            .pipe(take(1))
-            .subscribe((job: any) => {
-                console.log(job);
-                this.loadJobs();
-            });
 
-        this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'You applied to this job',
-            life: 3000,
-        });
-        this.job = {};
+        let jobUser: JobUserDto = {};
+        jobUser.jobId = this.job._id;
+        jobUser.userId = this.user._id;
+
+        try {
+            this.jobService
+                .createJobUser(jobUser)
+                .pipe(take(1))
+                .subscribe((data: any) => {
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Successful',
+                        detail: 'You applied to this job',
+                        life: 3000,
+                    });
+                    alert('You applied to this job!');
+                    console.log(data);
+                });
+        } catch (error) {
+            alert('You already applied to this job');
+        }
     }
+
+    // confirmApply() {
+    //     this.applyJobDialog = false;
+    //     this.jobs = this.jobs.filter((val) => val._id !== this.job._id);
+    //     this.job.status = 'PENDING';
+    //     this.job.employee = this.user._id;
+    //     this.jobService
+    //         .updateJob(this.job)
+    //         .pipe(take(1))
+    //         .subscribe((job: any) => {
+    //             console.log(job);
+    //             this.loadJobs();
+    //         });
+
+    //     this.messageService.add({
+    //         severity: 'success',
+    //         summary: 'Successful',
+    //         detail: 'You applied to this job',
+    //         life: 3000,
+    //     });
+    //     this.job = {};
+    // }
 
     viewJob(job: Job) {
         this.router.navigate(['/uikit/job-detail', { id: job._id }]);

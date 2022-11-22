@@ -89,7 +89,7 @@
                 </div>
                 <div class="field">
                     <label for="country">Country</label>
-                    <p-dropdown id="country" [options]="countries" optionLabel="label" optionValue="value" [(ngModel)]="address.country" placeholder="Select a Country">
+                    <p-dropdown appendTo="body" id="country" [options]="countries" optionLabel="label" optionValue="value" [(ngModel)]="address.country" placeholder="Select a Country">
                         <ng-template let-country pTemplate="country">
                             <span>{{country.label}}</span>
                         </ng-template>
@@ -97,7 +97,7 @@
                 </div>
                 <div class="field">
                     <label for="city">City</label>
-                    <p-dropdown id="city" [options]="cities" optionLabel="label" optionValue="value" [(ngModel)]="address.city" placeholder="Select a City">
+                    <p-dropdown appendTo="body" id="city" [options]="cities" optionLabel="label" optionValue="value" [(ngModel)]="address.city" placeholder="Select a City">
                         <ng-template let-city pTemplate="city">
                             <span>{{city.label}}</span>
                         </ng-template>

@@ -128,6 +128,7 @@ export class CrudJobComponent implements OnInit {
         this.skills = [
             { label: 'ELECTRONIC', value: 'ELECTRONIC' },
             { label: 'GAMER', value: 'GAMER' },
+            { label: 'PAINTER', value: 'PAINTER' },
             { label: 'TRAINER', value: 'TRAINER' },
             { label: 'MECHANIC', value: 'MECHANIC' },
             { label: 'CARPENTER', value: 'CARPENTER' },

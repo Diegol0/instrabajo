@@ -30,6 +30,7 @@ import { DividerModule } from 'primeng/divider';
 import { DialogModule } from 'primeng/dialog';
 import { GalleriaModule } from 'primeng/galleria';
 import { FileUploadModule } from 'primeng/fileupload';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
     imports: [
@@ -62,7 +63,8 @@ import { FileUploadModule } from 'primeng/fileupload';
         DividerModule,
         DialogModule,
         GalleriaModule,
-        FileUploadModule
+        FileUploadModule,
+        TableModule
     ],
     declarations: [JobDetailComponent],
 })

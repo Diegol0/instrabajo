@@ -1,13 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { JobUser, JobUserDocument } from 'src/schemas/job-user.schema';
 import { Job, JobDocument } from 'src/schemas/jobs.schema';
+import { CreateJobUserDto } from './dto/create-job-user.dto';
 import { CreateJobDto } from './dto/create-job.dto';
 
 @Injectable()
 export class JobsService {
   constructor(
     @InjectModel(Job.name) private readonly jobModel: Model<JobDocument>,
+    @InjectModel(JobUser.name)
+    private readonly jobUserModel: Model<JobUserDocument>,
   ) {}
 
   async create(createJobDto: CreateJobDto) {
@@ -56,6 +60,19 @@ export class JobsService {
       .findOneAndUpdate({ _id: updateJobDto._id }, params)
       .exec();
     return updatedJob;
+  }
+
+  async createJobUser(createJobUserDto: CreateJobUserDto) {
+    const createdJob = await this.jobUserModel.create(createJobUserDto);
+    return createdJob;
+  }
+
+  async findJobAppliedByEmployee(userId: string) {
+    return await this.jobUserModel.find({ userId: userId }).exec();
+  }
+
+  async findJobAppliedByJob(jobId: string) {
+    return await this.jobUserModel.find({ jobId: jobId }).exec();
   }
 
   async remove(id: string) {

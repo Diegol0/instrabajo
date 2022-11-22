@@ -80,7 +80,7 @@
                 </div>
                 <div class="field">
                     <label for="skill">Skill</label>
-                    <p-dropdown id="skill" [options]="skills" optionLabel="label" optionValue="value" [(ngModel)]="job.skill" placeholder="Select a Skill">
+                    <p-dropdown appendTo="body" id="skill" [options]="skills" optionLabel="label" optionValue="value" [(ngModel)]="job.skill" placeholder="Select a Skill">
                         <ng-template let-skill pTemplate="skill">
                             <span>{{skill.label}}</span>
                         </ng-template>

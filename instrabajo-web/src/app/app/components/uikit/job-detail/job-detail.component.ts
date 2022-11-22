@@ -11,7 +11,9 @@ import {
     CompareDto,
     GalleryImage,
     JobImageDto,
+    JobUserDto,
     UpdateUserDto,
+    UserDto,
 } from 'src/app/app/models/service.dto';
 import { AddressService } from 'src/app/app/service/address.service';
 import { CountryService } from 'src/app/app/service/country.service';
@@ -62,7 +64,10 @@ export class JobDetailComponent implements OnInit {
     cancelJobDialog: boolean = false;
     completeJobDialog: boolean = false;
     acceptEmployeeDialog: boolean = false;
+    viewEmployeeDialog: boolean = false;
     photo = null;
+
+    selectedEmployee: any = {};
 
     faceMatch = false;
 
@@ -72,6 +77,8 @@ export class JobDetailComponent implements OnInit {
 
     employer: any = {};
     employee: any = {};
+
+    jobUsers: any[] = [];
 
     subscription: Subscription;
 
@@ -113,7 +120,7 @@ export class JobDetailComponent implements OnInit {
         const source = interval(2000);
         const text = 'Your Text Here';
         this.subscription = source.subscribe((val) => {
-            if (this.job._id) {
+            if (this.job._id && this.job.employee) {
                 this.messagesService
                     .getAllMessages(this.job._id)
                     .pipe(take(1))
@@ -138,6 +145,7 @@ export class JobDetailComponent implements OnInit {
 
         this.skills = [
             { label: 'ELECTRONIC', value: 'ELECTRONIC' },
+            { label: 'PAINTER', value: 'PAINTER' },
             { label: 'GAMER', value: 'GAMER' },
             { label: 'TRAINER', value: 'TRAINER' },
             { label: 'MECHANIC', value: 'MECHANIC' },
@@ -242,6 +250,24 @@ export class JobDetailComponent implements OnInit {
                         this.options.center = this.center;
                         this.options.zoom = 14;
                     });
+                this.loadJobUsers();
+            });
+    }
+
+    loadJobUsers() {
+        this.jobUsers = [];
+        this.jobService
+            .getApplyByJob(this.id)
+            .pipe(take(1))
+            .subscribe((jobUsers: any) => {
+                jobUsers.forEach((jobUser: JobUserDto) => {
+                    this.instrabajoService
+                        .getUser(jobUser.userId!)
+                        .pipe(take(1))
+                        .subscribe((user: any) => {
+                            this.jobUsers.push(user);
+                        });
+                });
             });
     }
 
@@ -319,8 +345,14 @@ export class JobDetailComponent implements OnInit {
         this.acceptEmployeeDialog = true;
     }
 
+    viewEmployee(employee: any) {
+        this.selectedEmployee = employee;
+        this.viewEmployeeDialog = true;
+    }
+
     confirmEmployee() {
         this.acceptEmployeeDialog = false;
+        this.job.employee = this.selectedEmployee._id;
         this.job.status = 'ACCEPTED';
         this.jobService
             .updateJob(this.job)

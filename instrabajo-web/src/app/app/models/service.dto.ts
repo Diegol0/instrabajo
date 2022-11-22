@@ -50,6 +50,12 @@ export interface JobDto {
     employeeVerified?: boolean | null;
 }
 
+export interface JobUserDto {
+    _id?: string | null;
+    jobId?: string | null;
+    userId?: string | null;
+}
+
 export interface GalleryImage {
     itemImageSrc?: string | null;
     thumbnailImageSrc?: string | null;
@@ -78,7 +84,7 @@ export interface AddressDto {
 export interface ReviewDto {
     _id?: string | null;
     userId?: string | null;
-    jobId?:string | null;
+    jobId?: string | null;
     nameJob?: string | null;
     Comment?: string | null;
     stars?: number | null;

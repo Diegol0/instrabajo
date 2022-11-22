@@ -5,7 +5,7 @@
 			<p-dataView #dv [value]="products" [paginator]="true" [rows]="9" filterBy="name" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
 				<ng-template pTemplate="header">
 					<div class="grid grid-nogutter flex-column md:flex-row justify-content-between">
-						<p-dropdown [options]="sortOptions" placeholder="Sort By Price" (onChange)="onSortChange($event)"></p-dropdown>
+						<p-dropdown appendTo="body" [options]="sortOptions" placeholder="Sort By Price" (onChange)="onSortChange($event)"></p-dropdown>
 						<span class="p-input-icon-left mb-2 md:mb-0">
                             <i class="pi pi-search"></i>
                             <input type="search" pInputText placeholder="Search by Name" (input)="onFilter(dv, $event)">
