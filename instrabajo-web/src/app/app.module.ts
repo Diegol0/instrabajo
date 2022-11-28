@@ -18,22 +18,29 @@ import { MessagesService } from './app/service/message.service';
 import { InstrabajoService } from './services/instrabajo.service';
 import { JobImageService } from './app/service/job-image.service';
 import { JobProfileService } from './app/service/job-profile.service';
-
+import { MessageNegotiationsService } from './app/service/message-negotiation.service';
 
 @NgModule({
-    declarations: [
-        AppComponent, NotfoundComponent
-    ],
-    imports: [
-        AppRoutingModule,
-        AppLayoutModule
-    ],
+    declarations: [AppComponent, NotfoundComponent],
+    imports: [AppRoutingModule, AppLayoutModule],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        CountryService, CustomerService, EventService, IconService, NodeService, JobImageService,
-        PhotoService, ProductService, AddressService, JobService, ReviewService, InstrabajoService, 
-        MessagesService,JobProfileService
+        CountryService,
+        CustomerService,
+        EventService,
+        IconService,
+        NodeService,
+        JobImageService,
+        PhotoService,
+        ProductService,
+        AddressService,
+        JobService,
+        ReviewService,
+        InstrabajoService,
+        MessagesService,
+        MessageNegotiationsService,
+        JobProfileService,
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

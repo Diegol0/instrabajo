@@ -21,7 +21,8 @@ import { JobImageService } from 'src/app/app/service/job-image.service';
 import { JobService } from 'src/app/app/service/job.service';
 import { InstrabajoService } from 'src/app/services/instrabajo.service';
 import { ReviewService } from 'src/app/app/service/review.service';
-import { Message } from 'src/app/app/api/message';
+import { Message, MessageNegotiation } from 'src/app/app/api/message';
+import { MessageNegotiationsService } from 'src/app/app/service/message-negotiation.service';
 declare var google: any;
 
 @Component({
@@ -32,7 +33,9 @@ declare var google: any;
 export class JobDetailComponent implements OnInit {
     countries: any[] = [];
     messages: Message[] = [];
+    negotiation: Message[] = [];
     mess: Message = {};
+    messNeg: MessageNegotiation = {};
     user: any = {};
     review: Review = {};
     filteredCountries: any[] = [];
@@ -79,6 +82,7 @@ export class JobDetailComponent implements OnInit {
     employee: any = {};
 
     jobUsers: any[] = [];
+    selectedJobUserId: any = {};
 
     subscription: Subscription;
 
@@ -102,13 +106,13 @@ export class JobDetailComponent implements OnInit {
     ];
 
     constructor(
-        private countryService: CountryService,
         public instrabajoService: InstrabajoService,
         private messageService: MessageService,
         private jobService: JobService,
         private addressService: AddressService,
         private route: ActivatedRoute,
         private messagesService: MessagesService,
+        private messagesNegotiationService: MessageNegotiationsService,
         private jobImagesService: JobImageService,
         private reviewService: ReviewService
     ) {
@@ -118,7 +122,7 @@ export class JobDetailComponent implements OnInit {
         };
 
         const source = interval(2000);
-        const text = 'Your Text Here';
+
         this.subscription = source.subscribe((val) => {
             if (this.job._id && this.job.employee) {
                 this.messagesService
@@ -126,6 +130,23 @@ export class JobDetailComponent implements OnInit {
                     .pipe(take(1))
                     .subscribe((data: any) => {
                         this.messages = data;
+                    });
+            }
+        });
+
+        const sourceNeg = interval(2000);
+
+        this.subscription = sourceNeg.subscribe((val) => {
+            if (
+                this.job._id &&
+                this.viewEmployeeDialog &&
+                this.selectedJobUserId
+            ) {
+                this.messagesNegotiationService
+                    .getAllMessageNegotiations(this.selectedJobUserId._id)
+                    .pipe(take(1))
+                    .subscribe((data: any) => {
+                        this.negotiation = data;
                     });
             }
         });
@@ -265,7 +286,10 @@ export class JobDetailComponent implements OnInit {
                         .getUser(jobUser.userId!)
                         .pipe(take(1))
                         .subscribe((user: any) => {
-                            this.jobUsers.push(user);
+                            this.jobUsers.push({
+                                jobUser: jobUser,
+                                user: user,
+                            });
                         });
                 });
             });
@@ -304,8 +328,28 @@ export class JobDetailComponent implements OnInit {
             });
     }
 
-    sendMessageFile(event: any) {
+    sendMessageNegotiation() {
         debugger;
+        this.messNeg.jobUserId = this.selectedJobUserId._id;
+        this.messNeg.fromUserId = this.user._id;
+        this.messNeg.toUserId =
+            this.user._id == this.job.employer
+                ? this.selectedJobUserId.userId
+                : this.job.employer;
+        this.messNeg.read = false;
+        this.messagesNegotiationService
+            .createMessageNegotiation(this.messNeg)
+            .pipe(take(1))
+            .subscribe((data: any) => {
+                if (data) {
+                    this.messNeg = {};
+                    console.log('_id: ' + data._id);
+                }
+                this.loadMessages(this.job._id!);
+            });
+    }
+
+    sendMessageFile(event: any) {
         this.instrabajoService
             .saveUserPhoto(event.files[0])
             .pipe(take(1))
@@ -313,6 +357,17 @@ export class JobDetailComponent implements OnInit {
                 console.log(data);
                 this.mess.message = data.payload.url;
                 this.sendMessage();
+            });
+    }
+
+    sendMessageNegotiationFile(event: any) {
+        this.instrabajoService
+            .saveUserPhoto(event.files[0])
+            .pipe(take(1))
+            .subscribe((data: any) => {
+                console.log(data);
+                this.mess.message = data.payload.url;
+                this.sendMessageNegotiation();
             });
     }
 
@@ -346,7 +401,9 @@ export class JobDetailComponent implements OnInit {
     }
 
     viewEmployee(employee: any) {
-        this.selectedEmployee = employee;
+        this.selectedEmployee = employee.user;
+        this.selectedJobUserId = employee.jobUser;
+        this.negotiation = [];
         this.viewEmployeeDialog = true;
     }
 

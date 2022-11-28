@@ -98,3 +98,12 @@ export interface MessageDto {
     message?: string | null;
     read?: boolean | null;
 }
+
+export interface MessageNegotiationDto {
+    _id?: string | null;
+    jobUserId?: string | null;
+    fromUserId?: string | null;
+    toUserId?: string | null;
+    message?: string | null;
+    read?: boolean | null;
+}

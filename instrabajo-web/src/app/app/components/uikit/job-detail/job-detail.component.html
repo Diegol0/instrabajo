@@ -436,43 +436,46 @@
 
         <div class="card" *ngIf="!job.employee">
             <div class="grid">
-                <h5>People applying for this position</h5>
-                <p-table
-                    [value]="jobUsers"
-                    [paginator]="true"
-                    [rows]="5"
-                    style="width: 100%"
-                    responsiveLayout="scroll"
-                >
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th pSortableColumn="name">Name</th>
-                            <th pSortableColumn="status">Phone</th>
-                            <th></th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-user>
-                        <tr>
-                            <td style="min-width: 10rem">
-                                <span class="p-column-title">Name</span>
-                                {{ user.name }}
-                            </td>
-                            <td style="min-width: 8rem">
-                                <span class="p-column-title">Status</span>
-                                {{ user.phone }}
-                            </td>
-                            <td style="text-align: center">
-                                <button
-                                    pButton
-                                    type="button"
-                                    class="p-button-secondary"
-                                    icon="pi pi-eye"
-                                    (click)="viewEmployee(user)"
-                                ></button>
-                            </td>
-                        </tr>
-                    </ng-template>
-                </p-table>
+                <div class="col-12">
+                    <h5>People applying for this position</h5>
+                </div>
+                <div class="col-12">
+                    <p-table
+                        [value]="jobUsers"
+                        [paginator]="true"
+                        [rows]="5"
+                        responsiveLayout="scroll"
+                    >
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="name">Name</th>
+                                <th pSortableColumn="status">Phone</th>
+                                <th></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-user>
+                            <tr>
+                                <td style="min-width: 10rem">
+                                    <span class="p-column-title">Name</span>
+                                    {{ user.user.name }}
+                                </td>
+                                <td style="min-width: 8rem">
+                                    <span class="p-column-title">Status</span>
+                                    {{ user.user.phone }}
+                                </td>
+                                <td style="text-align: center">
+                                    <button
+                                        pButton
+                                        type="button"
+                                        class="p-button-secondary"
+                                        icon="pi pi-eye"
+                                        (click)="viewEmployee(user)"
+                                    ></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
             </div>
         </div>
 
@@ -603,34 +606,6 @@
                     ></button>
                 </div>
             </div>
-
-            <!--<h5>Conversation</h5>
-            <p-divider align="left">
-                <span class="p-tag">Employee - 2 days ago</span>
-            </p-divider>
-            <p>
-                I want to change the fixed rate to GTQ250.00 since this is a
-                very complicated job.
-            </p>
-
-            <p-divider align="right">
-                <span class="p-tag">Employer - 2 days ago</span>
-            </p-divider>
-            <p align="right">I can go up to QTG220.00, that's all my bugdet.</p>
-
-            <p-divider align="left">
-                <span class="p-tag">Employee - 1 days ago</span>
-            </p-divider>
-            <p>Allright I'll take it.</p>
-            <p-divider align="left">
-                <span></span>
-            </p-divider>
-            <div class="col-12">
-                <div class="p-inputgroup">
-                    <input type="text" pInputText placeholder="Message" />
-                    <button type="button" pButton pRipple label="Send"></button>
-                </div>
-            </div>-->
         </div>
     </div>
 
@@ -745,12 +720,13 @@
         [(visible)]="viewEmployeeDialog"
         header="Confirm"
         [modal]="true"
-        [style]="{ width: '450px' }"
+        [style]="{ width: '80%' }"
     >
         <div class="card">
             <div class="grid">
-                <h5>Employee Information</h5>
-                <div class="grid formgrid">
+                <div class="col-12"><h5>Employee Information</h5></div>
+
+                <div class="grid formgrid col-6">
                     <div class="col-12">
                         <label htmlFor="name1">Name</label>
                         <input
@@ -791,6 +767,8 @@
                             disabled="true"
                         />
                     </div>
+                </div>
+                <div class="col-6">
                     <div class="col-12">
                         <label>Photo</label>
                         <img
@@ -800,6 +778,75 @@
                             src="{{ selectedEmployee.photo }}"
                             alt="Employee"
                         />
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <h5>Negotiation</h5>
+                        <div class="imessage">
+                            <p
+                                *ngFor="let message of negotiation"
+                                [ngClass]="{
+                                    'from-them': message.fromUserId != user._id,
+                                    'from-me': message.fromUserId == user._id
+                                }"
+                            >
+                                <button
+                                    *ngIf="
+                                        message.message &&
+                                        message.message.includes(
+                                            'https://instrabajo-dev.s3.amazonaws.com'
+                                        )
+                                    "
+                                    pButton
+                                    pRipple
+                                    type="button"
+                                    icon="pi pi-file"
+                                    (click)="
+                                        downloadAttachment(message.message)
+                                    "
+                                    class="p-button-rounded p-button-info"
+                                ></button>
+
+                                <span
+                                    *ngIf="
+                                        message.message &&
+                                        !message.message.includes(
+                                            'https://instrabajo-dev.s3.amazonaws.com'
+                                        )
+                                    "
+                                    >{{ message.message }}</span
+                                >
+                            </p>
+                        </div>
+                        <div style="display: flex; justify-content: center">
+                            <div class="p-inputgroup" style="max-width: 600px">
+                                <p-fileUpload
+                                    mode="basic"
+                                    [customUpload]="true"
+                                    [chooseIcon]="'pi pi-paperclip'"
+                                    (uploadHandler)="
+                                        sendMessageNegotiationFile($event)
+                                    "
+                                    [auto]="true"
+                                ></p-fileUpload>
+
+                                <input
+                                    type="text"
+                                    pInputText
+                                    placeholder="Message"
+                                    [(ngModel)]="messNeg.message"
+                                />
+
+                                <button
+                                    type="button"
+                                    pButton
+                                    pRipple
+                                    label="Send"
+                                    (click)="sendMessageNegotiation()"
+                                ></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

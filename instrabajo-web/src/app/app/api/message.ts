@@ -6,3 +6,12 @@ export interface Message {
     message?: string;
     read?: boolean;
 }
+
+export interface MessageNegotiation {
+    _id?: string;
+    jobUserId?: string;
+    fromUserId?: string;
+    toUserId?: string;
+    message?: string;
+    read?: boolean;
+}
