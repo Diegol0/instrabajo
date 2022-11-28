@@ -38,11 +38,11 @@ export class MessageNegotiationController {
 
   @Get('readMessageNegotiations/:jobUserId/:userId')
   readMessageNegotiations(
-    @Param('jobUserId') jobId: string,
+    @Param('jobUserId') jobUserId: string,
     @Param('userId') userId: string,
   ) {
     return this.messageNegotiationService.readMessageNegotiationsByUserId(
-      jobId,
+      jobUserId,
       userId,
     );
   }

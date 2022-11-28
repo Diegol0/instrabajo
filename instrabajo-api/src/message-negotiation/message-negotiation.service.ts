@@ -46,13 +46,18 @@ export class MessageNegotiationService {
       .exec();
   }
 
-  async findByJobId(jobId: string) {
-    return await this.messageNegotiationModel.find({ jobId: jobId }).exec();
+  async findByJobId(jobUserId: string) {
+    return await this.messageNegotiationModel
+      .find({ jobUserId: jobUserId })
+      .exec();
   }
 
-  async readMessageNegotiationsByUserId(jobId: string, userId: string) {
+  async readMessageNegotiationsByUserId(jobUserId: string, userId: string) {
     return await this.messageNegotiationModel
-      .updateMany({ jobId: jobId, toUserId: userId }, { $set: { read: true } })
+      .updateMany(
+        { jobUserId: jobUserId, toUserId: userId },
+        { $set: { read: true } },
+      )
       .exec();
   }
 
