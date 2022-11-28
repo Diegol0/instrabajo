@@ -1,15 +1,16 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type MessageDocument = Message & Document;
+export type MessageNegotiationDocument = MessageNegotiation & Document;
 
 @Schema()
-export class Message {
+export class MessageNegotiation {
   @Prop({ required: true })
-  jobId: string;
+  jobUserId: string;
 
   @Prop({ required: true })
   fromUserId: string;
+
   @Prop({ required: true })
   toUserId: string;
 
@@ -20,4 +21,5 @@ export class Message {
   read: boolean;
 }
 
-export const MessageSchema = SchemaFactory.createForClass(Message);
+export const MessageNegotiationSchema =
+  SchemaFactory.createForClass(MessageNegotiation);
