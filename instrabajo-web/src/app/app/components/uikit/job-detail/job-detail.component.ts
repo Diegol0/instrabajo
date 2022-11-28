@@ -134,7 +134,7 @@ export class JobDetailComponent implements OnInit {
             }
         });
 
-        const sourceNeg = interval(2000);
+        const sourceNeg = interval(500);
 
         this.subscription = sourceNeg.subscribe((val) => {
             if (
