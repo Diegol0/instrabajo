@@ -3,12 +3,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Message, MessageDocument } from 'src/schemas/message.schema';
 import { MessageDTO } from './dto/create-message.dto';
-import { UpdateMessageDto } from './dto/update-message.dto';
 
 @Injectable()
 export class MessageService {
   constructor(
-    @InjectModel(Message.name) private readonly messageModel: Model<MessageDocument>,
+    @InjectModel(Message.name)
+    private readonly messageModel: Model<MessageDocument>,
   ) {}
 
   async create(messageDto: MessageDTO) {
@@ -35,27 +35,31 @@ export class MessageService {
 
   async findByToUserAndUnread(userId: string) {
     //return "UserId"+userId;
-    return await this.messageModel.find({ toUserId: userId, read:false }).exec();
+    return await this.messageModel
+      .find({ toUserId: userId, read: false })
+      .exec();
   }
 
-  async findByJobId(jobId: string,) {
+  async findByJobId(jobId: string) {
     //return "UserId"+userId;
-    return await this.messageModel.find({ jobId: jobId}).exec();
+    return await this.messageModel.find({ jobId: jobId }).exec();
   }
 
   async readMessagesByUserId(jobId: string, userId: string) {
     //return "UserId"+userId;
-    return await this.messageModel.updateMany({jobId:jobId,toUserId:userId},{$set: {read:true}}).exec();
+    return await this.messageModel
+      .updateMany({ jobId: jobId, toUserId: userId }, { $set: { read: true } })
+      .exec();
     //return jobId+"  "+userId;
   }
 
   async update(addressDto: MessageDTO) {
-    return  await this.messageModel
+    return await this.messageModel
       .findOneAndUpdate({ _id: addressDto._id }, addressDto)
       .exec();
   }
 
   async remove(id: string) {
-    return  await this.messageModel.findByIdAndDelete({_id: id} ).exec();
+    return await this.messageModel.findByIdAndDelete({ _id: id }).exec();
   }
 }

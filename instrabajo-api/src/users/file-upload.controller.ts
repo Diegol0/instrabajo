@@ -1,15 +1,15 @@
 import {
+  Body,
   Controller,
   Post,
+  Request,
   UploadedFile,
   UseInterceptors,
-  Request,
-  Body,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { FileService } from './file-service';
-import { ResponseModel } from './.dto/response.model';
 import { CompareDto } from './.dto/compare.dto';
+import { ResponseModel } from './.dto/response.model';
+import { FileService } from './file-service';
 
 @Controller('file-upload')
 export class FileUploadController {
@@ -21,6 +21,7 @@ export class FileUploadController {
     @UploadedFile() file: Express.Multer.File,
     @Request() req,
   ): Promise<any> {
+    console.log(req);
     const result = await this.fileservice.uploadPublicFile(
       file.buffer,
       file.originalname.replace(/\W/g, ''),

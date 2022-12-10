@@ -1,15 +1,14 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
+  Controller,
+  Delete,
+  Get,
   Param,
-  Delete
+  Patch,
+  Post,
 } from '@nestjs/common';
-import { MessageService } from './message.service';
 import { MessageDTO } from './dto/create-message.dto';
-import { UpdateMessageDto } from './dto/update-message.dto';
+import { MessageService } from './message.service';
 
 @Controller('message')
 export class MessageController {
@@ -34,15 +33,15 @@ export class MessageController {
   findByJobId(@Param('jobId') id: string) {
     return this.messageService.findByJobId(id);
   }
-  
+
   @Get('readMessages/:jobId/:userId')
-  readMessages(@Param('jobId') jobId: string,@Param('userId') userId: string) {
-    return this.messageService.readMessagesByUserId( jobId, userId);
+  readMessages(@Param('jobId') jobId: string, @Param('userId') userId: string) {
+    return this.messageService.readMessagesByUserId(jobId, userId);
   }
 
   @Patch()
-  update( @Body() adressDto: MessageDTO) {
-    return this.messageService.update( adressDto);
+  update(@Body() adressDto: MessageDTO) {
+    return this.messageService.update(adressDto);
   }
 
   @Delete(':id')

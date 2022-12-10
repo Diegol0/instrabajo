@@ -1,5 +1,4 @@
 export class MessageDTO {
-  
   _id?: string;
   jobId?: string;
   fromUserId?: string;

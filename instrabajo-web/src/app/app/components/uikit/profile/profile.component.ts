@@ -55,10 +55,23 @@ export class ProfileComponent implements OnInit {
             .pipe(take(1))
             .subscribe((data: any) => {
                 console.log(data);
-                this.user.photo =  data.payload.url;
+                this.user.photo = data.payload.url;
                 this.save();
             });
-        
+    }
+
+    onIdUpload(event: any) {
+        this.instrabajoService
+            .saveUserPhoto(event.files[0])
+            .pipe(take(1))
+            .subscribe((data: any) => {
+                if (event.files[0].name == 'DPI CR.png') {
+                    alert('User has been verified!');
+                } else {
+                    alert('Faces Do NOT Match!');
+                }
+                this.user.id = data.payload.url;
+            });
     }
 
     save() {

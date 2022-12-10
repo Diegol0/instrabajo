@@ -72,5 +72,21 @@
                 [style]="{ width: '100%', height: '320px' }"
             ></p-gmap>
         </div>
+        <div class="card p-fluid">
+            <h5>Personal ID Photo</h5>
+            <p *ngIf="!user.photo">Please upload a photo of an ID.</p>
+            <input
+                type="file"
+                id="file"
+                (change)="onIdUpload($event.target)"
+            />
+            <!-- <p-fileUpload *ngIf="!user.photo" mode="basic" name="demo[]" [previewWidth]="200" [customUpload]="true" [maxFileSize]="1000000" (uploadHandler)="onBasicUpload($event)"></p-fileUpload> -->
+            <img
+                style="max-width: 100%;"
+                *ngIf="user.id"
+                src="{{ user.id }}"
+                alt="ID"
+            />
+        </div>
     </div>
 </div>

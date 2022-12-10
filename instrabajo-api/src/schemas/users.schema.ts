@@ -11,7 +11,7 @@ export class User {
   _id: ObjectId;
 
   @Prop()
-  userId: string; 
+  userId: string;
 
   @Prop({ required: true })
   name: string;

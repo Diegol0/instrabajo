@@ -5,19 +5,16 @@ export type ReviewDocument = Review & Document;
 
 @Schema()
 export class Review {
-
   @Prop()
   userId: string;
   @Prop()
   jobId: string;
   @Prop()
-  nameJob: string;   
+  nameJob: string;
   @Prop()
   Comment: string;
   @Prop()
   stars: number;
-
-
 }
 
 export const ReviewSchema = SchemaFactory.createForClass(Review);

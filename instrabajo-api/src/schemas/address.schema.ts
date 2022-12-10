@@ -5,7 +5,6 @@ export type AddressDocument = Address & Document;
 
 @Schema()
 export class Address {
-
   @Prop({ required: true })
   addressLine1: string;
 

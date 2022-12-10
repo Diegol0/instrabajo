@@ -7,7 +7,8 @@ import { CreateJobProfileDto } from './dto/create-job-profile.dto';
 @Injectable()
 export class JobProfileService {
   constructor(
-    @InjectModel(JobProfile.name) private readonly JobProfile: Model<JobProfileDocument>,
+    @InjectModel(JobProfile.name)
+    private readonly JobProfile: Model<JobProfileDocument>,
   ) {}
 
   async create(createJobDto: CreateJobProfileDto) {
@@ -52,16 +53,17 @@ export class JobProfileService {
     };
 
     for (const prop in params) if (!params[prop]) delete params[prop];
-    const updatedJob = await this.JobProfile
-      .findOneAndUpdate({ _id: updateJobDto._id }, params)
-      .exec();
+    const updatedJob = await this.JobProfile.findOneAndUpdate(
+      { _id: updateJobDto._id },
+      params,
+    ).exec();
     return updatedJob;
   }
 
   async remove(id: string) {
-    const deletedJob = await this.JobProfile
-      .findByIdAndRemove({ _id: id })
-      .exec();
+    const deletedJob = await this.JobProfile.findByIdAndRemove({
+      _id: id,
+    }).exec();
     return deletedJob;
   }
 }

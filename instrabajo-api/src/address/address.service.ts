@@ -6,7 +6,6 @@ import {
   AddressUserDocument,
 } from 'src/schemas/address-user.schema';
 import { AddressDTO } from './dto/create-adress.dto';
-import { UpdateAddressDto } from './dto/update-address.dto';
 
 @Injectable()
 export class AddressService {

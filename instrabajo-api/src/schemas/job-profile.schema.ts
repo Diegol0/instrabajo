@@ -23,7 +23,6 @@ export class JobProfile {
 
   @Prop()
   images: string[];
-
 }
 
 export const JobProfileSchema = SchemaFactory.createForClass(JobProfile);

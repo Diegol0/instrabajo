@@ -3,12 +3,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Review, ReviewDocument } from 'src/schemas/review.schema';
 import { ReviewDTO } from './dto/create-review.dto';
-import { UpdateReviewDto } from './dto/update-review.dto';
 
 @Injectable()
 export class ReviewService {
   constructor(
-    @InjectModel(Review.name) private readonly AddressModel: Model<ReviewDocument>,
+    @InjectModel(Review.name)
+    private readonly AddressModel: Model<ReviewDocument>,
   ) {}
 
   async create(createAddressDto: ReviewDTO) {
@@ -34,12 +34,13 @@ export class ReviewService {
   }
 
   async update(addressDto: ReviewDTO) {
-    return  await this.AddressModel
-      .findOneAndUpdate({ _id: addressDto._id }, addressDto)
-      .exec();
+    return await this.AddressModel.findOneAndUpdate(
+      { _id: addressDto._id },
+      addressDto,
+    ).exec();
   }
 
   async remove(id: string) {
-    return  await this.AddressModel.findByIdAndDelete({_id: id} ).exec();
+    return await this.AddressModel.findByIdAndDelete({ _id: id }).exec();
   }
 }

@@ -1,5 +1,4 @@
 export class AddressDTO {
-  
   _id?: string;
   userId?: string;
   name?: string;
