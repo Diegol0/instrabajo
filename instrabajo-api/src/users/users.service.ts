@@ -22,8 +22,9 @@ export class UsersService {
     const params = {
       phone: updateUserDTO.phone,
       photo: updateUserDTO.photo,
+      dpi: updateUserDTO.dpi,
+      isVerified: updateUserDTO.isVerified,
     };
-
     for (const prop in params) if (!params[prop]) delete params[prop];
     const updatedUser = await this.userModel
       .findOneAndUpdate({ _id: updateUserDTO._id }, params)

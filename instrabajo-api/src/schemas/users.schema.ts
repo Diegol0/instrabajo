@@ -37,6 +37,12 @@ export class User {
   @Prop()
   photo: string;
 
+  @Prop()
+  dpi: string;
+
+  @Prop()
+  isVerified: boolean;
+
   @Prop({ type: AddressSchema })
   @Type(() => Address)
   address: Address;
