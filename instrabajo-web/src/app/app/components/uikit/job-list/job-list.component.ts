@@ -4,6 +4,7 @@ import { MessageService, SelectItem } from 'primeng/api';
 import { DataView } from 'primeng/dataview';
 import { take } from 'rxjs';
 import { Job } from 'src/app/app/api/job';
+import { Address } from 'src/app/app/api/address';
 import { JobUserDto } from 'src/app/app/models/service.dto';
 import { AddressService } from 'src/app/app/service/address.service';
 import { JobImageService } from 'src/app/app/service/job-image.service';
@@ -63,6 +64,12 @@ export class JobListComponent implements OnInit {
             { label: 'Cerca de mi', value: 'NEAR' },
             { label: 'Con mi habilidad', value: 'SKILLS' },
         ];
+        navigator.geolocation.getCurrentPosition((position) => {
+            this.userLocation = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+            };
+        });
     }
 
     async loadJobs() {
@@ -115,16 +122,21 @@ export class JobListComponent implements OnInit {
                 this.filteredJobs = this.availableJobs;
                 break;
             case 'NEAR':
-                if (this.userLocation.lat == 0) {
-                    await navigator.geolocation.getCurrentPosition(
-                        (position) => {
-                            this.userLocation = {
-                                lat: position.coords.latitude,
-                                lng: position.coords.longitude,
-                            };
-                        }
+                this.filteredJobs = this.availableJobs.filter((job: any) => {
+                    const address: Address = job.address!;
+                    console.log(this.userLocation.lat + '');
+                    console.log(this.userLocation.lng + '');
+                    console.log(address.lat + '');
+                    console.log(address.lng + '');
+                    const distance = this.getDistanceFromLatLonInKm(
+                        this.userLocation.lat + '',
+                        this.userLocation.lng + '',
+                        address.lat + '',
+                        address.lng + ''
                     );
-                }
+                    console.log(distance + ' ' + job.name);
+                    return distance < 15;
+                });
                 break;
             case 'SKILLS':
                 this.filteredJobs = this.availableJobs.filter((job: Job) => {});
