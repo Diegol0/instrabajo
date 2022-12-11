@@ -7,18 +7,20 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
     imports: [
         CommonModule,
         LoginRoutingModule,
         ButtonModule,
+        ToastModule,
         CheckboxModule,
         InputTextModule,
         FormsModule,
         ReactiveFormsModule,
-        PasswordModule
+        PasswordModule,
     ],
-    declarations: [LoginComponent]
+    declarations: [LoginComponent],
 })
-export class LoginModule { }
+export class LoginModule {}

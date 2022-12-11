@@ -5,8 +5,10 @@ import { DataView } from 'primeng/dataview';
 import { take } from 'rxjs';
 import { Job } from 'src/app/app/api/job';
 import { JobUserDto } from 'src/app/app/models/service.dto';
+import { AddressService } from 'src/app/app/service/address.service';
 import { JobImageService } from 'src/app/app/service/job-image.service';
 import { JobService } from 'src/app/app/service/job.service';
+import { UtilsService } from 'src/app/app/service/utils.service';
 import { InstrabajoService } from 'src/app/services/instrabajo.service';
 
 @Component({
@@ -39,9 +41,10 @@ export class JobListComponent implements OnInit {
     constructor(
         private jobService: JobService,
         private messageService: MessageService,
-        private route: ActivatedRoute,
+        public utilsService: UtilsService,
         private router: Router,
         private jobImagesService: JobImageService,
+        private addressService: AddressService,
         private instrabajoService: InstrabajoService
     ) {
         this.instrabajoService.getLoggedUser
@@ -55,10 +58,10 @@ export class JobListComponent implements OnInit {
         this.loadJobs();
 
         this.sortOptions = [
-            { label: 'All Jobs Available', value: 'ALL' },
-            { label: 'My Jobs', value: 'MY' },
-            // { label: 'Jobs near me (15Km)', value: 'NEAR' },
-            // { label: 'Jobs with my skills', value: 'SKILLS' },
+            { label: 'Disponibles', value: 'ALL' },
+            { label: 'Mis trabajos', value: 'MY' },
+            { label: 'Cerca de mi', value: 'NEAR' },
+            { label: 'Con mi habilidad', value: 'SKILLS' },
         ];
     }
 
@@ -68,6 +71,12 @@ export class JobListComponent implements OnInit {
             .pipe(take(1))
             .subscribe((jobs: any) => {
                 jobs.forEach((job: Job) => {
+                    this.addressService
+                        .getAddressById(job.address!)
+                        .pipe(take(1))
+                        .subscribe((address: any) => {
+                            job.address = address;
+                        });
                     this.jobImagesService
                         .getJobImages(job._id)
                         .pipe(take(1))

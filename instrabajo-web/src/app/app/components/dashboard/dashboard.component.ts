@@ -10,11 +10,11 @@ import { ReviewService } from 'src/app/app/service/review.service';
 import { InstrabajoService } from 'src/app/services/instrabajo.service';
 import { MessagesService } from 'src/app/app/service/message.service';
 import { Review } from 'src/app/app/api/review';
+import { UtilsService } from '../../service/utils.service';
 @Component({
     templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-
     items!: MenuItem[];
 
     products!: Product[];
@@ -27,20 +27,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     subscription!: Subscription;
 
-    totalReviews:any;
+    totalReviews: any;
     reviews: Review[] = [];
 
     review: any;
-    user:any;
+    user: any;
     messages: any;
 
     constructor(
-        private productService: ProductService, 
-        public layoutService: LayoutService, 
-        private reviewService:ReviewService,
+        private productService: ProductService,
+        public layoutService: LayoutService,
+        private reviewService: ReviewService,
         private instrabajoService: InstrabajoService,
         private jobService: JobService,
-        private messageService: MessagesService) {
+        private messageService: MessagesService,
+        public utilsService: UtilsService
+    ) {
         this.subscription = this.layoutService.configUpdate$.subscribe(() => {
             this.initChart();
         });
@@ -54,93 +56,112 @@ export class DashboardComponent implements OnInit, OnDestroy {
             });
 
         this.jobService.getJobs().then((data) => (this.jobs = data));
-        this.reviewService.getReviews(this.user._id).pipe(take(1))
-        .subscribe((data: any) => {
-            this.reviews = data
-            this.totalReviews = this.reviews.length
-            let sum = 0;
-            this.reviews.forEach(review=> sum += review.stars!);
-            this.review = sum/this.reviews.length;
-        });
+        this.reviewService
+            .getReviews(this.user._id)
+            .pipe(take(1))
+            .subscribe((data: any) => {
+                this.reviews = data;
+                this.totalReviews = this.reviews.length;
+                let sum = 0;
+                this.reviews.forEach((review) => (sum += review.stars!));
+                this.review = sum / this.reviews.length;
+            });
 
-        this.messageService.getUnreadMessages(this.user._id).pipe(take(1))
-        .subscribe((data: any) => {
-            this.messages = data.length
-            
-        });
+        this.messageService
+            .getUnreadMessages(this.user._id)
+            .pipe(take(1))
+            .subscribe((data: any) => {
+                this.messages = data.length;
+            });
 
         this.jobService
-        .getJobsByStatus('AVAILABLE')
-        .pipe(take(1))
-        .subscribe((jobs: any) => {
-            this.jobs = jobs.slice(0,3);
-        });
+            .getJobsByStatus('AVAILABLE')
+            .pipe(take(1))
+            .subscribe((jobs: any) => {
+                this.jobs = jobs.slice(0, 3);
+            });
 
         this.initChart();
-        this.productService.getProductsSmall().then(data => this.products = data);
+        this.productService
+            .getProductsSmall()
+            .then((data) => (this.products = data));
 
         this.items = [
             { label: 'Add New', icon: 'pi pi-fw pi-plus' },
-            { label: 'Remove', icon: 'pi pi-fw pi-minus' }
+            { label: 'Remove', icon: 'pi pi-fw pi-minus' },
         ];
     }
 
     initChart() {
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
-        const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-        const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+        const textColorSecondary = documentStyle.getPropertyValue(
+            '--text-color-secondary'
+        );
+        const surfaceBorder =
+            documentStyle.getPropertyValue('--surface-border');
 
         this.chartData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            labels: [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+            ],
             datasets: [
                 {
                     label: 'First Dataset',
                     data: [65, 59, 80, 81, 56, 55, 40],
                     fill: false,
-                    backgroundColor: documentStyle.getPropertyValue('--bluegray-700'),
-                    borderColor: documentStyle.getPropertyValue('--bluegray-700'),
-                    tension: .4
+                    backgroundColor:
+                        documentStyle.getPropertyValue('--bluegray-700'),
+                    borderColor:
+                        documentStyle.getPropertyValue('--bluegray-700'),
+                    tension: 0.4,
                 },
                 {
                     label: 'Second Dataset',
                     data: [28, 48, 40, 19, 86, 27, 90],
                     fill: false,
-                    backgroundColor: documentStyle.getPropertyValue('--green-600'),
+                    backgroundColor:
+                        documentStyle.getPropertyValue('--green-600'),
                     borderColor: documentStyle.getPropertyValue('--green-600'),
-                    tension: .4
-                }
-            ]
+                    tension: 0.4,
+                },
+            ],
         };
 
         this.chartOptions = {
             plugins: {
                 legend: {
                     labels: {
-                        color: textColor
-                    }
-                }
+                        color: textColor,
+                    },
+                },
             },
             scales: {
                 x: {
                     ticks: {
-                        color: textColorSecondary
+                        color: textColorSecondary,
                     },
                     grid: {
                         color: surfaceBorder,
-                        drawBorder: false
-                    }
+                        drawBorder: false,
+                    },
                 },
                 y: {
                     ticks: {
-                        color: textColorSecondary
+                        color: textColorSecondary,
                     },
                     grid: {
                         color: surfaceBorder,
-                        drawBorder: false
-                    }
-                }
-            }
+                        drawBorder: false,
+                    },
+                },
+            },
         };
     }
 

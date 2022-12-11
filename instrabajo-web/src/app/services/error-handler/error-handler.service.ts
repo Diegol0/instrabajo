@@ -12,10 +12,10 @@ export class ErrorHandlerService {
     if (error.status === 401 || error.status === 403) {
       console.log();
       if (!this.router.url.includes('login')) {
-        alert('Invalid session, redirecting to Login');
+        alert('Tu sesión ha expirado');
         this.router.navigate(['/auth/login']);
       } else {
-        alert('Invalid credentials');
+        alert('Las credenciales son inválidas');
       }
     }
     return throwError(() => error.message);
@@ -25,10 +25,10 @@ export class ErrorHandlerService {
     if (error.status === 401 || error.status === 403) {
       console.log();
       if (!this.router.url.includes('login')) {
-        alert('Invalid session, redirecting to Login');
+        alert('Tu sesión ha expirado');
         this.router.navigate(['/auth/login']);
       } else {
-        alert('Invalid credentials');
+        alert('Las credenciales son inválidas');
       }
     }
     return throwError(() => error.message);

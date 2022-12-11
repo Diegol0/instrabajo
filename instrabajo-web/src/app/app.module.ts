@@ -19,6 +19,7 @@ import { InstrabajoService } from './services/instrabajo.service';
 import { JobImageService } from './app/service/job-image.service';
 import { JobProfileService } from './app/service/job-profile.service';
 import { MessageNegotiationsService } from './app/service/message-negotiation.service';
+import { UtilsService } from './app/service/utils.service';
 
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
@@ -38,6 +39,7 @@ import { MessageNegotiationsService } from './app/service/message-negotiation.se
         ReviewService,
         InstrabajoService,
         MessagesService,
+        UtilsService,
         MessageNegotiationsService,
         JobProfileService,
     ],

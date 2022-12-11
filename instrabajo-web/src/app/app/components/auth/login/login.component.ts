@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { take } from 'rxjs';
 import { LoginUserDto } from 'src/app/app/models/service.dto';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
@@ -9,6 +10,7 @@ import { InstrabajoService } from 'src/app/services/instrabajo.service';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
+    providers: [MessageService],
     styles: [
         `
             :host ::ng-deep .pi-eye,
@@ -33,6 +35,7 @@ export class LoginComponent {
     constructor(
         public layoutService: LayoutService,
         private instrabajoService: InstrabajoService,
+        private messageService: MessageService,
         private router: Router
     ) {}
 

@@ -9,6 +9,7 @@ import { GalleryImage, JobDto, JobImageDto } from 'src/app/app/models/service.dt
 import { AddressService } from 'src/app/app/service/address.service';
 import { JobImageService } from 'src/app/app/service/job-image.service';
 import { JobService } from 'src/app/app/service/job.service';
+import { UtilsService } from 'src/app/app/service/utils.service';
 import { InstrabajoService } from 'src/app/services/instrabajo.service';
 
 declare var google: any;
@@ -79,7 +80,7 @@ export class CrudJobComponent implements OnInit {
         private jobService: JobService,
         private messageService: MessageService,
         private addressService: AddressService,
-        private route: ActivatedRoute,
+        public utilsService: UtilsService,
         private jobImagesService: JobImageService,
         private router: Router,
         private instrabajoService: InstrabajoService
