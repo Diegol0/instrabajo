@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { take } from 'rxjs';
-import { UpdateUserDto } from 'src/app/app/models/service.dto';
+import { CompareDto, UpdateUserDto } from 'src/app/app/models/service.dto';
 import { InstrabajoService } from 'src/app/services/instrabajo.service';
 declare var google: any;
 @Component({
@@ -63,13 +63,54 @@ export class ProfileComponent implements OnInit {
         this.instrabajoService
             .saveUserPhoto(event.files[0])
             .pipe(take(1))
-            .subscribe((data: any) => {
+            .subscribe(async (data: any) => {
+                this.user.dpi = data.payload.url;
+
+                this.compare(this.user.dpi);
+
                 if (event.files[0].name == 'DPI CR.png') {
-                    alert('User has been verified!');
                 } else {
-                    alert('Faces Do NOT Match!');
                 }
                 this.user.id = data.payload.url;
+            });
+    }
+
+    compare(dpi: string) {
+        let compare: CompareDto = {
+            source: this.user.photo,
+            target: dpi,
+        };
+
+        this.instrabajoService
+            .compare(compare)
+            .pipe(take(1))
+            .subscribe((data: any) => {
+                console.log(data);
+                this.user.dpi = dpi;
+                if (
+                    data.payload.FaceMatches &&
+                    data.payload.FaceMatches.length > 0
+                ) {
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Exito',
+                        detail: 'Felicidades, has sido verificado',
+                        life: 3000,
+                        sticky: true,
+                    });
+                    this.user.isVerified = true;
+                    this.save();
+                } else {
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Error',
+                        detail: 'Lo sentimos, no hemos podido verificar tu perfil, puedes contactar a admin@instrabajo.com',
+                        life: 3000,
+                        sticky: true,
+                    });
+                    this.user.isVerified = false;
+                    this.save();
+                }
             });
     }
 
@@ -94,12 +135,4 @@ export class ProfileComponent implements OnInit {
                 });
             });
     }
-
-    selectedState: any;
-
-    dropdownItems = [
-        { name: 'Option 1', code: 'Option 1' },
-        { name: 'Option 2', code: 'Option 2' },
-        { name: 'Option 3', code: 'Option 3' },
-    ];
 }

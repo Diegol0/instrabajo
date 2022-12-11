@@ -2,9 +2,11 @@
 <div class="grid">
     <div class="col-12 md:col-6">
         <div class="card p-fluid" *ngIf="user">
-            <h5>Personal</h5>
+            <h5>
+                Personal {{ user.isVerified ? "- Perfil verificado ✅" : "" }}
+            </h5>
             <div class="field">
-                <label htmlFor="name1">Name</label>
+                <label htmlFor="name1">Nombre</label>
                 <input
                     pInputText
                     [(ngModel)]="user.name"
@@ -14,7 +16,7 @@
                 />
             </div>
             <div class="field">
-                <label htmlFor="lastName1">Last Name</label>
+                <label htmlFor="lastName1">Apellido</label>
                 <input
                     pInputText
                     [(ngModel)]="user.lastname"
@@ -24,7 +26,7 @@
                 />
             </div>
             <div class="field">
-                <label htmlFor="email1">Email</label>
+                <label htmlFor="email1">Correo</label>
                 <input
                     pInputText
                     [(ngModel)]="user.email"
@@ -34,7 +36,7 @@
                 />
             </div>
             <div class="field">
-                <label htmlFor="phone1">Phone</label>
+                <label htmlFor="phone1">Telefono</label>
                 <input
                     pInputText
                     [(ngModel)]="user.phone"
@@ -46,14 +48,17 @@
         </div>
 
         <div class="card p-fluid">
-            <h5>Personal Photo</h5>
-            <p *ngIf="!user.photo">Please upload a photo.</p>
+            <h5>Foto</h5>
+            <p *ngIf="!user.photo">Por favor sube una foto.</p>
+            <p *ngIf="!user.photo">
+                Recomendamos este paso, ya que genera confianza entre los
+                usuarios.
+            </p>
             <input
                 type="file"
                 id="file"
                 (change)="onBasicUpload($event.target)"
             />
-            <!-- <p-fileUpload *ngIf="!user.photo" mode="basic" name="demo[]" [previewWidth]="200" [customUpload]="true" [maxFileSize]="1000000" (uploadHandler)="onBasicUpload($event)"></p-fileUpload> -->
             <img
                 style="max-width: 100%"
                 *ngIf="user.photo"
@@ -65,7 +70,7 @@
 
     <div class="col-12 md:col-6">
         <div class="card p-fluid">
-            <h5>Current Location</h5>
+            <h5>Ubicación actual</h5>
             <p-gmap
                 *ngIf="options"
                 [options]="options"
@@ -73,15 +78,19 @@
                 [style]="{ width: '100%', height: '320px' }"
             ></p-gmap>
         </div>
-        <div class="card p-fluid">
-            <h5>Personal ID Photo</h5>
-            <p *ngIf="!user.photo">Please upload a photo of an ID.</p>
+        <div class="card p-fluid" *ngIf="user.photo">
+            <h5>Documento de identificación personal</h5>
+            <p *ngIf="!user.dpi">Por favor carga un ID.</p>
+            <p *ngIf="!user.dpi">
+                Recomendamos este paso, ya que genera confianza entre los
+                usuarios.
+            </p>
             <input type="file" id="file" (change)="onIdUpload($event.target)" />
-            <!-- <p-fileUpload *ngIf="!user.photo" mode="basic" name="demo[]" [previewWidth]="200" [customUpload]="true" [maxFileSize]="1000000" (uploadHandler)="onBasicUpload($event)"></p-fileUpload> -->
+
             <img
                 style="max-width: 100%"
-                *ngIf="user.id"
-                src="{{ user.id }}"
+                *ngIf="user.dpi"
+                src="{{ user.dpi }}"
                 alt="ID"
             />
         </div>
