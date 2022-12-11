@@ -100,7 +100,7 @@
                 </div>
                 <div class="field">
                     <label for="status">Estado</label>
-                    <input type="text" pInputText id="status" [(ngModel)]="job.status" required [disabled]="true" [ngClass]="{'ng-invalid ng-dirty' : submitted && !job.status}"/>
+                    <input type="text" pInputText id="status" required [disabled]="true" value="Nuevo" [ngClass]="{'ng-invalid ng-dirty' : submitted && !job.status}"/>
                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !job.status">Estado es requerido.</small>
                 </div>
                 <div class="field">

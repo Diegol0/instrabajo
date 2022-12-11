@@ -126,24 +126,8 @@ export class CrudJobComponent implements OnInit {
             { field: 'fixedRate', header: 'Fixed Rate' },
         ];
 
-        this.skills = [
-            { label: 'ELECTRONIC', value: 'ELECTRONIC' },
-            { label: 'GAMER', value: 'GAMER' },
-            { label: 'PAINTER', value: 'PAINTER' },
-            { label: 'TRAINER', value: 'TRAINER' },
-            { label: 'MECHANIC', value: 'MECHANIC' },
-            { label: 'CARPENTER', value: 'CARPENTER' },
-            { label: 'CLEARNER', value: 'CLEARNER' },
-            { label: 'GARDENER', value: 'GARDENER' },
-            { label: 'BABYSITTER', value: 'BABYSITTER' },
-            { label: 'WAITER', value: 'WAITER' },
-            { label: 'PLUMBER', value: 'PLUMBER' },
-            { label: 'BLACKSMITH', value: 'BLACKSMITH' },
-        ];
-        this.rateTypes = [
-            { label: 'Hourly Rate', value: 'HOURLY' },
-            { label: 'Fixed Rate', value: 'FIXED' },
-        ];
+        this.skills = this.utilsService.skills;
+        this.rateTypes = this.utilsService.rateTypes;
     }
 
     openNew() {

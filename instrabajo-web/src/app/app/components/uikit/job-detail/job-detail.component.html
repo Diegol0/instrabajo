@@ -10,7 +10,7 @@
                         pButton
                         pRipple
                         type="button"
-                        label="Mark Job as Completed"
+                        label="Marcar como completado"
                         class="p-button-rounded p-button-success"
                         (click)="completeJob()"
                         *ngIf="
@@ -39,7 +39,7 @@
                             pButton
                             pRipple
                             type="button"
-                            label="Contact Administrator"
+                            label="Contactar Administrador"
                             class="p-button-rounded p-button-warning"
                         ></button
                     ></a>
@@ -49,7 +49,7 @@
                         pButton
                         pRipple
                         type="button"
-                        label="Cancel this Job"
+                        label="Cancelar este trabajo"
                         class="p-button-rounded p-button-danger"
                         *ngIf="
                             job.employer == user._id &&
@@ -63,7 +63,7 @@
                         pButton
                         pRipple
                         type="button"
-                        label="Go Back"
+                        label="Regresar"
                         class="p-button-rounded p-button-info"
                         [routerLink]="'/uikit/job-list'"
                     ></button>
@@ -77,14 +77,14 @@
         *ngIf="job.status == 'COMPLETED' && user._id == job.employee"
     >
         <div class="card">
-            <h5>Rating</h5>
-            <p>It's time to rate this Employer</p>
+            <h5>Calificación</h5>
+            <p>Es momento de calificar al empleador</p>
             <div class="col-12">
-                <h5>Employer Rating</h5>
+                <h5>Calificación de este empleador</h5>
                 <p-rating [(ngModel)]="review.stars"></p-rating>
             </div>
             <div class="col-12 md:col-6">
-                <label for="description">Comment</label>
+                <label for="description">Comentario</label>
                 <textarea
                     id="description"
                     pInputTextarea
@@ -96,7 +96,7 @@
                     type="button"
                     pButton
                     pRipple
-                    label="Rate"
+                    label="Calificar"
                     (click)="createReview()"
                 ></button>
             </div>
@@ -108,14 +108,14 @@
         *ngIf="job.status == 'COMPLETED' && user._id == job.employer"
     >
         <div class="card">
-            <h5>Rating</h5>
-            <p>It's time to rate this Employee</p>
+            <h5>Calificación</h5>
+            <p>Es momento de calificar a este empleado</p>
             <div class="col-12">
-                <h5>Employee Rating</h5>
+                <h5>Calificación del empleado</h5>
                 <p-rating [(ngModel)]="review.stars"></p-rating>
             </div>
             <div class="col-12 md:col-6">
-                <label for="description">Comment</label>
+                <label for="description">Comentario</label>
                 <textarea
                     id="description"
                     pInputTextarea
@@ -128,7 +128,7 @@
                 type="button"
                 pButton
                 pRipple
-                label="Rate"
+                label="Calificar"
                 (click)="createReview()"
             ></button>
         </div>
@@ -136,10 +136,10 @@
 
     <div class="col-12 md:col-6">
         <div class="card">
-            <h5>Job Detail</h5>
+            <h5>Detalle del trabajo</h5>
             <div class="grid formgrid">
                 <div class="col-12">
-                    <label for="name">Name</label>
+                    <label for="name">Nombre</label>
                     <input
                         type="text"
                         pInputText
@@ -149,7 +149,7 @@
                     />
                 </div>
                 <div class="col-12">
-                    <label for="description">Description</label>
+                    <label for="description">Descripción</label>
                     <textarea
                         id="description"
                         pInputTextarea
@@ -161,7 +161,7 @@
                     ></textarea>
                 </div>
                 <div class="col-12">
-                    <label for="status">Status</label>
+                    <label for="status">Estado</label>
                     <input
                         type="text"
                         pInputText
@@ -173,7 +173,7 @@
                     />
                 </div>
                 <div class="col-12">
-                    <label for="skill">Skill</label>
+                    <label for="skill">Habilidad</label>
                     <p-dropdown
                         appendTo="body"
                         id="skill"
@@ -185,7 +185,9 @@
                         [disabled]="true"
                     >
                         <ng-template let-skill pTemplate="skill">
-                            <span>{{ skill.label }}</span>
+                            <span>{{
+                                utilsService.getJobRateType(skill)
+                            }}</span>
                         </ng-template>
                     </p-dropdown>
                 </div>
@@ -202,7 +204,9 @@
                         placeholder="Select a Rate Type"
                     >
                         <ng-template let-rateType pTemplate="rateType">
-                            <span>{{ rateType.label }}</span>
+                            <span>
+                                {{ utilsService.getJobRateType(rateType) }}
+                            </span>
                         </ng-template>
                     </p-dropdown>
                 </div>
@@ -234,10 +238,10 @@
         </div>
 
         <div *ngIf="address" class="card">
-            <h5>Address</h5>
+            <h5>Dirección</h5>
             <div class="grid formgrid">
                 <div class="col-12">
-                    <label for="name">Name</label>
+                    <label for="name">Nombre</label>
                     <input
                         type="text"
                         pInputText
@@ -247,7 +251,7 @@
                     />
                 </div>
                 <div class="col-12">
-                    <label for="addressLine1">Address Line 1</label>
+                    <label for="addressLine1">Dirección Linea 1</label>
                     <input
                         type="text"
                         pInputText
@@ -257,7 +261,7 @@
                     />
                 </div>
                 <div class="col-12">
-                    <label for="addressLine2">Address Line 2</label>
+                    <label for="addressLine2">Dirección Linea 2</label>
                     <input
                         type="text"
                         pInputText
@@ -267,7 +271,7 @@
                     />
                 </div>
                 <div class="col-12">
-                    <label for="country">Country</label>
+                    <label for="country">Pais</label>
                     <p-dropdown
                         appendTo="body"
                         id="country"
@@ -276,7 +280,7 @@
                         optionValue="value"
                         [disabled]="true"
                         [(ngModel)]="address.country"
-                        placeholder="Select a Country"
+                        placeholder="Seleccione un pais"
                     >
                         <ng-template let-country pTemplate="country">
                             <span>{{ country.label }}</span>
@@ -284,7 +288,7 @@
                     </p-dropdown>
                 </div>
                 <div class="col-12">
-                    <label for="city">City</label>
+                    <label for="city">Ciudad</label>
                     <p-dropdown
                         appendTo="body"
                         id="city"
@@ -306,7 +310,7 @@
                     class="field"
                     class="col-12"
                 >
-                    <label for="city">Location</label>
+                    <label for="city">Ubicación</label>
                     <p-gmap
                         [options]="options"
                         [overlays]="overlays"
@@ -320,10 +324,10 @@
     <div class="col-12 md:col-6">
         <div class="card">
             <div class="grid">
-                <h5>Employer Information</h5>
+                <h5>Empleador</h5>
                 <div class="grid formgrid col-12">
                     <div class="col-12">
-                        <label htmlFor="name1">Name</label>
+                        <label htmlFor="name1">Nombre</label>
                         <input
                             pInputText
                             [(ngModel)]="employer.name"
@@ -333,7 +337,7 @@
                         />
                     </div>
                     <div class="col-12">
-                        <label htmlFor="lastName1">Last Name</label>
+                        <label htmlFor="lastName1">Apellido</label>
                         <input
                             pInputText
                             [(ngModel)]="employer.lastname"
@@ -343,7 +347,7 @@
                         />
                     </div>
                     <div class="col-12">
-                        <label htmlFor="email1">Email</label>
+                        <label htmlFor="email1">Correo</label>
                         <input
                             pInputText
                             [(ngModel)]="employer.email"
@@ -353,7 +357,7 @@
                         />
                     </div>
                     <div class="col-12">
-                        <label htmlFor="phone1">Phone</label>
+                        <label htmlFor="phone1">Telefono</label>
                         <input
                             pInputText
                             [(ngModel)]="employer.phone"
@@ -363,7 +367,7 @@
                         />
                     </div>
                     <div class="col-12">
-                        <label>Photo</label>
+                        <label>Foto</label>
                         <img
                             class="center"
                             style="max-width: 200px"
@@ -378,10 +382,10 @@
 
         <div class="card" *ngIf="job.employee">
             <div class="grid">
-                <h5>Employee Information</h5>
+                <h5>Empleado</h5>
                 <div class="grid formgrid">
                     <div class="col-12">
-                        <label htmlFor="name1">Name</label>
+                        <label htmlFor="name1">Nombre</label>
                         <input
                             pInputText
                             [(ngModel)]="employee.name"
@@ -391,7 +395,7 @@
                         />
                     </div>
                     <div class="col-12">
-                        <label htmlFor="lastName1">Last Name</label>
+                        <label htmlFor="lastName1">Apellido</label>
                         <input
                             pInputText
                             [(ngModel)]="employee.lastname"
@@ -401,7 +405,7 @@
                         />
                     </div>
                     <div class="col-12">
-                        <label htmlFor="email1">Email</label>
+                        <label htmlFor="email1">Correo</label>
                         <input
                             pInputText
                             [(ngModel)]="employee.email"
@@ -411,7 +415,7 @@
                         />
                     </div>
                     <div class="col-12">
-                        <label htmlFor="phone1">Phone</label>
+                        <label htmlFor="phone1">Telefono</label>
                         <input
                             pInputText
                             [(ngModel)]="employee.phone"
@@ -421,7 +425,7 @@
                         />
                     </div>
                     <div class="col-12">
-                        <label>Photo</label>
+                        <label>Foto</label>
                         <img
                             class="center"
                             style="max-width: 200px"
@@ -437,7 +441,7 @@
         <div class="card" *ngIf="!job.employee">
             <div class="grid">
                 <div class="col-12">
-                    <h5>People applying for this position</h5>
+                    <h5>Personas aplicando a este trabajo</h5>
                 </div>
                 <div class="col-12">
                     <p-table
@@ -448,20 +452,27 @@
                     >
                         <ng-template pTemplate="header">
                             <tr>
-                                <th pSortableColumn="name">Name</th>
-                                <th pSortableColumn="status">Phone</th>
+                                <th pSortableColumn="name">Nombre</th>
+                                <th pSortableColumn="status">Telefono</th>
+                                <th pSortableColumn="status">Verificado</th>
                                 <th></th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-user>
                             <tr>
                                 <td style="min-width: 10rem">
-                                    <span class="p-column-title">Name</span>
+                                    <span class="p-column-title">Nombre</span>
                                     {{ user.user.name }}
                                 </td>
                                 <td style="min-width: 8rem">
-                                    <span class="p-column-title">Status</span>
+                                    <span class="p-column-title">Telefono</span>
                                     {{ user.user.phone }}
+                                </td>
+                                <td style="min-width: 8rem">
+                                    <span class="p-column-title"
+                                        >Verificado</span
+                                    >
+                                    {{ user.user.isVerified ? "✅" : "❌" }}
                                 </td>
                                 <td style="text-align: center">
                                     <button
@@ -482,12 +493,12 @@
         <div class="card" *ngIf="job.employee">
             <div class="grid">
                 <div class="col-12 md:col-12">
-                    <h5>Employee Facial Recognition</h5>
-                    <span *ngIf="!faceMatch" class="p-tag">Pending</span>
+                    <h5>Reconocimiento facial del empleado</h5>
+                    <span *ngIf="!faceMatch" class="p-tag">Pendiente</span>
                     <h6 *ngIf="!faceMatch">
-                        Do you want to verify this employee?
+                        Quisiera verificar al empleado?
                     </h6>
-                    <h6 *ngIf="faceMatch">This person has been verified! ✅</h6>
+                    <h6 *ngIf="faceMatch">Esta persona ha sido verificada! ✅</h6>
                     <input
                         *ngIf="!faceMatch"
                         type="file"
@@ -506,7 +517,7 @@
     </div>
     <div class="col-12" *ngIf="jobImages.length > 0">
         <div class="card">
-            <h5>Job Images</h5>
+            <h5>Imagenes</h5>
             <p-galleria
                 [value]="jobImages"
                 [responsiveOptions]="galleriaResponsiveOptions"
@@ -545,7 +556,7 @@
     </div>
     <div class="col-12" *ngIf="job.employee">
         <div class="card">
-            <h5>Conversation</h5>
+            <h5>Conversacion</h5>
             <div class="imessage">
                 <p
                     *ngFor="let message of messages"
@@ -601,7 +612,7 @@
                         type="button"
                         pButton
                         pRipple
-                        label="Send"
+                        label="Enviar"
                         (click)="sendMessage()"
                     ></button>
                 </div>
@@ -621,7 +632,7 @@
                 style="font-size: 2rem"
             ></i>
             <span *ngIf="job"
-                >Are you sure you want to cancel <b>{{ job.name }}</b
+                >Estas seguro de cancelar <b>{{ job.name }}</b
                 >?</span
             >
         </div>
@@ -657,7 +668,7 @@
                 style="font-size: 2rem"
             ></i>
             <span *ngIf="job"
-                >Are you sure you want to complete <b>{{ job.name }}</b
+                >Estas seguro de completar <b>{{ job.name }}</b
                 >?</span
             >
         </div>
@@ -693,7 +704,7 @@
                 style="font-size: 2rem"
             ></i>
             <span *ngIf="job"
-                >Are you sure you want to accept this employee?
+                >Estas seguro de aceptar a este empleado?
             </span>
         </div>
         <ng-template pTemplate="footer">
@@ -724,11 +735,11 @@
     >
         <div class="card">
             <div class="grid">
-                <div class="col-12"><h5>Employee Information</h5></div>
+                <div class="col-12"><h5>Empleado</h5></div>
 
                 <div class="grid formgrid col-6">
                     <div class="col-12">
-                        <label htmlFor="name1">Name</label>
+                        <label htmlFor="name1">Nombre</label>
                         <input
                             pInputText
                             [(ngModel)]="selectedEmployee.name"
@@ -738,7 +749,7 @@
                         />
                     </div>
                     <div class="col-12">
-                        <label htmlFor="lastName1">Last Name</label>
+                        <label htmlFor="lastName1">Apellido</label>
                         <input
                             pInputText
                             [(ngModel)]="selectedEmployee.lastname"
@@ -748,7 +759,7 @@
                         />
                     </div>
                     <div class="col-12">
-                        <label htmlFor="email1">Email</label>
+                        <label htmlFor="email1">Correo</label>
                         <input
                             pInputText
                             [(ngModel)]="selectedEmployee.email"
@@ -758,7 +769,7 @@
                         />
                     </div>
                     <div class="col-12">
-                        <label htmlFor="phone1">Phone</label>
+                        <label htmlFor="phone1">Telefono</label>
                         <input
                             pInputText
                             [(ngModel)]="selectedEmployee.phone"
@@ -770,7 +781,7 @@
                 </div>
                 <div class="col-6">
                     <div class="col-12">
-                        <label>Photo</label>
+                        <label>Foto</label>
                         <img
                             class="center"
                             style="max-width: 200px"
@@ -782,7 +793,7 @@
                 </div>
                 <div class="col-12">
                     <div class="card">
-                        <h5>Negotiation</h5>
+                        <h5>Negociacion</h5>
                         <div class="imessage">
                             <p
                                 *ngFor="let message of negotiation"
@@ -842,7 +853,7 @@
                                     type="button"
                                     pButton
                                     pRipple
-                                    label="Send"
+                                    label="Enviar"
                                     (click)="sendMessageNegotiation()"
                                 ></button>
                             </div>

@@ -23,6 +23,7 @@ import { InstrabajoService } from 'src/app/services/instrabajo.service';
 import { ReviewService } from 'src/app/app/service/review.service';
 import { Message, MessageNegotiation } from 'src/app/app/api/message';
 import { MessageNegotiationsService } from 'src/app/app/service/message-negotiation.service';
+import { UtilsService } from 'src/app/app/service/utils.service';
 declare var google: any;
 
 @Component({
@@ -111,6 +112,7 @@ export class JobDetailComponent implements OnInit {
         private jobService: JobService,
         private addressService: AddressService,
         private route: ActivatedRoute,
+        public utilsService: UtilsService,
         private messagesService: MessagesService,
         private messagesNegotiationService: MessageNegotiationsService,
         private jobImagesService: JobImageService,
@@ -163,25 +165,11 @@ export class JobDetailComponent implements OnInit {
         this.id = await this.route.snapshot.paramMap.get('id')!;
 
         await this.loadJob();
+        this.skills = this.utilsService.skills;
 
-        this.skills = [
-            { label: 'ELECTRONIC', value: 'ELECTRONIC' },
-            { label: 'PAINTER', value: 'PAINTER' },
-            { label: 'GAMER', value: 'GAMER' },
-            { label: 'TRAINER', value: 'TRAINER' },
-            { label: 'MECHANIC', value: 'MECHANIC' },
-            { label: 'CARPENTER', value: 'CARPENTER' },
-            { label: 'CLEARNER', value: 'CLEARNER' },
-            { label: 'GARDENER', value: 'GARDENER' },
-            { label: 'BABYSITTER', value: 'BABYSITTER' },
-        ];
+        this.rateTypes = this.utilsService.rateTypes;
 
-        this.rateTypes = [
-            { label: 'Hourly Rate', value: 'HOURLY' },
-            { label: 'Fixed Rate', value: 'FIXED' },
-        ];
-
-        this.countries = [{ label: 'GUATEMALA', value: 'GT' }];
+        this.countries = [{ label: 'Guatemala', value: 'GT' }];
         this.cities = [
             { label: 'Alta Verapaz', value: 'GT-AV' },
             { label: 'Baja Verapaz', value: 'GT-BV' },
@@ -233,6 +221,7 @@ export class JobDetailComponent implements OnInit {
             .pipe(take(1))
             .subscribe((job: any) => {
                 this.job = job;
+                this.job.status = this.utilsService.getJobStatus(job.status);
                 this.loadMessages(job._id);
                 this.loadImages();
                 if (job.employee) {
