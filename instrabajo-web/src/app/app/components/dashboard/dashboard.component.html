@@ -1,184 +1,265 @@
-    <div class="grid">
-        <div class="col-12 lg:col-6 xl:col-3">
-            <div class="card mb-0">
-                <div class="flex justify-content-between mb-3">
-                    <div>
-                        <span class="block text-500 font-medium mb-3">Total Jobs</span>
-                        <div class="text-900 font-medium text-xl">{{jobs.length}}</div>
-                    </div>
-                    <div class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
-                        <i class="pi pi-briefcase text-blue-500 text-xl"></i>
-                    </div>
-                </div>
-                <span class="text-green-500 font-medium">Available </span>
-                <span class="text-500">today</span>
-            </div>
-        </div>
-        <div class="col-12 lg:col-6 xl:col-3">
-            <div class="card mb-0">
-                <div class="flex justify-content-between mb-3">
-                    <div>
-                        <span class="block text-500 font-medium mb-3">Jobs near you</span>
-                        <div class="text-900 font-medium text-xl">{{jobs.length}}</div>
-                    </div>
-                    <div class="flex align-items-center justify-content-center bg-orange-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
-                        <i class="pi pi-map-marker text-orange-500 text-xl"></i>
+<div class="grid">
+    <div class="col-12 lg:col-6 xl:col-3">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3"
+                        >Trabajos</span
+                    >
+                    <div class="text-900 font-medium text-xl">
+                        {{ jobs.length }}
                     </div>
                 </div>
-                <span class="text-green-500 font-medium">near </span>
-                <span class="text-500"> your location</span>
+                <div
+                    class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                    [ngStyle]="{ width: '2.5rem', height: '2.5rem' }"
+                >
+                    <i class="pi pi-briefcase text-blue-500 text-xl"></i>
+                </div>
             </div>
+            <span class="text-green-500 font-medium">disponibles </span>
+            <span class="text-500">hoy</span>
         </div>
-        <div class="col-12 lg:col-6 xl:col-3">
-            <div class="card mb-0">
-                <div class="flex justify-content-between mb-3">
-                    <div>
-                        <span class="block text-500 font-medium mb-3">Messages</span>
-                        <div class="text-900 font-medium text-xl">{{messages}}</div>
-                    </div>
-                    <div class="flex align-items-center justify-content-center bg-cyan-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
-                        <i class="pi pi-inbox text-cyan-500 text-xl"></i>
+    </div>
+    <div class="col-12 lg:col-6 xl:col-3">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3"
+                        >Trabajos cerca de ti</span
+                    >
+                    <div class="text-900 font-medium text-xl">
+                        {{ jobs.length }}
                     </div>
                 </div>
-                <span class="text-green-500 font-medium">{{messages}} </span>
-                <span class="text-500">unread conversation</span>
+                <div
+                    class="flex align-items-center justify-content-center bg-orange-100 border-round"
+                    [ngStyle]="{ width: '2.5rem', height: '2.5rem' }"
+                >
+                    <i class="pi pi-map-marker text-orange-500 text-xl"></i>
+                </div>
             </div>
+            <span class="text-green-500 font-medium">cerca </span>
+            <span class="text-500"> de tu ubicación</span>
         </div>
-        <div class="col-12 lg:col-6 xl:col-3">
-            <div class="card mb-0">
-                <div class="flex justify-content-between mb-3">
-                    <div>
-                        <span class="block text-500 font-medium mb-3">Rating</span>
-                        <div class="text-900 font-medium text-xl">{{(review)? review : '5'}}⭐️</div>
-                    </div>
-                    <div class="flex align-items-center justify-content-center bg-purple-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
-                        <i class="pi pi-star text-purple-500 text-xl"></i>
+    </div>
+    <div class="col-12 lg:col-6 xl:col-3">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3"
+                        >Mensajes</span
+                    >
+                    <div class="text-900 font-medium text-xl">
+                        {{ messages }}
                     </div>
                 </div>
-                <span class="text-green-500 font-medium">{{(totalReviews)? totalReviews : '5'}}</span>
-                <span class="text-500">total reviews</span>
+                <div
+                    class="flex align-items-center justify-content-center bg-cyan-100 border-round"
+                    [ngStyle]="{ width: '2.5rem', height: '2.5rem' }"
+                >
+                    <i class="pi pi-inbox text-cyan-500 text-xl"></i>
+                </div>
             </div>
+            <span class="text-green-500 font-medium">{{ messages }} </span>
+            <span class="text-500">conversaciones sin leer</span>
         </div>
+    </div>
+    <div class="col-12 lg:col-6 xl:col-3">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3"
+                        >Calificación</span
+                    >
+                    <div class="text-900 font-medium text-xl">
+                        {{ review ? review : "5" }}⭐️
+                    </div>
+                </div>
+                <div
+                    class="flex align-items-center justify-content-center bg-purple-100 border-round"
+                    [ngStyle]="{ width: '2.5rem', height: '2.5rem' }"
+                >
+                    <i class="pi pi-star text-purple-500 text-xl"></i>
+                </div>
+            </div>
+            <span class="text-green-500 font-medium">{{
+                totalReviews ? totalReviews : "5"
+            }}</span>
+            <span class="text-500"> calificaciones</span>
+        </div>
+    </div>
 
-        <div class="col-12 xl:col-6">
-            <div class="card">
-                <h5>Recent Jobs</h5>
-                <p-table [value]="jobs" [paginator]="true" [rows]="5" responsiveLayout="scroll">
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th pSortableColumn="name">Name </th>
-                            <th pSortableColumn="status">Status </th>
-                            <th pSortableColumn="skill">Skill </th>
-                            <th pSortableColumn="rateType">Rate Type </th>
-                            <th pSortableColumn="hourlyRate">Hourly Rate </th>
-                            <th pSortableColumn="fixedRate">Fixed Rate </th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-job>
-                        <tr>
-                            <td style="min-width:10rem;">
-                                <span class="p-column-title">Name</span>
-                                {{job.name}}
-                            </td> 
-                            <td style="min-width:8rem;">
-                                <span class="p-column-title">Status</span>
-                                {{job.status}}
-                            </td>
-                            <td style="min-width:10rem;">
-                                <span class="p-column-title">Skill</span>
-                                {{job.skill}}
-                            </td>
-                            <td style="min-width:10rem;">
-                                <span class="p-column-title">Rate Type</span>
-                                {{job.rateType}}
-                            </td>
-                            <td style="min-width:10rem;">
-                                <span class="p-column-title">Hourly Rate</span>
-                                {{job.hourlyRate | currency:'GTQ'}}
-                            </td>
-                            <td style="min-width:10rem;">
-                                <span class="p-column-title">Fixed Rate</span>
-                                {{job.fixedRate | currency:'GTQ'}}
-                            </td>
-                        </tr>
-                    </ng-template>
-                </p-table>
-            </div>
-            <div class="card">
-                <div class="flex justify-content-between align-items-center mb-5">
-                    <h5>Skills on demand</h5>
-                </div>
-                <ul class="list-none p-0 m-0">
-                    <li class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-                        <div>
-                            <span class="text-900 font-medium mr-2 mb-1 md:mb-0">Electronic</span>
-                            <div class="mt-1 text-600">1 job</div>
-                        </div>
-                        <div class="mt-2 md:mt-0 flex align-items-center">
-                            <div class="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" [ngStyle]="{height: '8px'}">
-                                <div class="bg-orange-500 h-full" [ngStyle]="{width: '33%'}"></div>
-                            </div>
-                            <span class="text-orange-500 ml-3 font-medium">%33</span>
-                        </div>
-                    </li>
-                    <li class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-                        <div>
-                            <span class="text-900 font-medium mr-2 mb-1 md:mb-0">Gamer</span>
-                            <div class="mt-1 text-600">1 job</div>
-                        </div>
-                        <div class="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                            <div class="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" [ngStyle]="{height: '8px'}">
-                                <div class="bg-cyan-500 h-full" [ngStyle]="{width: '33%'}"></div>
-                            </div>
-                            <span class="text-cyan-500 ml-3 font-medium">%33</span>
-                        </div>
-                    </li>
-                    <li class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-                        <div>
-                            <span class="text-900 font-medium mr-2 mb-1 md:mb-0">Trainer</span>
-                            <div class="mt-1 text-600">1 job</div>
-                        </div>
-                        <div class="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                            <div class="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" [ngStyle]="{height: '8px'}">
-                                <div class="bg-pink-500 h-full" [ngStyle]="{width: '33%'}"></div>
-                            </div>
-                            <span class="text-pink-500 ml-3 font-medium">%33</span>
-                        </div>
-                    </li>
-                    
-                </ul>
-            </div>
+    <div class="col-12 xl:col-6">
+        <div class="card">
+            <h5>Trabajos recientes</h5>
+            <p-table
+                [value]="jobs"
+                [paginator]="true"
+                [rows]="5"
+                responsiveLayout="scroll"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="name">Nombre</th>
+                        <th pSortableColumn="status">Estado</th>
+                        <th pSortableColumn="skill">Habilidad</th>
+                        <th pSortableColumn="rateType">Tipo de pago</th>
+                        <th pSortableColumn="hourlyRate">Pago por hora</th>
+                        <th pSortableColumn="fixedRate">Pago fijo</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-job>
+                    <tr>
+                        <td style="min-width: 10rem">
+                            <span class="p-column-title">Nombre</span>
+                            {{ job.name }}
+                        </td>
+                        <td style="min-width: 8rem">
+                            <span class="p-column-title">Estado</span>
+                            {{ job.status }}
+                        </td>
+                        <td style="min-width: 10rem">
+                            <span class="p-column-title">Habilidad</span>
+                            {{ job.skill }}
+                        </td>
+                        <td style="min-width: 10rem">
+                            <span class="p-column-title">Tipo de pago</span>
+                            {{ job.rateType }}
+                        </td>
+                        <td style="min-width: 10rem">
+                            <span class="p-column-title">Pago por hora</span>
+                            {{ job.hourlyRate | currency : "GTQ" }}
+                        </td>
+                        <td style="min-width: 10rem">
+                            <span class="p-column-title">Pago fijo</span>
+                            {{ job.fixedRate | currency : "GTQ" }}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
         </div>
+        <div class="card">
+            <div class="flex justify-content-between align-items-center mb-5">
+                <h5>Habilidades mas buscadas</h5>
+            </div>
+            <ul class="list-none p-0 m-0">
+                <li
+                    class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4"
+                >
+                    <div>
+                        <span class="text-900 font-medium mr-2 mb-1 md:mb-0"
+                            >Electronico</span
+                        >
+                        <div class="mt-1 text-600">1 job</div>
+                    </div>
+                    <div class="mt-2 md:mt-0 flex align-items-center">
+                        <div
+                            class="surface-300 border-round overflow-hidden w-10rem lg:w-6rem"
+                            [ngStyle]="{ height: '8px' }"
+                        >
+                            <div
+                                class="bg-orange-500 h-full"
+                                [ngStyle]="{ width: '33%' }"
+                            ></div>
+                        </div>
+                        <span class="text-orange-500 ml-3 font-medium"
+                            >%33</span
+                        >
+                    </div>
+                </li>
+                <li
+                    class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4"
+                >
+                    <div>
+                        <span class="text-900 font-medium mr-2 mb-1 md:mb-0"
+                            >Probador de juegos</span
+                        >
+                        <div class="mt-1 text-600">1 job</div>
+                    </div>
+                    <div
+                        class="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center"
+                    >
+                        <div
+                            class="surface-300 border-round overflow-hidden w-10rem lg:w-6rem"
+                            [ngStyle]="{ height: '8px' }"
+                        >
+                            <div
+                                class="bg-cyan-500 h-full"
+                                [ngStyle]="{ width: '33%' }"
+                            ></div>
+                        </div>
+                        <span class="text-cyan-500 ml-3 font-medium">%33</span>
+                    </div>
+                </li>
+                <li
+                    class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4"
+                >
+                    <div>
+                        <span class="text-900 font-medium mr-2 mb-1 md:mb-0"
+                            >Entrenador</span
+                        >
+                        <div class="mt-1 text-600">1 job</div>
+                    </div>
+                    <div
+                        class="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center"
+                    >
+                        <div
+                            class="surface-300 border-round overflow-hidden w-10rem lg:w-6rem"
+                            [ngStyle]="{ height: '8px' }"
+                        >
+                            <div
+                                class="bg-pink-500 h-full"
+                                [ngStyle]="{ width: '33%' }"
+                            ></div>
+                        </div>
+                        <span class="text-pink-500 ml-3 font-medium">%33</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
 
-        <div class="col-12 xl:col-6">
-            <!-- <div class="card">
+    <div class="col-12 xl:col-6">
+        <!-- <div class="card">
                 <h5>Sales Overview</h5>
                 <p-chart type="line" [data]="chartData" [options]="chartOptions"></p-chart>
             </div> -->
 
-            <div class="card">
-                <div class="flex align-items-center justify-content-between mb-4">
-                    <h5>Notifications</h5>
-                    <div>
-                        <button pButton type="button" icon="pi pi-ellipsis-v" class="p-button-rounded p-button-text p-button-plain" (click)="menu.toggle($event)"></button>
-                        <p-menu #menu [popup]="true" [model]="items"></p-menu>
-                    </div>
+        <div class="card">
+            <div class="flex align-items-center justify-content-between mb-4">
+                <h5>Notificaciones</h5>
+                <div>
+                    <button
+                        pButton
+                        type="button"
+                        icon="pi pi-ellipsis-v"
+                        class="p-button-rounded p-button-text p-button-plain"
+                        (click)="menu.toggle($event)"
+                    ></button>
+                    <p-menu #menu [popup]="true" [model]="items"></p-menu>
                 </div>
-
-                <span class="block text-600 font-medium mb-3">Messages</span>
-                <ul class="p-0 mx-0 mt-0 mb-4 list-none">
-                    <li class="flex align-items-center py-2 border-bottom-1 surface-border">
-                        <div class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
-                            <i class="pi pi-dollar text-xl text-blue-500"></i>
-                        </div>
-                        <span class="text-900 line-height-3">SmartWatch Repair
-                    <span class="text-700"> has new messages <span class="text-blue-500">2</span></span>
-                </span>
-                    </li>
-                </ul>
-
-
             </div>
+
+            <span class="block text-600 font-medium mb-3">Mensajes</span>
+            <ul class="p-0 mx-0 mt-0 mb-4 list-none">
+                <li
+                    class="flex align-items-center py-2 border-bottom-1 surface-border"
+                >
+                    <div
+                        class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0"
+                    >
+                        <i class="pi pi-dollar text-xl text-blue-500"></i>
+                    </div>
+                    <span class="text-900 line-height-3"
+                        >Reparacion de reloj
+                        <span class="text-700">
+                            tiene nuevos mensajes
+                            <span class="text-blue-500">2</span></span
+                        >
+                    </span>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
-

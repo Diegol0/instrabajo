@@ -8,17 +8,17 @@
                 <div>
                     
                     <form [formGroup]="registryForm" (ngSubmit)="registry()">
-                        <label for="name" class="block text-900 text-xl font-medium mb-2">Name</label>
-                        <input id="name" type="text" placeholder="Name" formControlName="name" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
-                        <label for="lastname" class="block text-900 text-xl font-medium mb-2">LastName</label>
-                        <input id="lastname" type="text" placeholder="Last Name" formControlName="lastname" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
-                        <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
-                        <input id="email1" type="text" placeholder="Email address" formControlName="email" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+                        <label for="name" class="block text-900 text-xl font-medium mb-2">Nombre</label>
+                        <input id="name" type="text" placeholder="Nombre" formControlName="name" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+                        <label for="lastname" class="block text-900 text-xl font-medium mb-2">Apellido</label>
+                        <input id="lastname" type="text" placeholder="Apellido" formControlName="lastname" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+                        <label for="email1" class="block text-900 text-xl font-medium mb-2">Correo</label>
+                        <input id="email1" type="text" placeholder="Correo" formControlName="email" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
 
-                        <label for="password1" class="block text-900 font-medium text-xl mb-2">Password</label>
-                        <p-password id="password1" formControlName="password" placeholder="Password" [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
+                        <label for="password1" class="block text-900 font-medium text-xl mb-2">Contraseña</label>
+                        <p-password id="password1" formControlName="password" placeholder="Contraseña" [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
 
-                        <button pButton pRipple label="Sign Up" class="w-full p-3 text-xl"  type="submit"></button>
+                        <button pButton pRipple label="Registrarme" class="w-full p-3 text-xl"  type="submit"></button>
                     </form>
                 </div>
             </div>

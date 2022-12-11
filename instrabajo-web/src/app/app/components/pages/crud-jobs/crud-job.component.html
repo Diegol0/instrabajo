@@ -5,24 +5,24 @@
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
                     <div class="my-2">
-                        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
-                        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedJobs()" [disabled]="!selectedJobs || !selectedJobs.length"></button>
+                        <button pButton pRipple label="Nueva" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="Borrar" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedJobs()" [disabled]="!selectedJobs || !selectedJobs.length"></button>
                     </div>
                 </ng-template>
 
                 <ng-template pTemplate="right">
-                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload> -->
                     <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
                 </ng-template>
             </p-toolbar>
 
-            <p-table #dt [value]="jobs" [columns]="cols" responsiveLayout="scroll" [rows]="10" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedJobs" selectionMode="multiple" [rowHover]="true" dataKey="id">
+            <p-table #dt [value]="jobs" [columns]="cols" responsiveLayout="scroll" [rows]="10" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros" [(selection)]="selectedJobs" selectionMode="multiple" [rowHover]="true" dataKey="id">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                        <h5 class="m-0">Manage Jobs</h5>
+                        <h5 class="m-0">Administrar trabajos</h5>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
-                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..."  class="w-full sm:w-auto"/>
                         </span>
                     </div>
                 </ng-template>
@@ -31,13 +31,13 @@
                         <th style="width: 3rem">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
-                        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-                        <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
-                        <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
-                        <th pSortableColumn="skill">Skill <p-sortIcon field="skill"></p-sortIcon></th>
-                        <th pSortableColumn="rateType">Rate Type <p-sortIcon field="rateType"></p-sortIcon></th>
-                        <th pSortableColumn="hourlyRate">Hourly Rate<p-sortIcon field="hourlyRate"></p-sortIcon></th>
-                        <th pSortableColumn="fixedRate">Fixed Rate <p-sortIcon field="fixedRate"></p-sortIcon></th>
+                        <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+                        <th pSortableColumn="description">Descripción <p-sortIcon field="description"></p-sortIcon></th>
+                        <th pSortableColumn="status">Estado <p-sortIcon field="status"></p-sortIcon></th>
+                        <th pSortableColumn="skill">Habilidad <p-sortIcon field="skill"></p-sortIcon></th>
+                        <th pSortableColumn="rateType">Tipo de pago <p-sortIcon field="rateType"></p-sortIcon></th>
+                        <th pSortableColumn="hourlyRate">Pago por hora<p-sortIcon field="hourlyRate"></p-sortIcon></th>
+                        <th pSortableColumn="fixedRate">Pago fijo <p-sortIcon field="fixedRate"></p-sortIcon></th>
                         <th></th>
                     </tr>
                 </ng-template>
@@ -47,31 +47,31 @@
                             <p-tableCheckbox [value]="job"></p-tableCheckbox>
                         </td>
                         <td style="min-width:10rem;">
-                            <span class="p-column-title">Name</span>
+                            <span class="p-column-title">Nombre</span>
                             {{job.name}}
                         </td> 
                         <td style="min-width:8rem;">
-                            <span class="p-column-title">Description</span>
+                            <span class="p-column-title">Descripción</span>
                             {{job.description}}
                         </td>
                         <td style="min-width:8rem;">
-                            <span class="p-column-title">Status</span>
+                            <span class="p-column-title">Estado</span>
                             {{job.status}}
                         </td>
                         <td style="min-width:10rem;">
-                            <span class="p-column-title">Skill</span>
+                            <span class="p-column-title">Habilidad</span>
                             {{job.skill}}
                         </td>
                         <td style="min-width:10rem;">
-                            <span class="p-column-title">Rate Type</span>
+                            <span class="p-column-title">Tipo de pago</span>
                             {{job.rateType}}
                         </td>
                         <td style="min-width:10rem;">
-                            <span class="p-column-title">Hourly Rate</span>
+                            <span class="p-column-title">Pago por hora</span>
                             {{job.hourlyRate | currency:'GTQ'}}
                         </td>
                         <td style="min-width:10rem;">
-                            <span class="p-column-title">Fixed Rate</span>
+                            <span class="p-column-title">Pago fijo</span>
                             {{job.fixedRate | currency:'GTQ'}}
                         </td>
                         <td>
@@ -86,34 +86,34 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="jobDialog" [style]="{width: '600px'}" header="Job Details" [modal]="true" class="p-fluid">
+        <p-dialog [(visible)]="jobDialog" [style]="{width: '600px'}" header="Detalle del trabajo" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
                 
                 <div class="field">
-                    <label for="name">Name</label>
+                    <label for="name">Nombre</label>
                     <input type="text" pInputText id="name" [(ngModel)]="job.name" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !job.name}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !job.name">Name is required.</small>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !job.name">Nombre es requerido.</small>
                 </div>
                 <div class="field">
-                    <label for="description">Description</label>
+                    <label for="description">Descripción</label>
                     <textarea id="description" pInputTextarea [(ngModel)]="job.description" required rows="3" cols="20"></textarea>
                 </div>
                 <div class="field">
-                    <label for="status">Status</label>
+                    <label for="status">Estado</label>
                     <input type="text" pInputText id="status" [(ngModel)]="job.status" required [disabled]="true" [ngClass]="{'ng-invalid ng-dirty' : submitted && !job.status}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !job.status">Status is required.</small>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !job.status">Estado es requerido.</small>
                 </div>
                 <div class="field">
-                    <label for="skill">Skill</label>
-                    <p-dropdown appendTo="body" id="skill" [options]="skills" optionLabel="label" optionValue="value" [(ngModel)]="job.skill" placeholder="Select a Skill">
+                    <label for="skill">Habilidad</label>
+                    <p-dropdown appendTo="body" id="skill" [options]="skills" optionLabel="label" optionValue="value" [(ngModel)]="job.skill" placeholder="Selecciona una habilidad">
                         <ng-template let-skill pTemplate="skill">
                             <span>{{skill.label}}</span>
                         </ng-template>
                     </p-dropdown>
                 </div>
                 <div class="field">
-                    <label for="rateType">Rate Type</label>
-                    <p-dropdown appendTo="body" id="rateType" [options]="rateTypes" optionLabel="label" optionValue="value" [(ngModel)]="job.rateType" placeholder="Select a Rate Type">
+                    <label for="rateType">Tipo de pago</label>
+                    <p-dropdown appendTo="body" id="rateType" [options]="rateTypes" optionLabel="label" optionValue="value" [(ngModel)]="job.rateType" placeholder="Selecciona un tipo de pago">
                         <ng-template let-rateType pTemplate="rateType">
                             <span>{{rateType.label}}</span>
                         </ng-template>
@@ -121,28 +121,28 @@
                 </div>
 
                 <div *ngIf="job.rateType == 'HOURLY'" class="field">
-                    <label for="hourlyRate">Hourly Rate</label>
+                    <label for="hourlyRate">Pago por hora</label>
                     <p-inputNumber id="hourlyRate" [(ngModel)]="job.hourlyRate" mode="currency" currency="GTQ" locale="es-GT"></p-inputNumber>
                 </div>
 
                 <div *ngIf="job.rateType == 'FIXED'" class="field">
-                    <label for="fixedRate">Fixed Rate</label>
+                    <label for="fixedRate">Pago fijo</label>
                     <p-inputNumber id="fixedRate" [(ngModel)]="job.fixedRate" mode="currency" currency="GTQ" locale="es-GT"></p-inputNumber>
                 </div>
                 
                 <div class="field">
-                    <label for="address">Address</label>
-                    <p-dropdown appendTo="body" id="address" [options]="addresss" optionLabel="name" optionValue="_id" [(ngModel)]="job.address" placeholder="Select a Address">
+                    <label for="address">Dirección</label>
+                    <p-dropdown appendTo="body" id="address" [options]="addresss" optionLabel="name" optionValue="_id" [(ngModel)]="job.address" placeholder="Selecciona una dirección">
                         <ng-template let-address pTemplate="address">
                             <span>{{address.name}}</span>
                         </ng-template>
                     </p-dropdown>
                 </div>
                 <div *ngIf="job.status !== 'NEW'">
-                    <h5>Job Images</h5>
+                    <h5>Imágenes del trabajo</h5>
                     <input type="file" id="file" (change)="onBasicUpload($event.target)"/>
                     <div *ngIf="jobImages.length > 0" class="col-12">
-                        <h5>Uploaded Images</h5>
+                        <h5>Imágenes cargadas</h5>
                         <p-galleria [value]="jobImages" [responsiveOptions]="galleriaResponsiveOptions"
                                     [containerStyle]="{'max-width': '500px', 'margin':'auto', 'background':'black'}" [numVisible]="6" [circular]="true">
                             <ng-template pTemplate="item" let-item>
@@ -161,30 +161,30 @@
             </ng-template>
 
             <ng-template pTemplate="footer">
-                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveJob()"></button>
+                <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text" (click)="saveJob()"></button>
             </ng-template>
         </p-dialog>
 
-        <p-dialog [(visible)]="deleteJobDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+        <p-dialog [(visible)]="deleteJobDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span *ngIf="job">Are you sure you want to delete <b>{{job.name}}</b>?</span>
+                <span *ngIf="job">Estas seguro de borrar <b>{{job.name}}</b>?</span>
             </div>
             <ng-template pTemplate="footer">
                 <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteJobDialog = false"></button>
-                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Si" (click)="confirmDelete()"></button>
             </ng-template>
         </p-dialog>
 
-        <p-dialog [(visible)]="deleteJobsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+        <p-dialog [(visible)]="deleteJobsDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span>Are you sure you want to delete selected Jobs?</span>
+                <span>Estas seguro de borrar estos trabajos?</span>
             </div>
             <ng-template pTemplate="footer">
                 <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteJobsDialog = false"></button>
-                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Si" (click)="confirmDeleteSelected()"></button>
             </ng-template>
         </p-dialog>
     </div>

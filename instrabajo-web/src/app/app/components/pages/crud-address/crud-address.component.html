@@ -5,24 +5,24 @@
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
                     <div class="my-2">
-                        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
-                        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedAddresss()" [disabled]="!selectedAddresss || !selectedAddresss.length"></button>
+                        <button pButton pRipple label="Nueva" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="Borrar" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedAddresss()" [disabled]="!selectedAddresss || !selectedAddresss.length"></button>
                     </div>
                 </ng-template>
 
                 <ng-template pTemplate="right">
-                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload> -->
                     <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
                 </ng-template>
             </p-toolbar>
 
-            <p-table #dt [value]="addresss" [columns]="cols" responsiveLayout="scroll" [rows]="10" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedAddresss" selectionMode="multiple" [rowHover]="true" dataKey="id">
+            <p-table #dt [value]="addresss" [columns]="cols" responsiveLayout="scroll" [rows]="10" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros" [(selection)]="selectedAddresss" selectionMode="multiple" [rowHover]="true" dataKey="id">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                        <h5 class="m-0">Manage Addresss</h5>
+                        <h5 class="m-0">Administrar direcciones</h5>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
-                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..."  class="w-full sm:w-auto"/>
                         </span>
                     </div>
                 </ng-template>
@@ -31,10 +31,10 @@
                         <th style="width: 3rem">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
-                        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-                        <th pSortableColumn="addressLine1">Line 1 <p-sortIcon field="addressLine1"></p-sortIcon></th>
-                        <th pSortableColumn="city">City <p-sortIcon field="city"></p-sortIcon></th>
-                        <th pSortableColumn="country">Country <p-sortIcon field="country"></p-sortIcon></th>
+                        <th pSortableColumn="name">Alias <p-sortIcon field="name"></p-sortIcon></th>
+                        <th pSortableColumn="addressLine1">Linea 1 <p-sortIcon field="addressLine1"></p-sortIcon></th>
+                        <th pSortableColumn="city">Ciudad <p-sortIcon field="city"></p-sortIcon></th>
+                        <th pSortableColumn="country">Pais <p-sortIcon field="country"></p-sortIcon></th>
                         <th></th>
                     </tr>
                 </ng-template>
@@ -44,19 +44,19 @@
                             <p-tableCheckbox [value]="address"></p-tableCheckbox>
                         </td>
                         <td style="min-width:10rem;">
-                            <span class="p-column-title">Name</span>
+                            <span class="p-column-title">Nombre</span>
                             {{address.name}}
                         </td> 
                         <td style="min-width:8rem;">
-                            <span class="p-column-title">Line 1</span>
+                            <span class="p-column-title">Linea 1</span>
                             {{address.addressLine1}}
                         </td>
                         <td style="min-width:10rem;">
-                            <span class="p-column-title">City</span>
+                            <span class="p-column-title">Ciudad</span>
                             {{address.city}}
                         </td>
                         <td style="min-width:10rem;">
-                            <span class="p-column-title">Country</span>
+                            <span class="p-column-title">Pais</span>
                             {{address.country}}
                         </td>
                         <td>
@@ -70,34 +70,34 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="addressDialog" [style]="{width: '450px'}" header="Address Details" [modal]="true" class="p-fluid">
+        <p-dialog [(visible)]="addressDialog" [style]="{width: '450px'}" header="Detalle de dirección" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
                 
                 <div class="field">
-                    <label for="name">Name</label>
+                    <label for="name">Nombre</label>
                     <input type="text" pInputText id="name" [(ngModel)]="address.name" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !address.name}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !address.name">Name is required.</small>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !address.name">Nombre es requerido.</small>
                 </div>
                 <div class="field">
-                    <label for="addressLine1">Address Line 1</label>
+                    <label for="addressLine1">Dirección Linea 1</label>
                     <input type="text" pInputText id="addressLine1" [(ngModel)]="address.addressLine1" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !address.addressLine1}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !address.addressLine1">Address Line 1 is required.</small>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !address.addressLine1">Dirección Linea 1 es requirida.</small>
                 </div>
                 <div class="field">
-                    <label for="addressLine2">Address Line 2</label>
+                    <label for="addressLine2">Dirección Linea 2</label>
                     <input type="text" pInputText id="addressLine2" [(ngModel)]="address.addressLine2"/>
                 </div>
                 <div class="field">
-                    <label for="country">Country</label>
-                    <p-dropdown appendTo="body" id="country" [options]="countries" optionLabel="label" optionValue="value" [(ngModel)]="address.country" placeholder="Select a Country">
+                    <label for="country">Pais</label>
+                    <p-dropdown appendTo="body" id="country" [options]="countries" optionLabel="label" optionValue="value" [(ngModel)]="address.country" placeholder="Seleccione un pais">
                         <ng-template let-country pTemplate="country">
                             <span>{{country.label}}</span>
                         </ng-template>
                     </p-dropdown>
                 </div>
                 <div class="field">
-                    <label for="city">City</label>
-                    <p-dropdown appendTo="body" id="city" [options]="cities" optionLabel="label" optionValue="value" [(ngModel)]="address.city" placeholder="Select a City">
+                    <label for="city">Ciudad</label>
+                    <p-dropdown appendTo="body" id="city" [options]="cities" optionLabel="label" optionValue="value" [(ngModel)]="address.city" placeholder="Selecciones una ciudad">
                         <ng-template let-city pTemplate="city">
                             <span>{{city.label}}</span>
                         </ng-template>
@@ -105,37 +105,37 @@
                 </div>
 
                 <div *ngIf="options" class="field">
-                    <label for="city">Location</label>
+                    <label for="city">Ubicación</label>
                     <p-gmap [options]="options" [overlays]="overlays" (onMapClick)="addMarker($event)" [style]="{'width':'100%','height':'320px'}" ></p-gmap>
                 </div>
 
             </ng-template>
 
             <ng-template pTemplate="footer">
-                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveAddress()"></button>
+                <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text" (click)="saveAddress()"></button>
             </ng-template>
         </p-dialog>
 
-        <p-dialog [(visible)]="deleteAddressDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+        <p-dialog [(visible)]="deleteAddressDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span *ngIf="address">Are you sure you want to delete <b>{{address.name}}</b>?</span>
+                <span *ngIf="address">Estas seguro de borrar <b>{{address.name}}</b>?</span>
             </div>
             <ng-template pTemplate="footer">
                 <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteAddressDialog = false"></button>
-                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Si" (click)="confirmDelete()"></button>
             </ng-template>
         </p-dialog>
 
-        <p-dialog [(visible)]="deleteAddresssDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+        <p-dialog [(visible)]="deleteAddresssDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span>Are you sure you want to delete selected Addresses?</span>
+                <span>Estas seguro de borrar estas direcciones?</span>
             </div>
             <ng-template pTemplate="footer">
                 <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteAddresssDialog = false"></button>
-                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Si" (click)="confirmDeleteSelected()"></button>
             </ng-template>
         </p-dialog>
     </div>
