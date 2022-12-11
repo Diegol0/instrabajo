@@ -495,15 +495,9 @@ export class JobDetailComponent implements OnInit {
                 ) {
                     this.faceMatch = true;
                 } else {
-                    alert('No, this is not the employee! Be careful!!!!');
+                    alert('Esto no es el empleado, cuidado!!');
                     this.faceMatch = false;
                 }
-
-                this.messageService.add({
-                    severity: 'info',
-                    summary: 'Success',
-                    detail: 'User updated',
-                });
             });
     }
 

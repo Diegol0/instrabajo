@@ -12,7 +12,7 @@
 
                 <ng-template pTemplate="right">
                     <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload> -->
-                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+                    <button pButton pRipple label="Exportar" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
                 </ng-template>
             </p-toolbar>
 
@@ -50,7 +50,7 @@
                             <span class="p-column-title">Nombre</span>
                             {{job.name}}
                         </td> 
-                        <td style="min-width:8rem;">
+                        <td style="min-width:10rem;">
                             <span class="p-column-title">Descripción</span>
                             {{job.description}}
                         </td>
@@ -62,11 +62,11 @@
                             <span class="p-column-title">Habilidad</span>
                             {{job.skill}}
                         </td>
-                        <td style="min-width:10rem;">
+                        <td style="min-width:12rem;">
                             <span class="p-column-title">Tipo de pago</span>
                             {{job.rateType}}
                         </td>
-                        <td style="min-width:10rem;">
+                        <td style="min-width:12rem;">
                             <span class="p-column-title">Pago por hora</span>
                             {{job.hourlyRate | currency:'GTQ'}}
                         </td>

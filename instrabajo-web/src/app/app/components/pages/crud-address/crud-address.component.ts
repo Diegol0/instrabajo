@@ -2,13 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
+import { take } from 'rxjs';
 import { Address } from 'src/app/app/api/address';
 import { AddressService } from 'src/app/app/service/address.service';
 import { InstrabajoService } from 'src/app/services/instrabajo.service';
-import { map, switchMap, take } from 'rxjs';
-import {
-    UserDto,
-} from 'src/app/app/models/service.dto';
 
 declare var google: any;
 
@@ -17,7 +14,6 @@ declare var google: any;
     providers: [MessageService],
 })
 export class CrudAddressComponent implements OnInit {
-
     user: any;
     addressDialog: boolean = false;
 
@@ -48,18 +44,18 @@ export class CrudAddressComponent implements OnInit {
     overlays: any[] = [];
 
     rowsPerPageOptions = [5, 10, 20];
-    userId: string = "";
+    userId: string = '';
 
-    addressId: string = "";
+    addressId: string = '';
 
     constructor(
         private addressService: AddressService,
         private messageService: MessageService,
         private instrabajoService: InstrabajoService
     ) {
-       navigator.geolocation.getCurrentPosition((position) => {
-            console.log(position)
-            
+        navigator.geolocation.getCurrentPosition((position) => {
+            console.log(position);
+
             this.center = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
@@ -75,20 +71,18 @@ export class CrudAddressComponent implements OnInit {
             .subscribe((user: any) => {
                 this.user = user;
             });
-        
     }
 
-    loadAddress(){
-        
-                this.addressService
-                .getAddressByUser(this.user._id).pipe(take(1))
-                .subscribe((data: any) => {
-                    this.addresss = data
-                });
+    loadAddress() {
+        this.addressService
+            .getAddressByUser(this.user._id)
+            .pipe(take(1))
+            .subscribe((data: any) => {
+                this.addresss = data;
+            });
     }
 
     ngOnInit() {
-        
         this.loadAddress();
 
         this.cols = [
@@ -132,8 +126,8 @@ export class CrudAddressComponent implements OnInit {
         this.submitted = false;
         this.addressDialog = true;
         navigator.geolocation.getCurrentPosition((position) => {
-            console.log(position)
-            
+            console.log(position);
+
             this.center = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
@@ -143,7 +137,7 @@ export class CrudAddressComponent implements OnInit {
                 zoom: 12,
             };
         });
-        this.overlays = []
+        this.overlays = [];
     }
 
     deleteSelectedAddresss() {
@@ -153,11 +147,19 @@ export class CrudAddressComponent implements OnInit {
     editAddress(address: Address) {
         this.address = { ...address };
         this.addressDialog = true;
-        console.log("LATITUD: "+this.address.lat+" LONGITUD: "+this.address.lng);
-        this.center = new google.maps.LatLng(this.address.lat!, this.address.lng!);
+        console.log(
+            'LATITUD: ' + this.address.lat + ' LONGITUD: ' + this.address.lng
+        );
+        this.center = new google.maps.LatLng(
+            this.address.lat!,
+            this.address.lng!
+        );
         this.overlays = [
-            new google.maps.Marker({position: this.center , title:this.address.name})
-        ]
+            new google.maps.Marker({
+                position: this.center,
+                title: this.address.name,
+            }),
+        ];
         this.options.center = this.center;
         this.options.zoom = 14;
     }
@@ -186,21 +188,23 @@ export class CrudAddressComponent implements OnInit {
         /*this.addresss = this.addresss.filter(
             (val) => val._id !== this.address._id
         );*/
-        
-        this.addressService.deleteAddress(this.address).pipe(take(1))
-                    .subscribe((data: any) => {
-                        if (data) {
-                            console.log("_id: "+data._id);
-                        }
-                        this.messageService.add({
-                            severity: 'success',
-                            summary: 'Successful',
-                            detail: 'Address Deleted',
-                            life: 3000,
-                        });
-                        this.loadAddress();
-                    }); 
-        
+
+        this.addressService
+            .deleteAddress(this.address)
+            .pipe(take(1))
+            .subscribe((data: any) => {
+                if (data) {
+                    console.log('_id: ' + data._id);
+                }
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'Address Deleted',
+                    life: 3000,
+                });
+                this.loadAddress();
+            });
+
         this.address = {};
     }
 
@@ -210,26 +214,28 @@ export class CrudAddressComponent implements OnInit {
     }
 
     saveAddress() {
-        if(this.center.lat==0){
+        if (this.center.lat == 0) {
             return;
         }
         this.submitted = true;
-        
+
         this.address.lat = this.center.lat;
 
         this.address.lng = this.center.lng;
 
-        console.log(this.overlays)
-        
+        console.log(this.overlays);
+
         if (this.address.name?.trim()) {
             if (this.address._id) {
                 // @ts-ignore
                 /*this.addresss[this.findIndexById(this.address.id)] =
                     this.address;*/
-                this.addressService.updateAdress(this.address).pipe(take(1))
+                this.addressService
+                    .updateAdress(this.address)
+                    .pipe(take(1))
                     .subscribe((data: any) => {
                         if (data) {
-                            console.log("_id: "+data._id);
+                            console.log('_id: ' + data._id);
                         }
                         this.messageService.add({
                             severity: 'success',
@@ -238,32 +244,30 @@ export class CrudAddressComponent implements OnInit {
                             life: 3000,
                         });
                         this.loadAddress();
-                    });   
-                
+                    });
             } else {
                 this.address.userId = this.user._id;
-                this.addressService.createAdress(this.address).pipe(take(1))
-                .subscribe((data: any) => {
-                    if (data) {
-                        console.log("_id: "+data._id);
-                    }
-                    this.messageService.add({
-                        severity: 'success',
-                        summary: 'Successful',
-                        detail: 'Address Created',
-                        life: 3000,
+                this.addressService
+                    .createAdress(this.address)
+                    .pipe(take(1))
+                    .subscribe((data: any) => {
+                        if (data) {
+                            console.log('_id: ' + data._id);
+                        }
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: 'Successful',
+                            detail: 'Address Created',
+                            life: 3000,
+                        });
+                        this.loadAddress();
                     });
-                    this.loadAddress();
-                });
-                
-               
             }
 
             this.addresss = [...this.addresss];
             this.addressDialog = false;
             this.address = {};
         }
-       
     }
 
     findIndexById(id: string): number {
@@ -295,12 +299,14 @@ export class CrudAddressComponent implements OnInit {
         );
     }
 
-    addMarker(event: any){
-        this.center = { lat: event.latLng.lat(), lng: event.latLng.lng() };;
-        
-        this.overlays = [
-            new google.maps.Marker({position: event.latLng, title:this.address.name})
-        ]
+    addMarker(event: any) {
+        this.center = { lat: event.latLng.lat(), lng: event.latLng.lng() };
 
+        this.overlays = [
+            new google.maps.Marker({
+                position: event.latLng,
+                title: this.address.name,
+            }),
+        ];
     }
 }

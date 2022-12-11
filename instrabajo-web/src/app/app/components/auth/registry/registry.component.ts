@@ -51,7 +51,7 @@ export class RegistryComponent {
             .pipe(take(1))
             .subscribe((data: any) => {
                 if (data) {
-                    alert('User has been created');
+                    alert('Usuario creado exitosamente!');
                     this.router.navigate(['auth/login']);
                 }
             });

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { take } from 'rxjs';
 import { UpdateUserDto } from 'src/app/app/models/service.dto';
@@ -86,11 +85,12 @@ export class ProfileComponent implements OnInit {
             .pipe(take(1))
             .subscribe((data: any) => {
                 console.log(data);
-                alert('User updated!');
                 this.messageService.add({
-                    severity: 'info',
-                    summary: 'Success',
-                    detail: 'User updated',
+                    severity: 'success',
+                    summary: 'Exito',
+                    detail: 'Usuario actualizado',
+                    life: 3000,
+                    sticky: true,
                 });
             });
     }
